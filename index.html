@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Origins2 Helper by Society</title>
+  <meta name="description" content="Origins2 Helper by Society – Promoter, Upp-Rechner, Boss-Ticker und Eventkalender für Origins2.">
+  <meta name="theme-color" content="#110d09">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/tailwind.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body class="min-h-screen bg-ink-950 text-parch-100 font-sans antialiased">
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero relative overflow-hidden border-b border-gold-line">
+    <div class="hero-bg" data-banner="assets/hero-bg.jpg" aria-hidden="true"></div>
+    <div class="hero-shade" aria-hidden="true"></div>
+
+    <!-- Top bar -->
+    <div class="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 pt-5 sm:px-8">
+      <a href="#" class="flex items-center gap-3">
+        <span class="font-display text-sm font-semibold tracking-[0.3em] text-parch-200">SOCIETY</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <div class="lang-switch" role="group" data-i18n-attr="aria-label:lang.label">
+          <button type="button" data-lang="de">DE</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <button type="button" class="btn-ghost text-xs" id="share-site">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
+          <span data-i18n="share.btn">Teilen</span>
+        </button>
+        <a href="https://origins2.global" class="btn-ghost text-xs hide-xs">
+          origins2.global
+          <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11 3h6v6h-2V6.4l-6.3 6.3-1.4-1.4L13.6 5H11V3zM5 5h3v2H5v8h8v-3h2v5H3V5h2z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero content -->
+    <div class="relative z-10 mx-auto max-w-6xl px-5 pb-10 pt-4 text-center sm:px-8 sm:pb-14 sm:pt-2">
+      <div class="hero-row">
+        <!-- Referral (kompakt, links neben dem Logo) -->
+        <div class="hero-side hero-side-left">
+          <div class="ref-mini">
+            <p class="ref-mini-label" data-i18n="ref.label">Referral-Code</p>
+            <div class="mt-1.5 flex items-center gap-1.5">
+              <span class="ref-mini-code font-display" id="ref-code">CRITICALZ</span>
+              <button type="button" class="ref-mini-btn" id="copy-ref" data-copy="CRITICALZ" aria-label="Code kopieren" title="Code kopieren" data-i18n-attr="aria-label:ref.copy;title:ref.copy">
+                <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M7 2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1v-2h1V4H7v1H5V4a2 2 0 0 1 2-2zM4 7h9a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zm0 2v7h9V9H4z"/></svg>
+                <span data-label class="sr-only">Kopieren</span>
+              </button>
+            </div>
+            <a href="https://origins2.global/users/register" class="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium text-gold-300 hover:text-gold-200">
+              <span data-i18n="ref.register">Jetzt registrieren</span>
+              <svg class="h-2.5 w-2.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M7.3 4.3 13 10l-5.7 5.7-1.4-1.4L10.2 10 5.9 5.7z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-logo-wrap">
+          <img src="assets/origins2-logo.png" alt="Origins2 Rebirth" class="hero-logo mx-auto w-auto" data-fallback="origins2">
+        </div>
+
+        <div class="hero-side" aria-hidden="true"></div>
+      </div>
+
+      <div class="mt-1 flex items-center justify-center gap-3">
+        <span class="ornament-line"></span>
+        <p class="font-display text-sm font-semibold uppercase tracking-[0.35em] text-gold-300 sm:text-base">Helper by Society</p>
+        <span class="ornament-line flip"></span>
+      </div>
+
+      <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-parch-300 sm:text-base" data-i18n="hero.tagline">
+        Boss-Timer, Upp-Kostenrechner, Eventkalender und Promoter – alles für deinen Weg auf Origins2 an einem Ort.
+      </p>
+    </div>
+
+  </header>
+
+  <!-- ===================== TABS + LIVE-LEISTE (bleiben oben stehen) ===================== -->
+  <div class="topbar">
+    <nav class="tabs-bar" aria-label="Bereiche" data-i18n-attr="aria-label:nav.label">
+      <div class="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 sm:px-6 no-scrollbar" role="tablist">
+        <a class="tab" href="#uebersicht" data-tab="uebersicht" data-i18n="tab.overview">Übersicht</a>
+        <a class="tab" href="#bosse" data-tab="bosse" data-i18n="tab.bosses">Boss-Timer</a>
+        <a class="tab" href="#upp-rechner" data-tab="upp-rechner" data-i18n="tab.upp">Upp-Rechner</a>
+        <a class="tab" href="#kalender" data-tab="kalender"><span data-i18n="tab.calendar">Kalender</span> <em data-i18n="soon">Bald</em></a>
+      </div>
+    </nav>
+
+    <div class="ticker" role="region" aria-label="Nächste Weltbosse" data-i18n-attr="aria-label:ticker.label">
+    <div class="mx-auto flex max-w-6xl items-center gap-3 px-5 sm:px-8">
+      <div class="ticker-head">
+        <span class="ticker-dot" aria-hidden="true"></span>
+        <span class="ticker-title" data-i18n="ticker.title">Weltbosse</span>
+        <span class="ticker-clock tabular-nums" title="Aktuelle Serverzeit" data-i18n-attr="title:ticker.clock"><span id="server-clock">--:--:--</span></span>
+      </div>
+      <div id="ticker-list" class="ticker-list no-scrollbar"></div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
+
+    <!-- ========== VIEW: Übersicht ========== -->
+    <div class="view" data-view="uebersicht">
+
+    <!-- Promoter -->
+    <section aria-labelledby="promoter-title">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-baseline gap-3">
+          <h2 id="promoter-title" class="eyebrow" data-i18n="promoter.title">Promoter</h2>
+          <p class="text-xs text-parch-500" id="live-line"></p>
+        </div>
+        <div class="chips chips-sm" role="tablist" aria-label="Filter" id="promoter-filter">
+          <button type="button" class="chip is-active" data-filter="all" data-i18n="filter.all">Alle</button>
+          <button type="button" class="chip" data-filter="live" data-i18n="filter.live">Live</button>
+          <button type="button" class="chip" data-filter="guild" data-i18n="filter.guild">Gilde</button>
+          <button type="button" class="chip" data-filter="server" data-i18n="filter.server">Server</button>
+        </div>
+      </div>
+
+      <div id="promoter-list" class="promoter-strip mt-3 no-scrollbar"></div>
+      <p id="promoter-empty" class="mt-3 hidden rounded-lg border border-gold-line bg-ink-900 px-4 py-3 text-center text-xs text-parch-400" data-i18n="promoter.empty">Gerade ist niemand aus dieser Gruppe live.</p>
+    </section>
+
+    <!-- Coming soon -->
+    <section class="mt-14" aria-labelledby="soon-title">
+      <p class="eyebrow" data-i18n="tools.eyebrow">Werkzeuge</p>
+      <h2 id="soon-title" class="section-title" data-i18n="tools.title">Mehr im Helper</h2>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+        <a href="#upp-rechner" class="panel panel-link block p-5">
+          <div class="icon-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14.5 3.5 20.5 9.5 10 20H4v-6L14.5 3.5Z"/><path d="m12 6 6 6"/></svg>
+          </div>
+          <h3 class="mt-4 font-display text-base font-semibold text-parch-100"><span data-i18n="tools.upp.title">Upp-Kostenrechner</span> <span class="new-badge" data-i18n="new">Neu</span></h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-parch-400" data-i18n="tools.upp.text">Start und Ziel wählen – Einkaufsliste mit Material und Yang für Glück, Durchschnitt und Pech.</p>
+        </a>
+        <a href="#kalender" class="panel panel-link block p-5">
+          <div class="icon-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+          </div>
+          <h3 class="mt-4 font-display text-base font-semibold text-parch-100" data-i18n="tools.cal.title">Eventkalender</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-parch-400" data-i18n="tools.cal.text">Wochen- und Monatsansicht mit Filter und Erinnerungs-Glocke pro Termin.</p>
+        </a>
+      </div>
+    </section>
+    <!-- Gilde -->
+    <section class="mt-14" aria-labelledby="guild-title">
+      <div class="guild-band">
+        <div class="guild-media">
+          <img src="assets/society-banner.jpg" alt="Gilde Society" class="guild-img" data-i18n-attr="alt:guild.alt">
+        </div>
+        <div class="guild-text">
+          <h2 id="guild-title" class="eyebrow" data-i18n="guild.eyebrow">Die Gilde dahinter</h2>
+          <p class="mt-1.5 text-sm leading-relaxed text-parch-300" data-i18n="guild.text">Wir bauen den Helper für alle Origins2-Spieler – gepflegt von der Gilde Society.</p>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <!-- ========== VIEW: Boss-Timer ========== -->
+    <div class="view" data-view="bosse" hidden>
+    <!-- Boss-Timer -->
+    <section aria-labelledby="boss-title">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="eyebrow" data-i18n="boss.eyebrow">Live-Countdown</p>
+          <h2 id="boss-title" class="section-title" data-i18n="boss.title">Boss-Timer</h2>
+        </div>
+        <p class="text-xs text-parch-500" data-i18n-html="boss.note">Alle Zeiten in Serverzeit · <span class="text-parch-300">Glocke</span> = Ton 5 Min vorher und beim Spawn</p>
+      </div>
+
+      <h3 class="sub-title mt-6" data-i18n="boss.world">Weltbosse</h3>
+      <div id="boss-world" class="mt-3 grid gap-4 md:grid-cols-3"></div>
+
+      <h3 class="sub-title mt-8" data-i18n="boss.map">Map-Bosse</h3>
+      <div id="boss-map" class="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"></div>
+    </section>
+
+    </div>
+
+    <!-- ========== VIEW: Upp-Rechner ========== -->
+    <div class="view" data-view="upp-rechner" hidden>
+      <section aria-labelledby="upp-title">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="eyebrow" data-i18n="upp.eyebrow">Materialrechner</p>
+            <h2 id="upp-title" class="section-title" data-i18n="upp.title">Upp-Kostenrechner</h2>
+          </div>
+          <p class="text-xs text-parch-500" data-i18n="upp.note">Simulation mit 10.000 Durchläufen · Werte aus dem Ingame-Wiki</p>
+        </div>
+
+        <!-- Eingaben -->
+        <div class="panel mt-6 p-4 sm:p-5">
+          <div class="grid gap-4 md:grid-cols-[1.1fr_1fr_1fr]">
+            <label class="field">
+              <span class="field-label" data-i18n="upp.line">Upp-Reihe</span>
+              <select id="upp-line" class="field-input"></select>
+            </label>
+            <label class="field">
+              <span class="field-label" data-i18n="upp.from">Start</span>
+              <select id="upp-from" class="field-input"></select>
+            </label>
+            <label class="field">
+              <span class="field-label" data-i18n="upp.to">Ziel</span>
+              <select id="upp-to" class="field-input"></select>
+            </label>
+          </div>
+
+          <p class="rule-note mt-4">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 26 13 16 28 6 13Z" fill="#8a4dd6" stroke="#f3d79a" stroke-width="1.5"/></svg>
+            <span data-i18n-html="upp.rule"><b>Mit Magischem Stein:</b> Bei einem Fail bleibt die Stufe, Material und Yang sind weg. Pity ist eingerechnet.</span>
+          </p>
+
+          <div id="upp-chain" class="chain mt-5 no-scrollbar"></div>
+        </div>
+
+        <!-- Ergebnis -->
+        <div id="upp-result" class="mt-4"></div>
+      </section>
+    </div>
+
+    <!-- ========== VIEW: Kalender ========== -->
+    <div class="view" data-view="kalender" hidden>
+      <section class="soon-view panel">
+        <div class="icon-tile mx-auto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+        </div>
+        <p class="eyebrow mt-5" data-i18n="cal.eyebrow">In Arbeit</p>
+        <h2 class="section-title" data-i18n="cal.title">Eventkalender</h2>
+        <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-parch-400" data-i18n="cal.text">Wochen- und Monatsansicht mit Filter für Events, Weltbosse und Society-Termine – plus Erinnerungs-Glocke pro Termin.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="border-t border-gold-line bg-ink-900/60">
+    <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 px-5 py-8 text-center sm:flex-row sm:justify-between sm:text-left sm:px-8">
+      <div>
+        <p class="font-display text-sm font-semibold tracking-[0.15em] text-parch-200">ORIGINS2 HELPER <span class="text-gold-400">by Society</span></p>
+        <p class="mt-1 text-xs text-parch-500" data-i18n="footer.tool">Community-Tool der Gilde Society</p>
+      </div>
+      <p class="text-xs text-parch-500">Creator: <span class="text-parch-300">cRiTiCaLZz</span> · Code <span class="font-semibold tracking-wider text-gold-300">CRITICALZ</span></p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/icons-data.js"></script>
+  <script src="js/streamers.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/upp.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
