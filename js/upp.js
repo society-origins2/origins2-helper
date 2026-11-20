@@ -196,14 +196,24 @@ function matValueOf(mats, prices) {
   return v;
 }
 
+function currentCat() { return document.querySelector('input[name="upp-cat"]:checked')?.value || "pvp"; }
+
 function renderResult() {
-  const line = UPGRADE_LINES[document.getElementById("upp-line").value];
+  const out0 = document.getElementById("upp-result");
+  const lineId = document.getElementById("upp-line").value;
+  if (!lineId || !UPGRADE_LINES[lineId]) {
+    out0.innerHTML = `<p class="upp-empty panel">${t("upp.noLines", currentCat() === "pvm" ? "PvM" : "PvP")}</p>`;
+    const ch = document.getElementById("upp-chain"); if (ch) ch.innerHTML = "";
+    uppLast = null;
+    return;
+  }
+  const line = UPGRADE_LINES[lineId];
   const from = +document.getElementById("upp-from").value;
   const to = +document.getElementById("upp-to").value;
   const downgrade = false; // Society-Regel: immer Magischer Stein → Stufe bleibt
   const out = document.getElementById("upp-result");
   renderChain(line, from, to);
-  saveUppState({ line: document.getElementById("upp-line").value, from, to, downgrade });
+  saveUppState({ line: lineId, cat: currentCat(), from, to, downgrade });
 
   if (to <= from) {
     out.innerHTML = `<p class="upp-empty">${t("upp.chooseHigher")}</p>`;
@@ -478,26 +488,35 @@ function initUpp() {
   const lineSel = document.getElementById("upp-line");
   if (!lineSel || typeof UPGRADE_LINES === "undefined") return;
   const st = uppState();
-  const lineIds = Object.keys(UPGRADE_LINES);
+  const catOf = id => UPGRADE_LINES[id].category || "pvp";
+  let lineIds = [];
   const fillLines = () => {
     const cur = lineSel.value;
+    lineIds = Object.keys(UPGRADE_LINES).filter(id => catOf(id) === currentCat());
     lineSel.innerHTML = lineIds.map(id => `<option value="${id}">${uEsc(lineName(UPGRADE_LINES[id]))}</option>`).join("");
-    if (cur) lineSel.value = cur;
+    if (cur && lineIds.includes(cur)) lineSel.value = cur;
+    const has = lineIds.length > 0;
+    [lineSel, document.getElementById("upp-from"), document.getElementById("upp-to")].forEach(el => { el.disabled = !has; });
+    if (!has) { document.getElementById("upp-from").innerHTML = ""; document.getElementById("upp-to").innerHTML = ""; }
   };
-  fillLines();
   // geteilter Link: ?line=…&from=…&to=…
   try {
     const q = new URLSearchParams(location.search);
     if (q.get("line") && UPGRADE_LINES[q.get("line")]) st.line = q.get("line");
     if (q.get("from") != null && q.get("to") != null) { st.from = +q.get("from"); st.to = +q.get("to"); }
   } catch {}
-  if (st.line && UPGRADE_LINES[st.line]) lineSel.value = st.line;
+  const startCat = (st.line && UPGRADE_LINES[st.line]) ? catOf(st.line) : (st.cat || "pvp");
+  const catRadio = document.querySelector(`input[name="upp-cat"][value="${startCat}"]`);
+  if (catRadio) catRadio.checked = true;
+  fillLines();
+  if (st.line && lineIds.includes(st.line)) lineSel.value = st.line;
 
   const fromSel = document.getElementById("upp-from");
   const toSel = document.getElementById("upp-to");
 
   const refreshSelects = (keep) => {
     const line = UPGRADE_LINES[lineSel.value];
+    if (!line) return;
     const max = line.stages.length * 10 - 1;
     let from = keep && st.from != null ? st.from : +fromSel.value || 0;
     let to = keep && st.to != null ? st.to : +toSel.value || max;
@@ -511,10 +530,14 @@ function initUpp() {
   lineSel.addEventListener("change", () => { fromSel.value = 0; toSel.value = 999; refreshSelects(false); renderResult(); });
   fromSel.addEventListener("change", () => { refreshSelects(false); renderResult(); });
   toSel.addEventListener("change", renderResult);
+  document.querySelectorAll('input[name="upp-cat"]').forEach(r => r.addEventListener("change", () => {
+    fillLines(); refreshSelects(false); renderResult();
+  }));
 
   window.addEventListener("langchange", () => {
     fillLines();
     const line = UPGRADE_LINES[lineSel.value];
+    if (!line) { renderResult(); return; }
     const f = +fromSel.value, to = +toSel.value, max = line.stages.length * 10 - 1;
     fillPosSelect(fromSel, line, 0, max - 1, f);
     fillPosSelect(toSel, line, f + 1, max, to);

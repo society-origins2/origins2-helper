@@ -55,6 +55,7 @@ const BOSS_SCHEDULES = [
     id: "map-low",
     type: "map",
     title: "Low-Level-Mapbosse",
+    img: "assets/bosses/map-low.png", imgH: 119,
     titleEn: "Low-level map bosses",
     maps: "Orktal bis Grotte der Verbannung 2",
     mapsEn: "Orc Valley to Grotto of Exile 2",
@@ -65,6 +66,7 @@ const BOSS_SCHEDULES = [
     id: "map-beta",
     type: "map",
     title: "Beta-Map-Bosse",
+    img: "assets/bosses/map-beta.png", imgH: 118,
     titleEn: "Beta map bosses",
     maps: "Beta-Maps",
     mapsEn: "Beta maps",
@@ -75,6 +77,7 @@ const BOSS_SCHEDULES = [
     id: "map-elementar",
     type: "map",
     title: "Elementar-Map-Bosse",
+    img: "assets/bosses/map-elementar.png", imgH: 110,
     titleEn: "Elemental map bosses",
     maps: "Elementar-Maps",
     mapsEn: "Elemental maps",
@@ -85,6 +88,7 @@ const BOSS_SCHEDULES = [
     id: "map-yohara",
     type: "map",
     title: "Yohara-Map-Bosse",
+    img: "assets/bosses/map-yohara.png", imgH: 83,
     titleEn: "Yohara map bosses",
     maps: "Yohara-Maps",
     mapsEn: "Yohara maps",
@@ -92,6 +96,22 @@ const BOSS_SCHEDULES = [
     start: "00:00"
   }
 ];
+
+
+/* =====================================================================
+   BOSS-BILDER  –  Porträt im Hintergrund der Karten
+   ---------------------------------------------------------------------
+   Weltbosse: Schlüssel = deutscher Bossname wie oben in "bosses".
+   Map-Bosse: direkt im Zeitplan oben als img / imgH eintragen.
+   img  : Bild in assets/bosses/ (freigestellt, PNG mit Transparenz)
+   imgH : Originalhöhe in Pixeln (damit das Bild nicht unscharf vergrößert wird)
+   ===================================================================== */
+
+const BOSS_INFO = {
+  "Große Eishexe":           { img: "assets/bosses/eishexe.png",   imgH: 86 },
+  "Schlangenkönigin Nethis": { img: "assets/bosses/nethis.png",    imgH: 125 },
+  "Elementar-Herrscher":     { img: "assets/bosses/elementar.png", imgH: 115 }
+};
 
 
 /* =====================================================================
@@ -159,10 +179,14 @@ function fmtEvery(min) {
 function bossNames(s) { return (LANG === "en" && s.bossesEn) || s.bosses || []; }
 function bossLabel(s) { return L(s, "title") || bossNames(s).join(" · "); }
 function bossShort(s) { return L(s, "short") || bossLabel(s); }
+function bossArtInfo(s) {
+  if (s.img) return { img: s.img, imgH: s.imgH };
+  return (s.bosses || []).map(b => BOSS_INFO[b]).find(i => i && i.img) || null;
+}
+function bossArt(s) { const i = bossArtInfo(s); return i ? i.img : ""; }
 function esc(str) {
   return String(str ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
-
 /* ---------------- Sound (pro Boss einzeln) ---------------- */
 const SOUND_KEY = "o2h.bossSounds";
 let audioCtx = null;
@@ -215,6 +239,7 @@ function renderTicker() {
   const worlds = BOSS_SCHEDULES.filter(s => s.type === "world");
   list.innerHTML = worlds.map(s => `
     <div class="tick" data-id="${esc(s.id)}">
+      ${bossArt(s) ? `<span class="tick-ava"><img src="${esc(bossArt(s))}" alt=""></span>` : ""}
       <div class="min-w-0">
         <p class="tick-name" title="${esc(bossLabel(s))}">${esc(bossShort(s))}</p>
         <p class="tick-meta"><span data-at>--:--</span> · ${fmtEvery(s.every)}</p>
@@ -232,7 +257,8 @@ function bossCard(s) {
     ? `<ul class="boss-names">${bossNames(s).map(b => `<li>${esc(b)}</li>`).join("")}</ul>`
     : `<p class="mt-1 text-xs text-parch-400">${esc(L(s, "maps"))}</p>`;
   return `
-    <article class="boss-card panel" data-id="${esc(s.id)}">
+    <article class="boss-card panel${bossArt(s) ? " has-art" : ""}" data-id="${esc(s.id)}">
+      ${bossArt(s) ? `<img class="boss-art" src="${esc(bossArt(s))}" alt="" aria-hidden="true" style="max-height:${Math.round((bossArtInfo(s).imgH || 150) * 2.1)}px">` : ""}
       <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
           <p class="boss-kicker">${fmtEvery(s.every)}</p>

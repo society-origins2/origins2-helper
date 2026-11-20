@@ -20,6 +20,7 @@
   <header class="hero relative overflow-hidden border-b border-gold-line">
     <div class="hero-bg" data-banner="assets/hero-bg.jpg" aria-hidden="true"></div>
     <div class="hero-shade" aria-hidden="true"></div>
+    <canvas class="hero-embers" id="hero-embers" aria-hidden="true"></canvas>
 
     <!-- Top bar -->
     <div class="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 pt-5 sm:px-8">
@@ -43,42 +44,43 @@
     </div>
 
     <!-- Hero content -->
-    <div class="relative z-10 mx-auto max-w-6xl px-5 pb-10 pt-4 text-center sm:px-8 sm:pb-14 sm:pt-2">
-      <div class="hero-row">
-        <!-- Referral (kompakt, links neben dem Logo) -->
-        <div class="hero-side hero-side-left">
-          <div class="ref-mini">
-            <p class="ref-mini-label" data-i18n="ref.label">Referral-Code</p>
-            <div class="mt-1.5 flex items-center gap-1.5">
-              <span class="ref-mini-code font-display" id="ref-code">CRITICALZ</span>
-              <button type="button" class="ref-mini-btn" id="copy-ref" data-copy="CRITICALZ" aria-label="Code kopieren" title="Code kopieren" data-i18n-attr="aria-label:ref.copy;title:ref.copy">
-                <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M7 2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1v-2h1V4H7v1H5V4a2 2 0 0 1 2-2zM4 7h9a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zm0 2v7h9V9H4z"/></svg>
-                <span data-label class="sr-only">Kopieren</span>
-              </button>
+    <div class="relative z-10 mx-auto max-w-6xl px-5 pb-7 pt-3 sm:px-8 sm:pb-8">
+      <div class="hero-grid">
+        <div class="hero-logo-wrap">
+          <img src="assets/origins2-logo.png" alt="Origins2 Rebirth" class="hero-logo" data-fallback="origins2">
+        </div>
+
+        <div class="hero-text">
+          <div class="hero-title-row">
+            <span class="ornament-line"></span>
+            <p class="font-display text-sm font-semibold uppercase tracking-[0.35em] text-gold-300 sm:text-base">Helper by Society</p>
+          </div>
+          <p class="hero-tagline" data-i18n="hero.tagline">Boss-Timer, Upp-Kostenrechner, Eventkalender und Promoter – alles für deinen Weg auf Origins2 an einem Ort.</p>
+
+          <div class="hero-cards">
+            <div class="ref-mini">
+              <p class="ref-mini-label" data-i18n="ref.label">Referral-Code</p>
+              <div class="mt-1.5 flex items-center gap-1.5">
+                <span class="ref-mini-code font-display" id="ref-code">CRITICALZ</span>
+                <button type="button" class="ref-mini-btn" id="copy-ref" data-copy="CRITICALZ" aria-label="Code kopieren" title="Code kopieren" data-i18n-attr="aria-label:ref.copy;title:ref.copy">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M7 2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-1v-2h1V4H7v1H5V4a2 2 0 0 1 2-2zM4 7h9a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zm0 2v7h9V9H4z"/></svg>
+                  <span data-label class="sr-only">Kopieren</span>
+                </button>
+              </div>
+              <a href="https://origins2.global/users/register" class="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium text-gold-300 hover:text-gold-200">
+                <span data-i18n="ref.register">Jetzt registrieren</span>
+                <svg class="h-2.5 w-2.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M7.3 4.3 13 10l-5.7 5.7-1.4-1.4L10.2 10 5.9 5.7z"/></svg>
+              </a>
             </div>
-            <a href="https://origins2.global/users/register" class="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium text-gold-300 hover:text-gold-200">
-              <span data-i18n="ref.register">Jetzt registrieren</span>
-              <svg class="h-2.5 w-2.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M7.3 4.3 13 10l-5.7 5.7-1.4-1.4L10.2 10 5.9 5.7z"/></svg>
+
+            <a href="#kalender" class="today-card" id="today-card">
+              <p class="ref-mini-label" data-i18n="today.title">Heute aktiv</p>
+              <div class="today-icons" id="today-icons"></div>
+              <p class="today-more" id="today-more"></p>
             </a>
           </div>
         </div>
-
-        <div class="hero-logo-wrap">
-          <img src="assets/origins2-logo.png" alt="Origins2 Rebirth" class="hero-logo mx-auto w-auto" data-fallback="origins2">
-        </div>
-
-        <div class="hero-side" aria-hidden="true"></div>
       </div>
-
-      <div class="mt-1 flex items-center justify-center gap-3">
-        <span class="ornament-line"></span>
-        <p class="font-display text-sm font-semibold uppercase tracking-[0.35em] text-gold-300 sm:text-base">Helper by Society</p>
-        <span class="ornament-line flip"></span>
-      </div>
-
-      <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-parch-300 sm:text-base" data-i18n="hero.tagline">
-        Boss-Timer, Upp-Kostenrechner, Eventkalender und Promoter – alles für deinen Weg auf Origins2 an einem Ort.
-      </p>
     </div>
 
   </header>
@@ -90,7 +92,7 @@
         <a class="tab" href="#uebersicht" data-tab="uebersicht" data-i18n="tab.overview">Übersicht</a>
         <a class="tab" href="#bosse" data-tab="bosse" data-i18n="tab.bosses">Boss-Timer</a>
         <a class="tab" href="#upp-rechner" data-tab="upp-rechner" data-i18n="tab.upp">Upp-Rechner</a>
-        <a class="tab" href="#kalender" data-tab="kalender"><span data-i18n="tab.calendar">Kalender</span> <em data-i18n="soon">Bald</em></a>
+        <a class="tab" href="#kalender" data-tab="kalender"><span data-i18n="tab.calendar">Kalender</span> <em data-i18n="new">Neu</em></a>
       </div>
     </nav>
 
@@ -200,6 +202,13 @@
 
         <!-- Eingaben -->
         <div class="panel mt-6 p-4 sm:p-5">
+          <div class="mb-4 flex flex-wrap items-center gap-3">
+            <span class="field-label" data-i18n="upp.cat">Kategorie</span>
+            <div class="seg seg-cat" role="radiogroup" data-i18n-attr="aria-label:upp.cat">
+              <label><input type="radio" name="upp-cat" value="pvp" checked><span>PvP</span></label>
+              <label><input type="radio" name="upp-cat" value="pvm"><span>PvM</span></label>
+            </div>
+          </div>
           <div class="grid gap-4 md:grid-cols-[1.1fr_1fr_1fr]">
             <label class="field">
               <span class="field-label" data-i18n="upp.line">Upp-Reihe</span>
@@ -230,13 +239,37 @@
 
     <!-- ========== VIEW: Kalender ========== -->
     <div class="view" data-view="kalender" hidden>
-      <section class="soon-view panel">
-        <div class="icon-tile mx-auto">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+      <section aria-labelledby="cal-title">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="eyebrow" data-i18n="cal.eyebrow2">Server-Events</p>
+            <h2 id="cal-title" class="section-title" data-i18n="cal.title">Eventkalender</h2>
+          </div>
+          <p class="text-xs text-parch-500" data-i18n-html="cal.note">Serverzeit · <span class="text-parch-300">Glocke</span> = Ton zum Start (solange die Seite offen ist)</p>
         </div>
-        <p class="eyebrow mt-5" data-i18n="cal.eyebrow">In Arbeit</p>
-        <h2 class="section-title" data-i18n="cal.title">Eventkalender</h2>
-        <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-parch-400" data-i18n="cal.text">Wochen- und Monatsansicht mit Filter für Events, Weltbosse und Society-Termine – plus Erinnerungs-Glocke pro Termin.</p>
+
+        <div id="cal-perm" class="perm-row mt-5"></div>
+
+        <!-- Werkzeugleiste -->
+        <div class="cal-toolbar panel mt-4">
+          <div class="cal-nav">
+            <button type="button" class="cal-navbtn" data-cal-nav="prev" aria-label="‹">‹</button>
+            <span id="cal-label" class="cal-label"></span>
+            <button type="button" class="cal-navbtn" data-cal-nav="next" aria-label="›">›</button>
+            <button type="button" class="btn-ghost text-xs" data-cal-nav="today" data-i18n="cal.today">Heute</button>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="chips chips-sm">
+              <button type="button" class="chip is-active" data-cal-view="month" data-i18n="cal.month">Monat</button>
+              <button type="button" class="chip" data-cal-view="week" data-i18n="cal.week">Woche</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cal-layout mt-4">
+          <div id="cal-main" class="panel cal-main"></div>
+          <aside id="cal-day" class="panel cal-day"></aside>
+        </div>
       </section>
     </div>
   </main>
@@ -260,6 +293,8 @@
   <script src="js/streamers.js"></script>
   <script src="js/events.js"></script>
   <script src="js/upp.js"></script>
+  <script src="js/calendar-data.js"></script>
+  <script src="js/calendar.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

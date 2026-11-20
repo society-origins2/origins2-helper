@@ -110,6 +110,8 @@ const ARMORS = {
 /* =====================================================================
    UPP-REIHEN
    ---------------------------------------------------------------------
+   category       : "pvp" oder "pvm" (Schalter im Rechner, wie im Wiki 1 | 2)
+
    Eine Reihe besteht aus mehreren Stufen (Waffen), die nacheinander
    entwickelt werden: Waffe +0 … +9  →  nächste Waffe +0 … +9  usw.
 
@@ -133,8 +135,9 @@ const k = 1_000, kk = 1_000_000;
 
 const UPGRADE_LINES = {
   "schwert-1h-pvp": {
-    name: "1-Hand-PvP-Schwert",
-    nameEn: "One-handed PvP sword",
+    name: "1-Hand-Schwert",
+    nameEn: "One-handed sword",
+    category: "pvp",
     stages: [
       {
         item: "wpn-05", // Schlachtschwert

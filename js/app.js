@@ -132,14 +132,65 @@ function initLangAndShare() {
   });
 }
 
+/* ---------- Glutfunken im Kopfbereich ---------- */
+function initEmbers() {
+  const c = document.getElementById("hero-embers");
+  if (!c || !c.getContext) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const g = c.getContext("2d");
+  let W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2), parts = [], running = true;
+  const resize = () => {
+    const r = c.getBoundingClientRect(); W = r.width; H = r.height;
+    c.width = W * dpr; c.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const target = Math.round(Math.min(70, W / 22));
+    while (parts.length < target) parts.push(spawn(true));
+    parts.length = target;
+  };
+  const spawn = (anywhere) => ({
+    x: Math.random() * W,
+    y: anywhere ? Math.random() * H : H + 10,
+    r: 0.6 + Math.random() * 1.8,
+    vy: 0.15 + Math.random() * 0.45,
+    vx: (Math.random() - 0.5) * 0.15,
+    sw: Math.random() * Math.PI * 2,
+    life: 0.5 + Math.random() * 0.5,
+    hue: 22 + Math.random() * 20
+  });
+  const step = () => {
+    if (!running) return;
+    g.clearRect(0, 0, W, H);
+    g.globalCompositeOperation = "lighter";
+    for (const p of parts) {
+      p.sw += 0.02; p.y -= p.vy; p.x += p.vx + Math.sin(p.sw) * 0.25;
+      const fade = Math.max(0, Math.min(1, p.y / H)) * p.life;
+      if (p.y < -10) Object.assign(p, spawn(false));
+      const grd = g.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
+      grd.addColorStop(0, `hsla(${p.hue}, 100%, 70%, ${0.9 * fade})`);
+      grd.addColorStop(0.35, `hsla(${p.hue}, 95%, 55%, ${0.35 * fade})`);
+      grd.addColorStop(1, "hsla(20, 90%, 40%, 0)");
+      g.fillStyle = grd; g.beginPath(); g.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2); g.fill();
+    }
+    g.globalCompositeOperation = "source-over";
+    requestAnimationFrame(step);
+  };
+  // nur animieren, wenn der Kopfbereich sichtbar ist (spart Akku)
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => { const was = running; running = e.isIntersecting; if (running && !was) requestAnimationFrame(step); }).observe(c);
+  }
+  window.addEventListener("resize", resize);
+  resize(); requestAnimationFrame(step);
+}
+
 /* ---------- Start ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   initLangAndShare();
   initImageFallbacks();
   initBanner();
+  initEmbers();
   initReferral();
   initTabs();
   if (typeof initStreamers === "function") initStreamers();
   if (typeof initEvents === "function") initEvents();
   if (typeof initUpp === "function") initUpp();
+  if (typeof initCalendar === "function") initCalendar();
 });
