@@ -1,0 +1,7 @@
+Bilder fuer die Seite:
+
+origins2-logo.png    - Origins2-Logo (transparent), mittig oben
+society-banner.jpg   - Society-Bild fuer den Gilden-Bereich
+hero-bg.jpg          - optional: Hintergrundbild hinter dem Kopfbereich
+
+origins2-banner.jpg und society-logo.jpg sind deine Originale und werden nicht benutzt.
