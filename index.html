@@ -45,6 +45,11 @@
 
     <!-- Hero content -->
     <div class="hero-inner relative z-10 mx-auto max-w-6xl px-5 pb-7 pt-3 sm:px-8 sm:pb-8">
+      <a class="hero-creator hc-2" href="https://kick.com/drtraube" target="_blank" rel="noopener" data-i18n-attr="title:creator.kick" title="Zum Kick-Kanal">
+        <span class="hc-hint hc-hint-kick"><span data-i18n="creator.kick">Zum Kick-Kanal</span></span>
+        <img src="assets/team/lucid.png" alt="Charakter von Lucid / xTraube">
+        <span class="hc-cap"><span class="hc-name">Lucid</span><span class="hc-role" data-i18n="creator.role">Creator · Society</span></span>
+      </a>
       <a class="hero-creator" href="https://discord.com/users/432306996344258560" target="_blank" rel="noopener" data-i18n-attr="title:creator.discord" title="Auf Discord schreiben">
         <span class="hc-hint">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.5 19.5 0 0 0-4.9 1.4C.6 9 0 13.6.3 18.1A19.8 19.8 0 0 0 6.3 21l1.3-2a12.6 12.6 0 0 1-2-1l.5-.4a14 14 0 0 0 11.8 0l.5.4c-.6.4-1.3.7-2 1l1.3 2a19.7 19.7 0 0 0 6-3c.4-5.2-.7-9.8-3.4-13.6ZM8.7 15.3c-1.2 0-2.1-1-2.1-2.3s.9-2.3 2.1-2.3 2.2 1 2.1 2.3c0 1.3-.9 2.3-2.1 2.3Zm6.6 0c-1.2 0-2.1-1-2.1-2.3s.9-2.3 2.1-2.3 2.2 1 2.1 2.3c0 1.3-.9 2.3-2.1 2.3Z"/></svg>
@@ -61,7 +66,8 @@
         <div class="hero-text">
           <div class="hero-title-row">
             <span class="ornament-line"></span>
-            <p class="font-display text-sm font-semibold uppercase tracking-[0.35em] text-gold-300 sm:text-base">Helper by Society</p>
+            <p class="font-display text-sm font-semibold uppercase tracking-[0.35em] text-gold-300 hero-kick">Helper by Society</p>
+            <span class="ornament-line flip"></span>
           </div>
           <p class="hero-tagline" data-i18n="hero.tagline">Boss-Timer, Upp-Kalkulator, Eventkalender und Promoter – alles für deinen Weg auf Origins2 an einem Ort.</p>
 
@@ -99,10 +105,11 @@
       <div class="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 sm:px-6 no-scrollbar" role="tablist">
         <a class="tab" href="#uebersicht" data-tab="uebersicht" data-i18n="tab.overview">Home</a>
         <a class="tab" href="#upp-rechner" data-tab="upp-rechner" data-i18n="tab.upp">Upp-Kalkulator</a>
-        <a class="tab" href="#skilltree" data-tab="skilltree"><span data-i18n="tab.skill">Skilltree-Kalkulator</span> <em data-i18n="soon">Bald</em></a>
+        <a class="tab" href="#skilltree" data-tab="skilltree"><span data-i18n="tab.skill">Skilltree-Kalkulator</span> <em data-i18n="new">Neu</em></a>
         <a class="tab" href="#bosse" data-tab="bosse" data-i18n="tab.bosses">Boss-Timer</a>
         <a class="tab" href="#kalender" data-tab="kalender"><span data-i18n="tab.calendar">Kalender</span> <em data-i18n="new">Neu</em></a>
         <a class="tab" href="#guides" data-tab="guides"><span data-i18n="tab.guides">Guides</span> <em data-i18n="soon">Bald</em></a>
+        <a class="tab" href="#team" data-tab="team"><span data-i18n="tab.team">Team</span> <em data-i18n="new">Neu</em></a>
       </div>
     </nav>
 
@@ -163,29 +170,11 @@
       </div>
     </section>
 
-    <!-- Team -->
-    <section class="mt-14" aria-labelledby="team-title">
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p class="eyebrow" data-i18n="team.eyebrow">Hinter dem Helper</p>
-          <h2 id="team-title" class="section-title" data-i18n="team.title">Das Team</h2>
-        </div>
-        <p class="text-xs text-parch-500" data-i18n="team.note">Alle, die am Origins2 Helper mitwirken – danke!</p>
-      </div>
-      <div id="team-list" class="team-grid mt-5"></div>
-    </section>
-
     <!-- Gilde -->
-    <section class="mt-14" aria-labelledby="guild-title">
-      <div class="guild-band">
-        <div class="guild-media">
-          <img src="assets/society-banner.jpg" alt="Gilde Society" class="guild-img" data-i18n-attr="alt:guild.alt">
-        </div>
-        <div class="guild-text">
-          <h2 id="guild-title" class="eyebrow" data-i18n="guild.eyebrow">Die Gilde dahinter</h2>
-          <p class="mt-1.5 text-sm leading-relaxed text-parch-300" data-i18n="guild.text">Wir bauen den Helper für alle Origins2-Spieler – gepflegt von der Gilde Society.</p>
-        </div>
-      </div>
+    <section class="guild-free mt-16" aria-labelledby="guild-title">
+      <img src="assets/society-logo.webp" alt="Gilde Society" class="guild-logo" loading="lazy" data-i18n-attr="alt:guild.alt">
+      <h2 id="guild-title" class="eyebrow mt-1" data-i18n="guild.eyebrow">Die Gilde dahinter</h2>
+      <p class="mt-1.5 text-sm leading-relaxed text-parch-300" data-i18n="guild.text">Wir bauen den Helper für alle Origins2-Spieler – gepflegt von der Gilde Society.</p>
     </section>
     </div>
 
@@ -302,13 +291,22 @@
     </div>
     <!-- ========== VIEW: Skilltree ========== -->
     <div class="view" data-view="skilltree" hidden>
-      <section class="soon-view panel">
-        <div class="icon-tile mx-auto">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><circle cx="5.5" cy="12" r="2"/><circle cx="18.5" cy="12" r="2"/><circle cx="5.5" cy="19.5" r="2"/><circle cx="12" cy="19.5" r="2"/><circle cx="18.5" cy="19.5" r="2"/><path d="M12 6.5v4M11 10.5 6.5 10.5M13 10.5h4.5M5.5 14v3.5M18.5 14v3.5M12 10.5v7"/></svg>
+      <section aria-labelledby="st-title">
+        <p class="eyebrow" data-i18n="st.eyebrow">Fertigkeitsbaumsystem</p>
+        <h2 id="st-title" class="section-title" data-i18n="skill.title">Skilltree-Kalkulator</h2>
+        <p class="mt-1 max-w-2xl text-sm text-parch-400" data-i18n="st.intro">Tippe auf einen Bonus – der Baum füllt sich bis dorthin und du siehst alle Items, die du bis zu diesem Punkt brauchst.</p>
+        <div class="st-wrap mt-5">
+          <div class="st-tree panel">
+            <svg id="st-svg" viewBox="15 20 415 300" role="group" aria-labelledby="st-title"></svg>
+            <div id="st-legend" class="st-legend"></div>
+            <ul class="st-rules">
+              <li data-i18n="st.rule1">Boni werden von unten nach oben in fester Reihenfolge freigeschaltet – nichts kann übersprungen werden.</li>
+              <li data-i18n="st.rule2">Zweig II (PvP) braucht aus Zweig I nur die Heilfähigkeit.</li>
+              <li data-i18n="st.rule3">Zweig III (Yohara) braucht Zweig I vollständig.</li>
+            </ul>
+          </div>
+          <div id="st-result" class="st-result panel"></div>
         </div>
-        <p class="eyebrow mt-5" data-i18n="cal.eyebrow">In Arbeit</p>
-        <h2 class="section-title" data-i18n="skill.title">Skilltree-Kalkulator</h2>
-        <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-parch-400" data-i18n="skill.text">Skillpunkte für jede Klasse planen, freie Punkte im Blick behalten und deinen Build als Link teilen.</p>
       </section>
     </div>
 
@@ -323,6 +321,19 @@
         <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-parch-400" data-i18n="guides.text">Anleitungen und Tipps der Gilde Society – vom Einstieg bis zum Endgame.</p>
       </section>
     </div>
+    <!-- ========== VIEW: Team ========== -->
+    <div class="view" data-view="team" hidden>    
+    <section aria-labelledby="team-title">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="eyebrow" data-i18n="team.eyebrow">Hinter dem Helper</p>
+          <h2 id="team-title" class="section-title" data-i18n="team.title">Das Team</h2>
+        </div>
+        <p class="text-xs text-parch-500" data-i18n="team.note">Alle, die am Origins2 Helper mitwirken – danke!</p>
+      </div>
+      <div id="team-list" class="team-grid mt-5"></div>
+    </section>
+    </div>
   </main>
 
   <!-- ===================== FOOTER ===================== -->
@@ -332,7 +343,7 @@
         <p class="font-display text-sm font-semibold tracking-[0.15em] text-parch-200">ORIGINS2 HELPER <span class="text-gold-400">by Society</span></p>
         <p class="mt-1 text-xs text-parch-500" data-i18n="footer.tool">Community-Tool der Gilde Society</p>
       </div>
-      <p class="text-xs text-parch-500">Creator: <span class="text-parch-300">xZcRiTiCaLZz</span> · Code <span class="font-semibold tracking-wider text-gold-300">CRITICALZ</span></p>
+      <p class="text-xs text-parch-500">Creator: <span class="text-parch-300" data-runner-egg>xZcRiTiCaLZz</span> · Code <span class="font-semibold tracking-wider text-gold-300">CRITICALZ</span></p>
     </div>
   </footer>
 
@@ -437,6 +448,32 @@
     </div>
   </div>
 
+
+  <!-- ===================== EASTER EGG: SHADOW RUN ===================== -->
+  <div id="runner-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-label="Shadow Run">
+    <div class="modal-card runner-card panel">
+      <button type="button" class="modal-x" data-close-runner aria-label="×">×</button>
+      <p class="eyebrow" data-i18n="game.eyebrow">Easter Egg</p>
+      <h2 class="section-title">Shadow Run</h2>
+      <div id="runner-stage" class="runner-stage mt-3">
+        <canvas id="runner-canvas"></canvas>
+        <div id="rn-over" class="rn-over" hidden>
+          <p class="rn-over-t" data-i18n="game.over">Erwischt!</p>
+          <p class="rn-over-s"><span data-i18n="game.score">Punkte</span> <b id="rn-score">0</b></p>
+          <form id="rn-form" class="rn-form" hidden>
+            <input id="rn-name" class="field-input text" maxlength="16" autocomplete="off" data-i18n-attr="placeholder:game.name" placeholder="Dein Name">
+            <button type="submit" class="btn-gold" data-i18n="game.save">Eintragen</button>
+          </form>
+          <button type="button" id="rn-again" class="btn-ghost-sq" data-i18n="game.again">Nochmal</button>
+        </div>
+      </div>
+      <p class="mt-2 text-xs text-parch-500" data-i18n="game.help">Springen: Tippen, Leertaste oder ↑ – länger halten springt höher.</p>
+      <h3 class="mt-4 font-display text-sm font-semibold tracking-wider text-gold-200" data-i18n="game.ranking">Rangliste</h3>
+      <ol id="rn-rank" class="rn-rank mt-2"></ol>
+      <p class="mt-2 text-[0.7rem] text-parch-500" data-i18n="game.local">Gilt nur auf diesem Gerät – eine Rangliste für alle kommt mit dem Discord-Login.</p>
+    </div>
+  </div>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="js/i18n.js"></script>
@@ -445,11 +482,14 @@
   <script src="js/streamers.js"></script>
   <script src="js/events.js"></script>
   <script src="js/upp.js"></script>
+  <script src="js/skill-data.js"></script>
+  <script src="js/skilltree.js"></script>
   <script src="js/calendar-data.js"></script>
   <script src="js/calendar.js"></script>
   <script src="js/changelog.js"></script>
   <script src="js/apply.js"></script>
   <script src="js/team.js"></script>
+  <script src="js/runner.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

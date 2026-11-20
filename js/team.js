@@ -8,9 +8,20 @@
 
 const HELPER_WEBHOOK = "";
 
+/* Ränge: admin = leitet die Seite · creator = macht Content (Stream/Video)
+   helper = wirkt mit (Daten, Übersetzen, Testen …), macht aber keinen Content
+   Ein Mitglied kann mehrere Ränge haben – der erste ist der Hauptrang. */
+const TEAM_RANKS = {
+  admin:   { de: "Helper-Admin", en: "Helper Admin" },
+  creator: { de: "Creator", en: "Creator" },
+  helper:  { de: "Helper",  en: "Helper" }
+};
+
 const TEAM_MEMBERS = [
-  { name: "xZcRiTiCaLZz", role: "Creator", roleEn: "Creator",
-    img: "assets/creator.png", discordId: "432306996344258560" }
+  { name: "xZcRiTiCaLZz", ranks: ["admin", "creator"],
+    img: "assets/creator.png", discordId: "432306996344258560" },
+  { name: "Lucid", ranks: ["creator"],
+    img: "assets/team/lucid.png", link: "https://kick.com/drtraube" }
 ];
 
 /* Auswahl im Formular */
@@ -39,9 +50,11 @@ function renderTeam() {
     const inner = `
       <span class="tm-art"><img src="${tmEsc(m.img)}" alt="" loading="lazy"></span>
       <span class="tm-name">${tmEsc(m.name)}</span>
-      <span class="tm-role">${tmEsc(LANG === "en" && m.roleEn ? m.roleEn : m.role)}</span>`;
-    return m.discordId
-      ? `<a class="tm-card" href="https://discord.com/users/${tmEsc(m.discordId)}" target="_blank" rel="noopener" title="${tmEsc(t("creator.discord"))}">${inner}</a>`
+      <span class="tm-ranks">${(m.ranks || ["helper"]).map(r => `<span class="tm-rank tm-rank-${tmEsc(r)}">${tmEsc((TEAM_RANKS[r] || { de: r, en: r })[LANG === "en" ? "en" : "de"])}</span>`).join("")}</span>`;
+    const href = m.discordId ? `https://discord.com/users/${m.discordId}` : m.link;
+    const tip = m.discordId ? t("creator.discord") : t("creator.kick");
+    return href
+      ? `<a class="tm-card" href="${tmEsc(href)}" target="_blank" rel="noopener" title="${tmEsc(tip)}">${inner}</a>`
       : `<div class="tm-card">${inner}</div>`;
   }).join("") + `
     <button type="button" class="tm-card tm-join" data-open-helper>

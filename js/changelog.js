@@ -28,17 +28,25 @@ const CHANGELOG = [
                      en: "Clicking the character in the header opens the creator's Discord profile" },
       { type: "new", de: "„Promoter werden“: Bewerbung mit Kanal, Referral-Code und Charakter-Screenshot direkt an unseren Discord",
                      en: "“Become a promoter”: apply with channel, referral code and character screenshot straight to our Discord" },
-      { type: "new", de: "„Das Team“ auf Home – alle Mitwirkenden mit ihrem Charakter, plus Bewerbung als Helfer",
-                     en: "“The Team” on Home – all contributors with their character, plus helper applications" }
+      { type: "new", de: "Skilltree-Kalkulator: Bonus antippen, Baum füllt sich bis dorthin – mit Einkaufsliste als Bild, Text oder für Discord",
+                     en: "Skill Tree Calculator: tap a bonus, the tree fills up to it – with shopping list as image, text or for Discord" },
+      { type: "new", de: "Lucid ist als Creator im Kopfbereich und im Team dabei",
+                     en: "Lucid joins the header and the team as a creator" },
+      { type: "new", de: "Psst … es gibt ein verstecktes Easter Egg 👀",
+                     en: "Psst … there is a hidden easter egg 👀" },
+      { type: "new", de: "Neuer Reiter „Team“ – alle Mitwirkenden mit Charakter und Rang (Helper-Admin, Creator, Helper), plus Bewerbung als Helfer",
+                     en: "New “Team” tab – all contributors with character and rank (Helper Admin, Creator, Helper), plus helper applications" }
     ]
   }
 ];
 
 const ROADMAP = [
-  { status: "progress", de: "Skilltree-Kalkulator für alle Klassen",                     en: "Skill tree calculator for all classes" },
+  { status: "progress", de: "Skilltree: Item-Namen, Bonus-Werte, Schlüssel & Yang ergänzen", en: "Skill tree: add item names, bonus values, key & Yang" },
   { status: "progress", de: "Guides der Gilde Society",                                  en: "Guides from the guild Society" },
   { status: "progress", de: "Upp-Reihen für alle Klassen, Rüstungen, Schmuck & PvM",     en: "Upgrade lines for all classes, armour, jewellery & PvM" },
   { status: "progress", de: "Englische Item-Namen mit dem Client abgleichen",           en: "Check English item names against the client" },
+  { status: "planned",  de: "Englische Übersetzung der ganzen Seite verbessern",        en: "Improve the English translation of the whole site" },
+  { status: "planned",  de: "Weitere Sprachen (z. B. Türkisch, Rumänisch, Polnisch)",   en: "More languages (e.g. Turkish, Romanian, Polish)" },
   { status: "planned",  de: "Bug- & Support-Formular (vor der Beta)",                   en: "Bug & support form (before beta)" },
   { status: "planned",  de: "Discord-Login und Erinnerungen per Discord-DM",            en: "Discord login and reminders via Discord DM" },
   { status: "planned",  de: "Gilden-/Server-Warehouse (Marktplatz für EQ & Upp-Items)", en: "Guild/server warehouse (market for gear & upgrade items)" },

@@ -22,7 +22,7 @@ Der Nutzer ist kein Programmierer: Erklärungen kurz, auf Deutsch, ohne Fachjarg
 - `js/changelog.js` – `CHANGELOG` (neueste Version oben, Punkte de/en mit type new/improved/fixed) und `ROADMAP` (status progress/planned/idea), angezeigt auf Home. **Pflicht:** Bei JEDER für Besucher sichtbaren Änderung selbstständig einen Changelog-Eintrag ergänzen (de + en, type new/improved/fixed). Gleicher Tag → Punkt in die oberste Version; neuer Tag → neue Version oben (0.1 → 0.2 …). Reine Daten-Nachträge (z. B. neue Upp-Reihen) zusammenfassen statt pro Reihe. Erledigte Roadmap-Punkte aus `ROADMAP` entfernen und als Changelog-Punkt eintragen.
 - `js/apply.js` – „Promoter werden“-Formular (Ingame-Name, Discord-Name, Kanal-Link, Referral-Code, Charakter-Screenshot) → Discord-Webhook `APPLY_WEBHOOK` (multipart mit Bild-Anhang), Bot-Falle + 60 s Bremse. Webhook steht öffentlich im Code → bei Spam in Discord neuen Webhook anlegen und ersetzen. Später über Supabase/Bot absichern.
 - `js/events.js` – `BOSS_INFO` (nur Porträts `assets/bosses/` als Kartenhintergrund, freigestellt mit Transparenz; Map-Bosse per `img`/`imgH` direkt im Zeitplan). Drops/Fundort/Level/HP bewusst NICHT anzeigen (Nutzerwunsch) und oben `SERVER_TIMEZONE`, `WARN_MINUTES` und `BOSS_SCHEDULES` (feste Spawn-Raster: `every` in Minuten, `start` als HH:MM), darunter Live-Leiste (sticky unter dem Header, nur Weltbosse), Bereich „Boss-Timer“ (#bosse) und Sound-Ping (WebAudio, Schalter im `localStorage`)
-- `assets/` – `origins2-logo.png` (Phönix-Logo „Origins2 Rebirth“, transparent, Mitte im Hero), `society-banner.jpg` (Society-Schriftzug vor Runentor, 16:9, eigene Sektion „Die Gilde dahinter“). Optional `hero-bg.jpg` als Hintergrund hinter dem Hero. Originale des Nutzers: `origins2-banner.jpg` (= eigentlich das Logo) und `society-logo.jpg` – nicht löschen.
+- `assets/` – `origins2-logo.png` (Phönix-Logo „Origins2 Rebirth“, transparent, Mitte im Hero), `society-banner.jpg (Original) · society-logo.webp (freigestellt, wird auf Home ohne Rahmen gezeigt)` (Society-Schriftzug vor Runentor, 16:9, eigene Sektion „Die Gilde dahinter“). Optional `hero-bg.jpg` als Hintergrund hinter dem Hero. Originale des Nutzers: `origins2-banner.jpg` (= eigentlich das Logo) und `society-logo.jpg` – nicht löschen.
 - Society-Logo **nicht** klein verwenden (zu detailreich, wird matschig); oben links steht „SOCIETY“ als Text. Kein Schriftzug doppelt anzeigen (Logo + gleicher Text darüber).
 
 **Konfigurationsdaten immer getrennt halten** (`js/data.js`, `js/streamers.js`, `js/events.js`), oben in der Datei, deutsch kommentiert, damit der Nutzer sie selbst erweitern kann.
@@ -80,9 +80,26 @@ Der Nutzer schickt Screenshots aus dem Ingame-Wiki. Icons werden ausgeschnitten,
 - PvM-Upp-Reihen (Kategorie-Schalter ist schon da).
 - Support-/Bugreport-Formular: VOR der Beta-Phase einbauen. Plan: Discord-Webhook in eigenen Kanal (Typ, Beschreibung, optional Screenshot, Discord-Name, Seite/Browser automatisch), clientseitige Bremse gegen Spam. Später (Phase 2) über Supabase + Bot.
 
-## Team & Helfer-Bewerbung (js/team.js)
-- `TEAM_MEMBERS`: jeder Mitwirkende = { name, role, roleEn, img: "assets/team/<name>.png" (freigestellt, PNG transparent), discordId (optional → Karte verlinkt DM) }. Reihenfolge = Anzeige. Creator steht immer zuerst.
+## Team & Helfer-Bewerbung (js/team.js, eigener Reiter #team)
+- `TEAM_MEMBERS`: jeder Mitwirkende = { name, ranks: ["admin"|"creator"|"helper", …] (erster = Hauptrang), img: "assets/team/<name>.png" (freigestellt, PNG transparent), discordId (optional → Karte verlinkt DM) }. Reihenfolge = Anzeige. Creator steht immer zuerst.
+- Ränge (TEAM_RANKS): Helper-Admin = leitet diese Seite (bewusst nicht nur „Admin“, damit niemand an einen Server-Admin denkt), Creator = macht Content, Helper = wirkt mit ohne Content. Neue Helfer bekommen ["helper"].
 - Neuer Helfer angenommen → Charakter-Screenshot aus dem Discord-Kanal freistellen, nach assets/team/ legen, Eintrag ergänzen, Changelog-Eintrag.
 - `HELPER_WEBHOOK`: zweiter Discord-Webhook (eigener Kanal). Leer = Formular zeigt „gleich startklar“.
 - Formular: Charaktername, Discord, Altersgruppe (unter 16 / 16–17 / 18+ – bewusst kein genaues Alter), Gilde, spielt seit, Level, Aufgaben (HELPER_TASKS), Sprachen (HELPER_LANGS), Zeit/Woche, Screenshot (Pflicht, ≤8 MB), Motivation, Einwilligung (Pflicht). Honeypot + 60 s Sperre.
 - CSS-Klasse für Auswahl-Chips heißt `.hp-tick` (nicht `.tick` – das ist der Ticker!).
+
+## Easter Egg „Shadow Run“ (js/runner.js)
+- Endlos-Runner mit dem Creator-Charakter als Silhouette (Sprite = assets/creator.png, wird im Canvas eingefärbt).
+- Öffnen: Footer 5× schnell auf „xZcRiTiCaLZz“ tippen · am PC „society“ tippen · Link …/#runner. Im Changelog nur angedeutet, NICHT verraten.
+- Rangliste: Top 10 nur lokal (localStorage o2h.runnerTop). Weltweite Rangliste erst mit Supabase (Phase 2).
+
+## Skilltree-Kalkulator (js/skill-data.js, js/skilltree.js, Reiter #skilltree)
+- 3 Zweige: I PvM (orange), II PvP (türkis), III Yohara (lila), je 9 Boni. Reihenfolge 1→9 fest = Reihenfolge der Ingame-Tabelle. x/y = Position im Spielfenster (440×320).
+- Klick auf Bonus → alle Stufen davor + Voraussetzungen (`requires`) werden summiert. Yohara braucht PvM komplett. PvP braucht PvM bis „Heilfähigkeit“ → Stufe noch OFFEN (requires: null).
+- Bonus-Icons: assets/skill/<zweig>-<n>.png, Schlüssel: assets/skill/key.png.
+- Neue Items aus den Lieferungs-Tabellen: mat-77 … mat-107 (Icons aus Client-Screenshots, Name noch leer → „Name folgt (#77)“). Namensliste zum Ausfüllen: Artifact „Skilltree-Items benennen“.
+- Item-Namen mat-77–107 sind eingetragen (vom User, Tippfehler „Handshuh“ → „Handschuh“ korrigiert).
+- OFFEN: Bonus-Namen/-Werte (bonus/bonusEn), Schlüssel pro Stufe (SKILL_KEY.perNode), Yang pro Stufe (SKILL_YANG), welche PvM-Stufe die Heilfähigkeit ist.
+
+## Creator im Kopfbereich
+- Zwei Figuren rechts im Hero: Lucid (assets/team/lucid.png, Link Kick drtraube, Klasse .hc-2) und xZcRiTiCaLZz (Discord). Ab 1100px sichtbar.

@@ -86,6 +86,37 @@ const MATERIALS = {
   "mat-74": { name: "Blutrote Perle", nameEn: "Blood Pearl", icon: "assets/items/mat-74.png" },
   "mat-75": { name: "Achat", nameEn: "Agate", icon: "assets/items/mat-75.png" },
   "mat-76": { name: "Mithril", nameEn: "Mithril", icon: "assets/items/mat-76.png" },
+  "mat-77": { name: "Eissand", icon: "assets/items/mat-77.png" }, // Skilltree
+  "mat-78": { name: "Eiskristall", icon: "assets/items/mat-78.png" }, // Skilltree
+  "mat-79": { name: "Eis-Elementarfragment", icon: "assets/items/mat-79.png" }, // Skilltree
+  "mat-80": { name: "Dunkelsand", icon: "assets/items/mat-80.png" }, // Skilltree
+  "mat-81": { name: "Dunkelkristall", icon: "assets/items/mat-81.png" }, // Skilltree
+  "mat-82": { name: "Dunkelheits-Elementarfragment", icon: "assets/items/mat-82.png" }, // Skilltree
+  "mat-83": { name: "Erdsand", icon: "assets/items/mat-83.png" }, // Skilltree
+  "mat-84": { name: "Erdkristall", icon: "assets/items/mat-84.png" }, // Skilltree
+  "mat-85": { name: "Erd-Elementarfragment", icon: "assets/items/mat-85.png" }, // Skilltree
+  "mat-86": { name: "Wind-Elementarfragment", icon: "assets/items/mat-86.png" }, // Skilltree
+  "mat-87": { name: "Blitz-Elementarfragment", icon: "assets/items/mat-87.png" }, // Skilltree
+  "mat-88": { name: "Feuer-Elementarfragment", icon: "assets/items/mat-88.png" }, // Skilltree
+  "mat-89": { name: "Handschuh- und Ringfragment", icon: "assets/items/mat-89.png" }, // Skilltree
+  "mat-90": { name: "Feuerrune der Aura", icon: "assets/items/mat-90.png" }, // Skilltree
+  "mat-91": { name: "Aura-Kostüm verzaubern", icon: "assets/items/mat-91.png" }, // Skilltree
+  "mat-92": { name: "Flammenblatt", icon: "assets/items/mat-92.png" }, // Skilltree
+  "mat-93": { name: "Flasche mit Elementaressenz", icon: "assets/items/mat-93.png" }, // Skilltree
+  "mat-94": { name: "Stein der Elemente", icon: "assets/items/mat-94.png" }, // Skilltree
+  "mat-95": { name: "Cor Draconis (Roh)", icon: "assets/items/mat-95.png" }, // Skilltree
+  "mat-96": { name: "Geist von Naga", icon: "assets/items/mat-96.png" }, // Skilltree
+  "mat-97": { name: "Stein von Naga", icon: "assets/items/mat-97.png" }, // Skilltree
+  "mat-98": { name: "Kyanit-Kern", icon: "assets/items/mat-98.png" }, // Skilltree
+  "mat-99": { name: "Versiegelter Kyanit-Kern", icon: "assets/items/mat-99.png" }, // Skilltree
+  "mat-100": { name: "Kyanit-Halbmond", icon: "assets/items/mat-100.png" }, // Skilltree
+  "mat-101": { name: "Energiekristall verzaubern", icon: "assets/items/mat-101.png" }, // Skilltree
+  "mat-102": { name: "Cor Daemonis (Roh)", icon: "assets/items/mat-102.png" }, // Skilltree
+  "mat-103": { name: "Yohara-Essenzflasche", icon: "assets/items/mat-103.png" }, // Skilltree
+  "mat-104": { name: "Stück Elementarerz", icon: "assets/items/mat-104.png" }, // Skilltree
+  "mat-105": { name: "Kristall der Elemente", icon: "assets/items/mat-105.png" }, // Skilltree
+  "mat-106": { name: "Sand der Elemente", icon: "assets/items/mat-106.png" }, // Skilltree
+  "mat-107": { name: "Rote SungMa-Rune", icon: "assets/items/mat-107.png" }, // Skilltree
 };
 
 const WEAPONS = {
