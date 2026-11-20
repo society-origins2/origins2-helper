@@ -1,5 +1,5 @@
 /* =====================================================================
-   Origins2 Helper – Upp-Kostenrechner
+   Origins2 Helper – Upp-Kalkulator
    Daten kommen aus js/data.js (UPGRADE_LINES, MATERIALS, WEAPONS)
    Hier muss normalerweise nichts geändert werden.
    ===================================================================== */
@@ -197,12 +197,25 @@ function matValueOf(mats, prices) {
 }
 
 function currentCat() { return document.querySelector('input[name="upp-cat"]:checked')?.value || "pvp"; }
+let uppSlot = "weapon", uppClass = "warrior";
+function slotBound(slot) { return !!(EQUIP_SLOTS[slot] && EQUIP_SLOTS[slot].classBound); }
+function filterLabel() {
+  const parts = [currentCat() === "pvm" ? "PvM" : "PvP", L(EQUIP_SLOTS[uppSlot])];
+  if (slotBound(uppSlot)) parts.push(L(CLASSES[uppClass]));
+  return parts.join(" · ");
+}
+function lineMatches(line) {
+  if ((line.category || "pvp") !== currentCat()) return false;
+  if ((line.slot || "weapon") !== uppSlot) return false;
+  if (slotBound(uppSlot)) return !line.classes || line.classes.includes(uppClass);
+  return true;
+}
 
 function renderResult() {
   const out0 = document.getElementById("upp-result");
   const lineId = document.getElementById("upp-line").value;
   if (!lineId || !UPGRADE_LINES[lineId]) {
-    out0.innerHTML = `<p class="upp-empty panel">${t("upp.noLines", currentCat() === "pvm" ? "PvM" : "PvP")}</p>`;
+    out0.innerHTML = `<p class="upp-empty panel">${t("upp.noLines", filterLabel())}</p>`;
     const ch = document.getElementById("upp-chain"); if (ch) ch.innerHTML = "";
     uppLast = null;
     return;
@@ -213,7 +226,7 @@ function renderResult() {
   const downgrade = false; // Society-Regel: immer Magischer Stein → Stufe bleibt
   const out = document.getElementById("upp-result");
   renderChain(line, from, to);
-  saveUppState({ line: lineId, cat: currentCat(), from, to, downgrade });
+  saveUppState({ line: lineId, cat: currentCat(), slot: uppSlot, cls: uppClass, from, to, downgrade });
 
   if (to <= from) {
     out.innerHTML = `<p class="upp-empty">${t("upp.chooseHigher")}</p>`;
@@ -490,9 +503,22 @@ function initUpp() {
   const st = uppState();
   const catOf = id => UPGRADE_LINES[id].category || "pvp";
   let lineIds = [];
+  const slotsEl = document.getElementById("upp-slots"), clsEl = document.getElementById("upp-classes");
+  const countFor = (slot, cls) => Object.values(UPGRADE_LINES).filter(l =>
+    (l.category || "pvp") === currentCat() && (l.slot || "weapon") === slot &&
+    (!EQUIP_SLOTS[slot].classBound || !cls || !l.classes || l.classes.includes(cls))).length;
+  const paintFilters = () => {
+    slotsEl.innerHTML = Object.keys(EQUIP_SLOTS).map(k =>
+      `<button type="button" class="chip${k === uppSlot ? " is-active" : ""}${countFor(k) ? "" : " is-empty"}" data-slot="${k}">${uEsc(L(EQUIP_SLOTS[k]))}</button>`).join("");
+    const bound = slotBound(uppSlot);
+    clsEl.innerHTML = Object.keys(CLASSES).map(k =>
+      `<button type="button" class="chip${bound && k === uppClass ? " is-active" : ""}${bound && !countFor(uppSlot, k) ? " is-empty" : ""}" data-cls="${k}"${bound ? "" : " disabled"}>${uEsc(L(CLASSES[k]))}</button>`).join("");
+    document.getElementById("upp-class-row").classList.toggle("is-off", !bound);
+  };
   const fillLines = () => {
     const cur = lineSel.value;
-    lineIds = Object.keys(UPGRADE_LINES).filter(id => catOf(id) === currentCat());
+    paintFilters();
+    lineIds = Object.keys(UPGRADE_LINES).filter(id => lineMatches(UPGRADE_LINES[id]));
     lineSel.innerHTML = lineIds.map(id => `<option value="${id}">${uEsc(lineName(UPGRADE_LINES[id]))}</option>`).join("");
     if (cur && lineIds.includes(cur)) lineSel.value = cur;
     const has = lineIds.length > 0;
@@ -505,6 +531,11 @@ function initUpp() {
     if (q.get("line") && UPGRADE_LINES[q.get("line")]) st.line = q.get("line");
     if (q.get("from") != null && q.get("to") != null) { st.from = +q.get("from"); st.to = +q.get("to"); }
   } catch {}
+  if (st.line && UPGRADE_LINES[st.line]) {
+    const ln = UPGRADE_LINES[st.line];
+    uppSlot = ln.slot || "weapon";
+    uppClass = (ln.classes && !(st.cls && ln.classes.includes(st.cls))) ? ln.classes[0] : (st.cls || "warrior");
+  } else { uppSlot = st.slot || uppSlot; uppClass = st.cls || uppClass; }
   const startCat = (st.line && UPGRADE_LINES[st.line]) ? catOf(st.line) : (st.cat || "pvp");
   const catRadio = document.querySelector(`input[name="upp-cat"][value="${startCat}"]`);
   if (catRadio) catRadio.checked = true;
@@ -533,6 +564,14 @@ function initUpp() {
   document.querySelectorAll('input[name="upp-cat"]').forEach(r => r.addEventListener("change", () => {
     fillLines(); refreshSelects(false); renderResult();
   }));
+  slotsEl.addEventListener("click", e => {
+    const b = e.target.closest("[data-slot]"); if (!b) return;
+    uppSlot = b.dataset.slot; fillLines(); refreshSelects(false); renderResult();
+  });
+  clsEl.addEventListener("click", e => {
+    const b = e.target.closest("[data-cls]"); if (!b || b.disabled) return;
+    uppClass = b.dataset.cls; fillLines(); refreshSelects(false); renderResult();
+  });
 
   window.addEventListener("langchange", () => {
     fillLines();

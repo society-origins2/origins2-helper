@@ -1,0 +1,80 @@
+/* =====================================================================
+   CHANGELOG & ROADMAP  –  wird auf „Home“ angezeigt
+   ---------------------------------------------------------------------
+   CHANGELOG: neueste Version oben. Pro Punkt Deutsch + Englisch.
+     type: "new" (Neu) | "improved" (Verbessert) | "fixed" (Behoben)
+   ROADMAP: status "progress" (In Arbeit) | "planned" (Geplant) | "idea" (Idee)
+   ===================================================================== */
+
+const CHANGELOG = [
+  {
+    version: "0.1",
+    date: "2026-11-20",
+    title: "Erste Vorschau", titleEn: "First preview",
+    items: [
+      { type: "new", de: "Upp-Kalkulator mit Einkaufsliste, Bild-/Text-Download und Discord-Export – erste Reihe: 1-Hand-Schwert (PvP)",
+                     en: "Upgrade Calculator with shopping list, image/text download and Discord export – first line: one-handed sword (PvP)" },
+      { type: "new", de: "Boss-Timer für Welt- und Map-Bosse mit Live-Countdown und Ton pro Boss",
+                     en: "Boss Timer for world and map bosses with live countdown and sound per boss" },
+      { type: "new", de: "Eventkalender mit Monats-/Wochenansicht, Tagesliste und Erinnerungs-Glocke",
+                     en: "Event Calendar with month/week view, day list and reminder bell" },
+      { type: "new", de: "Deutsch / Englisch umschaltbar und Links zum Teilen",
+                     en: "German / English switch and shareable links" },
+      { type: "new", de: "„Heute aktiv“ zeigt die laufenden Events direkt im Kopfbereich",
+                     en: "“Active today” shows running events right in the header" },
+      { type: "improved", de: "Promoter zeigen jetzt ihr Profilbild und beim Drüberfahren ihren Referral-Code",
+                     en: "Promoters now show their profile picture and their referral code on hover" },
+      { type: "new", de: "Klick auf den Charakter im Kopfbereich öffnet das Discord-Profil des Creators",
+                     en: "Clicking the character in the header opens the creator's Discord profile" },
+      { type: "new", de: "„Promoter werden“: Bewerbung mit Kanal, Referral-Code und Charakter-Screenshot direkt an unseren Discord",
+                     en: "“Become a promoter”: apply with channel, referral code and character screenshot straight to our Discord" },
+      { type: "new", de: "„Das Team“ auf Home – alle Mitwirkenden mit ihrem Charakter, plus Bewerbung als Helfer",
+                     en: "“The Team” on Home – all contributors with their character, plus helper applications" }
+    ]
+  }
+];
+
+const ROADMAP = [
+  { status: "progress", de: "Skilltree-Kalkulator für alle Klassen",                     en: "Skill tree calculator for all classes" },
+  { status: "progress", de: "Guides der Gilde Society",                                  en: "Guides from the guild Society" },
+  { status: "progress", de: "Upp-Reihen für alle Klassen, Rüstungen, Schmuck & PvM",     en: "Upgrade lines for all classes, armour, jewellery & PvM" },
+  { status: "progress", de: "Englische Item-Namen mit dem Client abgleichen",           en: "Check English item names against the client" },
+  { status: "planned",  de: "Bug- & Support-Formular (vor der Beta)",                   en: "Bug & support form (before beta)" },
+  { status: "planned",  de: "Discord-Login und Erinnerungen per Discord-DM",            en: "Discord login and reminders via Discord DM" },
+  { status: "planned",  de: "Gilden-/Server-Warehouse (Marktplatz für EQ & Upp-Items)", en: "Guild/server warehouse (market for gear & upgrade items)" },
+  { status: "idea",     de: "Persönliches Notizfeld",                                    en: "Personal notes" }
+];
+
+
+/* =====================================================================
+   Ab hier nichts ändern – Darstellung
+   ===================================================================== */
+function clEsc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+function renderChangelog() {
+  const cl = document.getElementById("changelog-list"), rm = document.getElementById("roadmap-list");
+  if (!cl || !rm) return;
+  const fmt = d => new Intl.DateTimeFormat(LANG === "de" ? "de-DE" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })
+    .format(new Date(d + "T00:00:00Z"));
+  cl.innerHTML = CHANGELOG.slice(0, 4).map((v, i) => `
+    <li class="cl-ver${i === 0 ? " is-latest" : ""}">
+      <div class="cl-head">
+        <span class="cl-tag">v${clEsc(v.version)}</span>
+        <span class="cl-title">${clEsc(LANG === "en" && v.titleEn ? v.titleEn : v.title)}</span>
+        <span class="cl-date">${clEsc(fmt(v.date))}</span>
+      </div>
+      <ul class="cl-items">${v.items.map(it => `
+        <li><span class="cl-type t-${it.type}">${t("cl." + it.type)}</span><span>${clEsc(LANG === "en" ? it.en : it.de)}</span></li>`).join("")}
+      </ul>
+    </li>`).join("");
+  const order = { progress: 0, planned: 1, idea: 2 };
+  rm.innerHTML = ROADMAP.slice().sort((a, b) => order[a.status] - order[b.status]).map(r => `
+    <li class="rm-item s-${r.status}"><span class="rm-dot" aria-hidden="true"></span>
+      <span class="rm-text">${clEsc(LANG === "en" ? r.en : r.de)}</span>
+      <span class="rm-status">${t("rm." + r.status)}</span></li>`).join("");
+}
+
+function initChangelog() {
+  renderChangelog();
+  window.addEventListener("langchange", renderChangelog);
+}

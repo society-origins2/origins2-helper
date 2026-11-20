@@ -131,6 +131,37 @@ const ARMORS = {
    werden (noch) nicht mitgezählt.
    ===================================================================== */
 
+/* ---------- Klassen & Ausrüstungsarten ----------
+   Jede Upp-Reihe bekommt:
+     category : "pvp" oder "pvm"
+     slot     : Ausrüstungsart (Schlüssel aus EQUIP_SLOTS)
+     classes  : Klassen, die das Item tragen können (Schlüssel aus CLASSES)
+                – bei Teilen für alle Klassen einfach weglassen
+*/
+const CLASSES = {
+  warrior: { name: "Krieger",  nameEn: "Warrior" },
+  ninja:   { name: "Ninja",    nameEn: "Ninja" },
+  sura:    { name: "Sura",     nameEn: "Sura" },
+  shaman:  { name: "Schamane", nameEn: "Shaman" },
+  lycan:   { name: "Lykaner",  nameEn: "Lycan" }
+};
+
+/* classBound: true = jede Klasse hat eigene Items */
+const EQUIP_SLOTS = {
+  weapon:    { name: "Waffe",       nameEn: "Weapon",     classBound: true },
+  armor:     { name: "Rüstung",     nameEn: "Armour",     classBound: true },
+  helmet:    { name: "Helm",        nameEn: "Helmet",     classBound: true },
+  shoulder:  { name: "Schulterband", nameEn: "Sash" },
+  talisman:  { name: "Talisman",    nameEn: "Talisman" },
+  necklace:  { name: "Kette",       nameEn: "Necklace" },
+  bracelet:  { name: "Armband",     nameEn: "Bracelet" },
+  shoes:     { name: "Schuhe",      nameEn: "Shoes" },
+  earrings:  { name: "Ohrringe",    nameEn: "Earrings" },
+  shield:    { name: "Schild",      nameEn: "Shield" },
+  belt:      { name: "Gürtel",      nameEn: "Belt" },
+  gloves:    { name: "Handschuhe",  nameEn: "Gloves" }
+};
+
 const k = 1_000, kk = 1_000_000;
 
 const UPGRADE_LINES = {
@@ -138,6 +169,8 @@ const UPGRADE_LINES = {
     name: "1-Hand-Schwert",
     nameEn: "One-handed sword",
     category: "pvp",
+    slot: "weapon",
+    classes: ["warrior", "ninja", "sura"],
     stages: [
       {
         item: "wpn-05", // Schlachtschwert

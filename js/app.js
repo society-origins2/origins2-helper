@@ -91,7 +91,7 @@ function initReferral() {
 }
 
 /* ---------- Reiter: zwischen den Bereichen blättern ---------- */
-const VIEWS = ["uebersicht", "bosse", "upp-rechner", "kalender"];
+const VIEWS = ["uebersicht", "upp-rechner", "skilltree", "bosse", "kalender", "guides"];
 
 function showView(name, scroll) {
   if (!VIEWS.includes(name)) name = VIEWS[0];
@@ -193,4 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof initEvents === "function") initEvents();
   if (typeof initUpp === "function") initUpp();
   if (typeof initCalendar === "function") initCalendar();
+  if (typeof initChangelog === "function") initChangelog();
+  if (typeof initApply === "function") initApply();
+  if (typeof initTeam === "function") initTeam();
 });

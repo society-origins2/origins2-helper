@@ -6,11 +6,16 @@
    name      : Anzeigename
    platform  : "twitch" | "kick" | "youtube"
    url       : Link zum Kanal / Stream
+   refCode   : Referral-Code des Promoters (optional, erscheint beim Drüberfahren;
+               am Handy direkt auf der Karte)
    group     : "guild"  = Gilden-Promoter (Society)
                "server" = Server-Promoter (Origins2)
    live      : true / false   (manuell, bis wir in Phase 2 automatisch prüfen)
    tagline   : kurze Beschreibung (optional), taglineEn = englische Version
-   avatar    : Bild im Ordner assets/, z.B. "assets/avatars/name.png" (optional)
+   avatar    : Profilbild (optional) – Link zum Bild oder Datei in assets/avatars/
+               Twitch: ohne avatar wird das Twitch-Profilbild automatisch geladen.
+               Kick/YouTube: Link einfach von Claude eintragen lassen.
+               Lädt ein Bild nicht, erscheinen die Initialen.
    ===================================================================== */
 
 const STREAMERS = [
@@ -18,6 +23,8 @@ const STREAMERS = [
     name: "Lucid / xTraube",
     platform: "kick",
     url: "https://kick.com/drtraube",
+    refCode: "TRAUBE",
+    avatar: "https://files.kick.com/images/user/1000565289/profile_image/conversion/0a8806c6-bf5f-4951-97f0-9434e8b1f1c5-fullsize.webp",
     group: "guild",
     live: false,
     tagline: "Society"
@@ -26,6 +33,8 @@ const STREAMERS = [
     name: "xZcRiTiCaLZz",
     platform: "kick",
     url: "https://kick.com/xzcriticalzz",
+    refCode: "CRITICALZ",
+    avatar: "https://files.kick.com/images/user/132480323/profile_image/conversion/70489622-5642-493e-9b07-c31ad3f4bd3e-fullsize.webp",
     group: "guild",
     live: false,
     tagline: "Society"
@@ -72,8 +81,10 @@ function initials(name) {
 
 function streamerCard(s) {
   const pf = PLATFORMS[s.platform] || PLATFORMS.twitch;
-  const avatar = s.avatar
-    ? `<img src="${escapeHtml(s.avatar)}" alt="" class="avatar-img">`
+  const handle = (s.url || "").replace(/\/+$/, "").split("/").pop();
+  const pic = s.avatar || (s.platform === "twitch" && handle ? `https://unavatar.io/twitch/${encodeURIComponent(handle)}?fallback=false` : "");
+  const avatar = pic
+    ? `<img src="${escapeHtml(pic)}" alt="" class="avatar-img" loading="lazy" referrerpolicy="no-referrer" data-initials="${escapeHtml(initials(s.name))}">`
     : `<span class="avatar-initials">${escapeHtml(initials(s.name))}</span>`;
 
   const status = s.live
@@ -82,7 +93,14 @@ function streamerCard(s) {
 
   const sub = L(s, "tagline") || groupLabel(s.group);
 
+  const code = s.refCode ? `
+      <span class="ref-pop">
+        <span class="ref-pop-label">${t("ref.label")}</span>
+        <span class="ref-pop-code">${escapeHtml(s.refCode)}</span>
+      </span>` : "";
+
   return `
+   <div class="streamer-wrap${s.refCode ? " has-code" : ""}">
     <a href="${escapeHtml(s.url)}" class="streamer-mini ${s.live ? "is-live" : ""}" target="_blank" rel="noopener"
        title="${escapeHtml(s.name)} – ${t("promoter.open")}">
       <span class="avatar ${s.live ? "is-live" : ""}">${avatar}</span>
@@ -99,7 +117,9 @@ function streamerCard(s) {
       <span class="open-icon" aria-hidden="true">
         <svg viewBox="0 0 20 20" fill="currentColor"><path d="M11 3h6v6h-2V6.4l-6.3 6.3-1.4-1.4L13.6 5H11V3zM5 5h3v2H5v8h8v-3h2v5H3V5h2z"/></svg>
       </span>
-    </a>`;
+      ${code}
+    </a>
+   </div>`;
 }
 
 let streamerFilter = "all";
@@ -118,6 +138,15 @@ function renderStreamers(filter = streamerFilter) {
   );
 
   list.innerHTML = shown.map(streamerCard).join("");
+  list.querySelectorAll("img.avatar-img").forEach(img => {
+    const fallback = () => {
+      const sp = document.createElement("span");
+      sp.className = "avatar-initials"; sp.textContent = img.dataset.initials || "?";
+      img.replaceWith(sp);
+    };
+    if (img.complete && img.naturalWidth === 0) fallback();
+    else img.addEventListener("error", fallback, { once: true });
+  });
   empty.classList.toggle("hidden", shown.length > 0);
 
   const ll = document.getElementById("live-line");

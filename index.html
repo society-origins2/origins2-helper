@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Origins2 Helper by Society</title>
-  <meta name="description" content="Origins2 Helper by Society – Promoter, Upp-Rechner, Boss-Ticker und Eventkalender für Origins2.">
+  <meta name="description" content="Origins2 Helper by Society – Promoter, Upp-Kalkulator, Boss-Ticker und Eventkalender für Origins2.">
   <meta name="theme-color" content="#110d09">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,10 +45,14 @@
 
     <!-- Hero content -->
     <div class="hero-inner relative z-10 mx-auto max-w-6xl px-5 pb-7 pt-3 sm:px-8 sm:pb-8">
-      <figure class="hero-creator" aria-label="xZcRiTiCaLZz">
+      <a class="hero-creator" href="https://discord.com/users/432306996344258560" target="_blank" rel="noopener" data-i18n-attr="title:creator.discord" title="Auf Discord schreiben">
+        <span class="hc-hint">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.5 19.5 0 0 0-4.9 1.4C.6 9 0 13.6.3 18.1A19.8 19.8 0 0 0 6.3 21l1.3-2a12.6 12.6 0 0 1-2-1l.5-.4a14 14 0 0 0 11.8 0l.5.4c-.6.4-1.3.7-2 1l1.3 2a19.7 19.7 0 0 0 6-3c.4-5.2-.7-9.8-3.4-13.6ZM8.7 15.3c-1.2 0-2.1-1-2.1-2.3s.9-2.3 2.1-2.3 2.2 1 2.1 2.3c0 1.3-.9 2.3-2.1 2.3Zm6.6 0c-1.2 0-2.1-1-2.1-2.3s.9-2.3 2.1-2.3 2.2 1 2.1 2.3c0 1.3-.9 2.3-2.1 2.3Z"/></svg>
+          <span data-i18n="creator.discord">Auf Discord schreiben</span>
+        </span>
         <img src="assets/creator.png" alt="Charakter von xZcRiTiCaLZz">
-        <figcaption><span class="hc-name">xZcRiTiCaLZz</span><span class="hc-role" data-i18n="creator.role">Creator · Society</span></figcaption>
-      </figure>
+        <span class="hc-cap"><span class="hc-name">xZcRiTiCaLZz</span><span class="hc-role" data-i18n="creator.role">Creator · Society</span></span>
+      </a>
       <div class="hero-grid">
         <div class="hero-logo-wrap">
           <img src="assets/origins2-logo.png" alt="Origins2 Rebirth" class="hero-logo" data-fallback="origins2">
@@ -59,7 +63,7 @@
             <span class="ornament-line"></span>
             <p class="font-display text-sm font-semibold uppercase tracking-[0.35em] text-gold-300 sm:text-base">Helper by Society</p>
           </div>
-          <p class="hero-tagline" data-i18n="hero.tagline">Boss-Timer, Upp-Kostenrechner, Eventkalender und Promoter – alles für deinen Weg auf Origins2 an einem Ort.</p>
+          <p class="hero-tagline" data-i18n="hero.tagline">Boss-Timer, Upp-Kalkulator, Eventkalender und Promoter – alles für deinen Weg auf Origins2 an einem Ort.</p>
 
           <div class="hero-cards">
             <div class="ref-mini">
@@ -93,10 +97,12 @@
   <div class="topbar">
     <nav class="tabs-bar" aria-label="Bereiche" data-i18n-attr="aria-label:nav.label">
       <div class="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 sm:px-6 no-scrollbar" role="tablist">
-        <a class="tab" href="#uebersicht" data-tab="uebersicht" data-i18n="tab.overview">Übersicht</a>
+        <a class="tab" href="#uebersicht" data-tab="uebersicht" data-i18n="tab.overview">Home</a>
+        <a class="tab" href="#upp-rechner" data-tab="upp-rechner" data-i18n="tab.upp">Upp-Kalkulator</a>
+        <a class="tab" href="#skilltree" data-tab="skilltree"><span data-i18n="tab.skill">Skilltree-Kalkulator</span> <em data-i18n="soon">Bald</em></a>
         <a class="tab" href="#bosse" data-tab="bosse" data-i18n="tab.bosses">Boss-Timer</a>
-        <a class="tab" href="#upp-rechner" data-tab="upp-rechner" data-i18n="tab.upp">Upp-Rechner</a>
         <a class="tab" href="#kalender" data-tab="kalender"><span data-i18n="tab.calendar">Kalender</span> <em data-i18n="new">Neu</em></a>
+        <a class="tab" href="#guides" data-tab="guides"><span data-i18n="tab.guides">Guides</span> <em data-i18n="soon">Bald</em></a>
       </div>
     </nav>
 
@@ -125,11 +131,17 @@
           <h2 id="promoter-title" class="eyebrow" data-i18n="promoter.title">Promoter</h2>
           <p class="text-xs text-parch-500" id="live-line"></p>
         </div>
+        <div class="flex flex-wrap items-center gap-2">
+        <button type="button" class="btn-apply" data-open-apply>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <span data-i18n="apply.open">Promoter werden</span>
+        </button>
         <div class="chips chips-sm" role="tablist" aria-label="Filter" id="promoter-filter">
           <button type="button" class="chip is-active" data-filter="all" data-i18n="filter.all">Alle</button>
           <button type="button" class="chip" data-filter="live" data-i18n="filter.live">Live</button>
           <button type="button" class="chip" data-filter="guild" data-i18n="filter.guild">Gilde</button>
           <button type="button" class="chip" data-filter="server" data-i18n="filter.server">Server</button>
+        </div>
         </div>
       </div>
 
@@ -137,27 +149,32 @@
       <p id="promoter-empty" class="mt-3 hidden rounded-lg border border-gold-line bg-ink-900 px-4 py-3 text-center text-xs text-parch-400" data-i18n="promoter.empty">Gerade ist niemand aus dieser Gruppe live.</p>
     </section>
 
-    <!-- Coming soon -->
-    <section class="mt-14" aria-labelledby="soon-title">
-      <p class="eyebrow" data-i18n="tools.eyebrow">Werkzeuge</p>
-      <h2 id="soon-title" class="section-title" data-i18n="tools.title">Mehr im Helper</h2>
-      <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <a href="#upp-rechner" class="panel panel-link block p-5">
-          <div class="icon-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14.5 3.5 20.5 9.5 10 20H4v-6L14.5 3.5Z"/><path d="m12 6 6 6"/></svg>
-          </div>
-          <h3 class="mt-4 font-display text-base font-semibold text-parch-100"><span data-i18n="tools.upp.title">Upp-Kostenrechner</span> <span class="new-badge" data-i18n="new">Neu</span></h3>
-          <p class="mt-1.5 text-sm leading-relaxed text-parch-400" data-i18n="tools.upp.text">Start und Ziel wählen – Einkaufsliste mit Material und Yang für Glück, Durchschnitt und Pech.</p>
-        </a>
-        <a href="#kalender" class="panel panel-link block p-5">
-          <div class="icon-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
-          </div>
-          <h3 class="mt-4 font-display text-base font-semibold text-parch-100" data-i18n="tools.cal.title">Eventkalender</h3>
-          <p class="mt-1.5 text-sm leading-relaxed text-parch-400" data-i18n="tools.cal.text">Wochen- und Monatsansicht mit Filter und Erinnerungs-Glocke pro Termin.</p>
-        </a>
+    <!-- Neuigkeiten & In Arbeit -->
+    <section class="mt-14 grid gap-4 lg:grid-cols-[1.4fr_1fr]" aria-label="Changelog">
+      <div class="panel p-5">
+        <p class="eyebrow" data-i18n="cl.eyebrow">Changelog</p>
+        <h2 class="section-title" data-i18n="cl.title">Neuigkeiten</h2>
+        <ol id="changelog-list" class="cl-list mt-4"></ol>
+      </div>
+      <div class="panel p-5">
+        <p class="eyebrow" data-i18n="rm.eyebrow">Roadmap</p>
+        <h2 class="section-title" data-i18n="rm.title">In Arbeit</h2>
+        <ul id="roadmap-list" class="rm-list mt-4"></ul>
       </div>
     </section>
+
+    <!-- Team -->
+    <section class="mt-14" aria-labelledby="team-title">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="eyebrow" data-i18n="team.eyebrow">Hinter dem Helper</p>
+          <h2 id="team-title" class="section-title" data-i18n="team.title">Das Team</h2>
+        </div>
+        <p class="text-xs text-parch-500" data-i18n="team.note">Alle, die am Origins2 Helper mitwirken – danke!</p>
+      </div>
+      <div id="team-list" class="team-grid mt-5"></div>
+    </section>
+
     <!-- Gilde -->
     <section class="mt-14" aria-labelledby="guild-title">
       <div class="guild-band">
@@ -193,24 +210,35 @@
 
     </div>
 
-    <!-- ========== VIEW: Upp-Rechner ========== -->
+    <!-- ========== VIEW: Upp-Kalkulator ========== -->
     <div class="view" data-view="upp-rechner" hidden>
       <section aria-labelledby="upp-title">
         <div class="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p class="eyebrow" data-i18n="upp.eyebrow">Materialrechner</p>
-            <h2 id="upp-title" class="section-title" data-i18n="upp.title">Upp-Kostenrechner</h2>
+            <h2 id="upp-title" class="section-title" data-i18n="upp.title">Upp-Kalkulator</h2>
           </div>
           <p class="text-xs text-parch-500" data-i18n="upp.note">Simulation mit 10.000 Durchläufen · Werte aus dem Ingame-Wiki</p>
         </div>
 
         <!-- Eingaben -->
         <div class="panel mt-6 p-4 sm:p-5">
-          <div class="mb-4 flex flex-wrap items-center gap-3">
-            <span class="field-label" data-i18n="upp.cat">Kategorie</span>
-            <div class="seg seg-cat" role="radiogroup" data-i18n-attr="aria-label:upp.cat">
-              <label><input type="radio" name="upp-cat" value="pvp" checked><span>PvP</span></label>
-              <label><input type="radio" name="upp-cat" value="pvm"><span>PvM</span></label>
+          <div class="upp-filters">
+            <div class="uf-row">
+              <span class="field-label" data-i18n="upp.cat">Kategorie</span>
+              <div class="seg seg-cat" role="radiogroup" data-i18n-attr="aria-label:upp.cat">
+                <label><input type="radio" name="upp-cat" value="pvp" checked><span>PvP</span></label>
+                <label><input type="radio" name="upp-cat" value="pvm"><span>PvM</span></label>
+              </div>
+            </div>
+            <div class="uf-row">
+              <span class="field-label" data-i18n="upp.slot">Ausrüstung</span>
+              <div class="chips chips-sm chips-wrap" id="upp-slots"></div>
+            </div>
+            <div class="uf-row" id="upp-class-row">
+              <span class="field-label" data-i18n="upp.class">Klasse</span>
+              <div class="chips chips-sm chips-wrap" id="upp-classes"></div>
+              <span class="uf-hint" id="upp-class-hint" data-i18n="upp.allClasses">für alle Klassen</span>
             </div>
           </div>
           <div class="grid gap-4 md:grid-cols-[1.1fr_1fr_1fr]">
@@ -228,10 +256,6 @@
             </label>
           </div>
 
-          <p class="rule-note mt-4">
-            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 26 13 16 28 6 13Z" fill="#8a4dd6" stroke="#f3d79a" stroke-width="1.5"/></svg>
-            <span data-i18n-html="upp.rule"><b>Mit Magischem Stein:</b> Bei einem Fail bleibt die Stufe, Material und Yang sind weg. Pity ist eingerechnet.</span>
-          </p>
 
           <div id="upp-chain" class="chain mt-5 no-scrollbar"></div>
         </div>
@@ -276,6 +300,29 @@
         </div>
       </section>
     </div>
+    <!-- ========== VIEW: Skilltree ========== -->
+    <div class="view" data-view="skilltree" hidden>
+      <section class="soon-view panel">
+        <div class="icon-tile mx-auto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><circle cx="5.5" cy="12" r="2"/><circle cx="18.5" cy="12" r="2"/><circle cx="5.5" cy="19.5" r="2"/><circle cx="12" cy="19.5" r="2"/><circle cx="18.5" cy="19.5" r="2"/><path d="M12 6.5v4M11 10.5 6.5 10.5M13 10.5h4.5M5.5 14v3.5M18.5 14v3.5M12 10.5v7"/></svg>
+        </div>
+        <p class="eyebrow mt-5" data-i18n="cal.eyebrow">In Arbeit</p>
+        <h2 class="section-title" data-i18n="skill.title">Skilltree-Kalkulator</h2>
+        <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-parch-400" data-i18n="skill.text">Skillpunkte für jede Klasse planen, freie Punkte im Blick behalten und deinen Build als Link teilen.</p>
+      </section>
+    </div>
+
+    <!-- ========== VIEW: Guides ========== -->
+    <div class="view" data-view="guides" hidden>
+      <section class="soon-view panel">
+        <div class="icon-tile mx-auto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5M8 7h8M8 11h6"/></svg>
+        </div>
+        <p class="eyebrow mt-5" data-i18n="cal.eyebrow">In Arbeit</p>
+        <h2 class="section-title" data-i18n="guides.title">Guides</h2>
+        <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-parch-400" data-i18n="guides.text">Anleitungen und Tipps der Gilde Society – vom Einstieg bis zum Endgame.</p>
+      </section>
+    </div>
   </main>
 
   <!-- ===================== FOOTER ===================== -->
@@ -285,9 +332,110 @@
         <p class="font-display text-sm font-semibold tracking-[0.15em] text-parch-200">ORIGINS2 HELPER <span class="text-gold-400">by Society</span></p>
         <p class="mt-1 text-xs text-parch-500" data-i18n="footer.tool">Community-Tool der Gilde Society</p>
       </div>
-      <p class="text-xs text-parch-500">Creator: <span class="text-parch-300">cRiTiCaLZz</span> · Code <span class="font-semibold tracking-wider text-gold-300">CRITICALZ</span></p>
+      <p class="text-xs text-parch-500">Creator: <span class="text-parch-300">xZcRiTiCaLZz</span> · Code <span class="font-semibold tracking-wider text-gold-300">CRITICALZ</span></p>
     </div>
   </footer>
+
+
+  <!-- ===================== PROMOTER-BEWERBUNG ===================== -->
+  <div id="apply-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="apply-title">
+    <div class="modal-card panel">
+      <button type="button" class="modal-x" data-close-apply aria-label="×">×</button>
+      <p class="eyebrow" data-i18n="apply.eyebrow">Promoter-Team</p>
+      <h2 id="apply-title" class="section-title" data-i18n="apply.title">Promoter werden</h2>
+      <p class="mt-1 text-sm text-parch-400" data-i18n="apply.intro">Du streamst Origins2? Bewirb dich – wir melden uns bei dir auf Discord.</p>
+
+      <form id="apply-form" class="apply-form mt-5" novalidate>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <label class="field"><span class="field-label" data-i18n="apply.ingame">Ingame-Name</span>
+            <input id="ap-ingame" class="field-input text" maxlength="40" required autocomplete="off"></label>
+          <label class="field"><span class="field-label" data-i18n="apply.discord">Discord-Name</span>
+            <input id="ap-discord" class="field-input text" maxlength="40" required autocomplete="off" placeholder="z. B. mrwampsen"></label>
+          <label class="field sm:col-span-2"><span class="field-label" data-i18n="apply.url">Kanal-Link</span>
+            <input id="ap-url" class="field-input text" type="url" maxlength="200" required placeholder="https://kick.com/…"></label>
+          <label class="field"><span class="field-label" data-i18n="apply.code">Referral-Code</span>
+            <input id="ap-code" class="field-input text uppercase" maxlength="20" required autocomplete="off" placeholder="CRITICALZ"></label>
+          <div class="field"><span class="field-label" data-i18n="apply.shot">Screenshot vom Charakter</span>
+            <label id="ap-shot-preview" class="shot-drop" for="ap-shot"></label>
+            <input id="ap-shot" type="file" accept="image/*" class="sr-only" required></div>
+        </div>
+        <input id="ap-website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p id="apply-error" class="apply-error" role="alert"></p>
+        <div class="mt-4 flex flex-wrap items-center justify-end gap-2">
+          <button type="button" class="btn-ghost-sq" data-close-apply data-i18n="apply.cancel">Abbrechen</button>
+          <button type="submit" class="btn-gold py-2.5" id="apply-submit" data-i18n="apply.send">Bewerbung senden</button>
+        </div>
+      </form>
+
+      <div id="apply-done" class="apply-done" hidden>
+        <div class="icon-tile mx-auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
+        <h3 class="mt-4 font-display text-lg font-semibold text-parch-100" data-i18n="apply.thanks">Danke für deine Bewerbung!</h3>
+        <p class="mt-1 text-sm text-parch-400" data-i18n="apply.thanksText">Wir schauen sie uns an und melden uns auf Discord.</p>
+        <button type="button" class="btn-ghost-sq mt-5" data-close-apply data-i18n="apply.close">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===================== HELFER-BEWERBUNG ===================== -->
+  <div id="helper-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="helper-title">
+    <div class="modal-card modal-wide panel">
+      <button type="button" class="modal-x" data-close-helper aria-label="×">×</button>
+      <p class="eyebrow" data-i18n="team.eyebrow">Hinter dem Helper</p>
+      <h2 id="helper-title" class="section-title" data-i18n="helper.title">Helfer werden</h2>
+      <p class="mt-1 text-sm text-parch-400" data-i18n="helper.intro">Du willst den Origins2 Helper mit aufbauen? Jeder, der mitwirkt, wird im Team verewigt.</p>
+
+      <form id="helper-form" class="apply-form mt-5" novalidate>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <label class="field"><span class="field-label" data-i18n="helper.ingame">Charaktername</span>
+            <input id="hp-ingame" class="field-input text" maxlength="40" required autocomplete="off"></label>
+          <label class="field"><span class="field-label" data-i18n="apply.discord">Discord-Name</span>
+            <input id="hp-discord" class="field-input text" maxlength="40" required autocomplete="off"></label>
+          <label class="field"><span class="field-label" data-i18n="helper.age">Alter</span>
+            <select id="hp-age" class="field-input" required><option value="" data-i18n="helper.choose">Bitte wählen</option><option value="unter 16">unter 16</option><option value="16–17">16–17</option><option value="18+">18+</option></select></label>
+          <label class="field"><span class="field-label" data-i18n="helper.guild">Gilde</span>
+            <select id="hp-guild" class="field-input">
+              <option value="society">Society</option>
+              <option value="other" data-i18n="helper.guildOther">Andere Gilde</option>
+              <option value="none" data-i18n="helper.guildNone">Keine Gilde</option>
+            </select></label>
+          <label class="field"><span class="field-label" data-i18n="helper.since">Spielst Origins2 seit</span>
+            <input id="hp-since" class="field-input text" maxlength="40" required data-i18n-attr="placeholder:helper.sinceEx" placeholder="z. B. Server-Start, März 2026"></label>
+          <label class="field"><span class="field-label" data-i18n="helper.level">Höchstes Level</span>
+            <input id="hp-level" class="field-input text" inputmode="numeric" maxlength="5" placeholder="120"></label>
+          <div class="field sm:col-span-2"><span class="field-label" data-i18n="helper.tasks">Wobei möchtest du helfen?</span>
+            <div id="hp-tasks" class="ticks"></div></div>
+          <div class="field sm:col-span-2"><span class="field-label" data-i18n="helper.langs">Sprachen</span>
+            <div id="hp-langs" class="ticks"></div></div>
+          <label class="field"><span class="field-label" data-i18n="helper.time">Zeit pro Woche</span>
+            <select id="hp-time" class="field-input">
+              <option value="unter 2 Std." data-i18n="helper.t1">unter 2 Std.</option>
+              <option value="2–5 Std." data-i18n="helper.t2">2–5 Std.</option>
+              <option value="über 5 Std." data-i18n="helper.t3">über 5 Std.</option>
+            </select></label>
+          <div class="field"><span class="field-label" data-i18n="apply.shot">Screenshot vom Charakter</span>
+            <label id="hp-shot-preview" class="shot-drop" for="hp-shot"></label>
+            <input id="hp-shot" type="file" accept="image/*" class="sr-only" required></div>
+          <label class="field sm:col-span-2"><span class="field-label" data-i18n="helper.about">Kurz zu dir / Motivation (optional)</span>
+            <textarea id="hp-about" class="field-input text area" maxlength="800" rows="3"></textarea></label>
+        </div>
+        <label class="consent mt-4"><input type="checkbox" id="hp-consent"><span data-i18n="helper.consent">Ich bin einverstanden, dass meine Angaben an das Society-Team auf Discord übermittelt werden und mein Charakter mit Namen im Team gezeigt werden darf.</span></label>
+        <input id="hp-website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p id="helper-error" class="apply-error" role="alert"></p>
+        <div class="mt-3 flex flex-wrap items-center justify-end gap-2">
+          <button type="button" class="btn-ghost-sq" data-close-helper data-i18n="apply.cancel">Abbrechen</button>
+          <button type="submit" class="btn-gold" id="helper-submit" data-i18n="apply.send">Bewerbung senden</button>
+        </div>
+      </form>
+
+      <div id="helper-done" class="apply-done" hidden>
+        <div class="icon-tile mx-auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
+        <h3 class="mt-4 font-display text-lg font-semibold text-parch-100" data-i18n="apply.thanks">Danke für deine Bewerbung!</h3>
+        <p class="mt-1 text-sm text-parch-400" data-i18n="apply.thanksText">Wir schauen sie uns an und melden uns auf Discord.</p>
+        <button type="button" class="btn-ghost-sq mt-5" data-close-helper data-i18n="apply.close">Schließen</button>
+      </div>
+    </div>
+  </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
@@ -299,6 +447,9 @@
   <script src="js/upp.js"></script>
   <script src="js/calendar-data.js"></script>
   <script src="js/calendar.js"></script>
+  <script src="js/changelog.js"></script>
+  <script src="js/apply.js"></script>
+  <script src="js/team.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
