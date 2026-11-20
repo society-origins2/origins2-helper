@@ -782,3 +782,35 @@ body { position: relative; isolation: isolate; }
 .hero-grid .hero-logo { animation: heroFloat 7s ease-in-out infinite; }
 @keyframes heroFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @media (prefers-reduced-motion: reduce) { .hero-logo-wrap::before, .hero-grid .hero-logo { animation: none; } }
+
+/* ---------------- Creator-Charakter im Kopfbereich ---------------- */
+.hero-creator { display: none; }
+@media (min-width: 1100px) {
+  .hero-creator {
+    display: flex; flex-direction: column; align-items: center;
+    position: absolute; right: 1.5rem; bottom: 0.4rem; z-index: 2; margin: 0;
+    pointer-events: none;
+  }
+  .hero-creator::before {
+    content: ""; position: absolute; left: 50%; top: 45%; width: 300px; height: 240px; z-index: -1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgb(200 40 40 / 0.28), rgb(212 120 50 / 0.12) 55%, transparent);
+    animation: heroGlow 5s ease-in-out infinite;
+  }
+  .hero-creator::after {
+    content: ""; position: absolute; left: 50%; bottom: 2.1rem; width: 170px; height: 18px; z-index: -1;
+    transform: translateX(-50%); border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(0 0 0 / 0.65), transparent);
+  }
+  .hero-creator img {
+    height: 200px; width: auto;
+    filter: drop-shadow(0 0 14px rgb(220 60 40 / 0.25)) drop-shadow(0 8px 18px rgb(0 0 0 / 0.6));
+    animation: creatorIdle 4.5s ease-in-out infinite; transform-origin: 60% 100%;
+  }
+  .hero-creator figcaption { display: flex; flex-direction: column; align-items: center; margin-top: 0.2rem; }
+  .hc-name { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.12em; color: var(--color-gold-200); text-shadow: 0 0 10px rgb(212 162 76 / 0.4); }
+  .hc-role { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-parch-400); }
+  .hero-text { padding-right: 13rem; }
+}
+@keyframes creatorIdle { 0%,100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(-3px) scaleY(1.01); } }
+@media (prefers-reduced-motion: reduce) { .hero-creator img, .hero-creator::before { animation: none; } }
