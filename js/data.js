@@ -1,0 +1,205 @@
+/* =====================================================================
+   UPP-DATEN  –  Materialien, Waffen und Upp-Reihen
+   ---------------------------------------------------------------------
+   Alle Werte stammen aus dem Ingame-Wiki (Screenshots).
+   name   = deutscher Tooltip-Name, nameEn = englischer Name
+            (fehlt nameEn, wird auf Englisch der deutsche Name gezeigt)
+            Geprüft mit englischem Client: Battle Sword, Rune Sword,
+            Kyanite Sword, Titanium Dioxide. Alle anderen nameEn sind
+            Übersetzungsvorschläge und werden noch mit dem Client abgeglichen.
+   Kürzel (mat-XX, wpn-XX, arm-XX) gehören zu den Icons in assets/items/.
+   ===================================================================== */
+
+const MATERIALS = {
+  "mat-01": { name: "Rubinmesser", nameEn: "Ruby Knife", icon: "assets/items/mat-01.png" },
+  "mat-02": { name: "Goldschelle", nameEn: "Gold Bell", icon: "assets/items/mat-02.png" },
+  "mat-03": { name: "Rubinverzierung", nameEn: "Ruby Ornament", icon: "assets/items/mat-03.png" },
+  "mat-04": { name: "Schmuckelement", nameEn: "Jewel Element", icon: "assets/items/mat-04.png" },
+  "mat-05": { name: "Elementar Sand", nameEn: "Elemental Sand", icon: "assets/items/mat-05.png" },
+  "mat-06": { name: "Elementar Kristall", nameEn: "Elemental Crystal", icon: "assets/items/mat-06.png" },
+  "mat-07": { name: "Elementar Fragment", nameEn: "Elemental Fragment", icon: "assets/items/mat-07.png" },
+  "mat-08": { name: "Upgrade Schriftrolle", nameEn: "Upgrade Scroll", icon: "assets/items/mat-08.png" },
+  "mat-09": { name: "Schlangenstein", nameEn: "Serpent Stone", icon: "assets/items/mat-09.png" },
+  "mat-10": { name: "Energiefragment", nameEn: "Energy Fragment", icon: "assets/items/mat-10.png" },
+  "mat-11": { name: "Eisrune der Aura", nameEn: "Aura Ice Rune", icon: "assets/items/mat-11.png" },
+  "mat-12": { name: "Rotes Drachenhorn", nameEn: "Red Dragon Horn", icon: "assets/items/mat-12.png" },
+  "mat-13": { name: "Weißer Drachenkopf", nameEn: "White Dragon Head", icon: "assets/items/mat-13.png" },
+  "mat-14": { name: "Schlangenmuster", nameEn: "Snake Pattern", icon: "assets/items/mat-14.png" },
+  "mat-15": { name: "Balathors Flügel", nameEn: "Balathor's Wing", icon: "assets/items/mat-15.png" },
+  "mat-16": { name: "Balathors Auge", nameEn: "Balathor's Eye", icon: "assets/items/mat-16.png" },
+  "mat-17": { name: "Spitzige Dornen", nameEn: "Sharp Thorns", icon: "assets/items/mat-17.png" },
+  "mat-18": { name: "Hydrakopf", nameEn: "Hydra Head", icon: "assets/items/mat-18.png" },
+  "mat-19": { name: "Hydra-Symbol", nameEn: "Hydra Symbol", icon: "assets/items/mat-19.png" },
+  "mat-20": { name: "Jia-Insigne", nameEn: "Jia Insignia", icon: "assets/items/mat-20.png" },
+  "mat-21": { name: "Insigne des Chen", nameEn: "Chen's Insignia", icon: "assets/items/mat-21.png" },
+  "mat-22": { name: "Drachenschwingen", nameEn: "Dragon Wings", icon: "assets/items/mat-22.png" },
+  "mat-23": { name: "Titandioxid", nameEn: "Titanium Dioxide", icon: "assets/items/mat-23.png" },
+  "mat-24": { name: "Weiße Drachenschuppe", nameEn: "White Dragon Scale", icon: "assets/items/mat-24.png" },
+  "mat-25": { name: "Schlangenseide", nameEn: "Snake Silk", icon: "assets/items/mat-25.png" },
+  "mat-26": { name: "Schwarzer Farbstoff", nameEn: "Black Dye", icon: "assets/items/mat-26.png" },
+  "mat-27": { name: "Geist der Erde", nameEn: "Spirit of the Earth", icon: "assets/items/mat-27.png" },
+  "mat-28": { name: "Horn des Razador", nameEn: "Razador's Horn", icon: "assets/items/mat-28.png" },
+  "mat-29": { name: "Horn des Nemere", nameEn: "Nemere's Horn", icon: "assets/items/mat-29.png" },
+  "mat-30": { name: "Seuchensymbol", nameEn: "Plague Symbol", icon: "assets/items/mat-30.png" },
+  "mat-31": { name: "Versteinerte Träne", nameEn: "Petrified Tear", icon: "assets/items/mat-31.png" },
+  "mat-32": { name: "Flammenstein", nameEn: "Flame Stone", icon: "assets/items/mat-32.png" },
+  "mat-33": { name: "Eisflammenstein", nameEn: "Ice Flame Stone", icon: "assets/items/mat-33.png" },
+  "mat-34": { name: "Schwarze Materie", nameEn: "Black Matter", icon: "assets/items/mat-34.png" },
+  "mat-35": { name: "Drachenklaue & Schuppen", nameEn: "Dragon Claw & Scales", icon: "assets/items/mat-35.png" },
+  "mat-37": { name: "Drachenschädel", nameEn: "Dragon Skull", icon: "assets/items/mat-37.png" },
+  "mat-38": { name: "Prächtiger Chaosstein", nameEn: "Magnificent Chaos Stone", icon: "assets/items/mat-38.png" },
+  "mat-39": { name: "Yohara-Energiefragment", nameEn: "Yohara Energy Fragment", icon: "assets/items/mat-39.png" },
+  "mat-40": { name: "Lila SungMa-Rune", nameEn: "Purple SungMa Rune", icon: "assets/items/mat-40.png" },
+  "mat-41": { name: "Gelbe SungMa-Rune", nameEn: "Yellow SungMa Rune", icon: "assets/items/mat-41.png" },
+  "mat-42": { name: "Mysteriöser Stein", nameEn: "Mysterious Stone", icon: "assets/items/mat-42.png" },
+  "mat-43": { name: "Token des Abgrundkaisers", nameEn: "Abyss Emperor Token", icon: "assets/items/mat-43.png" },
+  "mat-44": { name: "Token des uralten Erdwächters", nameEn: "Ancient Earth Guardian Token", icon: "assets/items/mat-44.png" },
+  "mat-45": { name: "Splitter des Abgrundkaisers", nameEn: "Abyss Emperor Shard", icon: "assets/items/mat-45.png" },
+  "mat-46": { name: "Token des Sturmhautkolosses", nameEn: "Stormhide Colossus Token", icon: "assets/items/mat-46.png" },
+  "mat-47": { name: "Auge des Abgrundkaisers", nameEn: "Abyss Emperor's Eye", icon: "assets/items/mat-47.png" },
+  "mat-48": { name: "Reißzahn des Sturmlords", nameEn: "Storm Lord's Fang", icon: "assets/items/mat-48.png" },
+  "mat-49": { name: "Token des Flammenkönigs", nameEn: "Flame King Token", icon: "assets/items/mat-49.png" },
+  "mat-50": { name: "Feuerkristall", nameEn: "Fire Crystal", icon: "assets/items/mat-50.png" },
+  "mat-51": { name: "Feuersand", nameEn: "Fire Sand", icon: "assets/items/mat-51.png" },
+  "mat-52": { name: "Seele des Sturmlords", nameEn: "Storm Lord's Soul", icon: "assets/items/mat-52.png" },
+  "mat-53": { name: "Naga Schlangen Token", nameEn: "Naga Serpent Token", icon: "assets/items/mat-53.png" },
+  "mat-54": { name: "Himmelsdonner-Token", nameEn: "Sky Thunder Token", icon: "assets/items/mat-54.png" },
+  "mat-55": { name: "Blitzkristall", nameEn: "Lightning Crystal", icon: "assets/items/mat-55.png" },
+  "mat-56": { name: "Blitzsand", nameEn: "Lightning Sand", icon: "assets/items/mat-56.png" },
+  "mat-57": { name: "Token des Chen-Generals", nameEn: "Chen General Token", icon: "assets/items/mat-57.png" },
+  "mat-58": { name: "Alastor-Token", nameEn: "Alastor Token", icon: "assets/items/mat-58.png" },
+  "mat-59": { name: "Balathor-Token", nameEn: "Balathor Token", icon: "assets/items/mat-59.png" },
+  "mat-60": { name: "Windkristall", nameEn: "Wind Crystal", icon: "assets/items/mat-60.png" },
+  "mat-61": { name: "Windsand", nameEn: "Wind Sand", icon: "assets/items/mat-61.png" },
+  "mat-62": { name: "Meisterschriftrolle", nameEn: "Master Scroll", icon: "assets/items/mat-62.png" },
+  "mat-63": { name: "Blaue SungMa-Rune", nameEn: "Blue SungMa Rune", icon: "assets/items/mat-63.png" },
+  "mat-64": { name: "Emblem des Frostwächters", nameEn: "Frost Guardian Emblem", icon: "assets/items/mat-64.png" },
+  "mat-65": { name: "Token des Frostwächters", nameEn: "Frost Guardian Token", icon: "assets/items/mat-65.png" },
+  "mat-66": { name: "Yohara-Elementartoken", nameEn: "Yohara Elemental Token", icon: "assets/items/mat-66.png" },
+  "mat-67": { name: "Herz des Erdwächters", nameEn: "Earth Guardian's Heart", icon: "assets/items/mat-67.png" },
+  "mat-68": { name: "Schimm. blaue Perle", nameEn: "Shimmering Blue Pearl", icon: "assets/items/mat-68.png" },
+  "mat-69": { name: "Schimm. weiße Perle", nameEn: "Shimmering White Pearl", icon: "assets/items/mat-69.png" },
+  "mat-70": { name: "Schimmernde rote Perle", nameEn: "Shimmering Red Pearl", icon: "assets/items/mat-70.png" },
+  "mat-71": { name: "Elementarblüte", nameEn: "Elemental Blossom", icon: "assets/items/mat-71.png" },
+  "mat-72": { name: "Weiße Perle", nameEn: "White Pearl", icon: "assets/items/mat-72.png" },
+  "mat-73": { name: "Blaue Perle", nameEn: "Blue Pearl", icon: "assets/items/mat-73.png" },
+  "mat-74": { name: "Blutrote Perle", nameEn: "Blood Pearl", icon: "assets/items/mat-74.png" },
+  "mat-75": { name: "Achat", nameEn: "Agate", icon: "assets/items/mat-75.png" },
+  "mat-76": { name: "Mithril", nameEn: "Mithril", icon: "assets/items/mat-76.png" },
+};
+
+const WEAPONS = {
+  "wpn-01": { name: "Tritonschwert", nameEn: "Triton Sword", icon: "assets/items/wpn-01.png" },
+  "wpn-02": { name: "Halbmenschenklinge", nameEn: "Half-Human Blade", icon: "assets/items/wpn-02.png" },
+  "wpn-03": { name: "Zodiakschwert", nameEn: "Zodiac Sword", icon: "assets/items/wpn-03.png" },
+  "wpn-04": { name: "Zodiakglefe", nameEn: "Zodiac Glaive", icon: "assets/items/wpn-04.png" },
+  "wpn-05": { name: "Schlachtschwert", nameEn: "Battle Sword", icon: "assets/items/wpn-05.png" },
+  "wpn-06": { name: "Runenschwert", nameEn: "Rune Sword", icon: "assets/items/wpn-06.png" },
+  "wpn-07": { name: "Kyanitschwert", nameEn: "Kyanite Sword", icon: "assets/items/wpn-07.png" },
+};
+
+const ARMORS = {
+  "arm-01": { name: "Zodiakrüstung", nameEn: "Zodiac Armour", icon: "assets/items/arm-01.png" },
+  "arm-02": { name: "Dunkeldrachenrüstung", nameEn: "Dark Dragon Armour", icon: "assets/items/arm-02.png" },
+  "arm-03": { name: "Teufelshornpanzer", nameEn: "Devil Horn Plate", icon: "assets/items/arm-03.png" },
+  "arm-04": { name: "Blaustahl-Panzer", nameEn: "Blue Steel Plate", icon: "assets/items/arm-04.png" },
+  "arm-05": { name: "Schlangenmantel", nameEn: "Serpent Mantle", icon: "assets/items/arm-05.png" },
+};
+
+
+/* =====================================================================
+   UPP-REIHEN
+   ---------------------------------------------------------------------
+   Eine Reihe besteht aus mehreren Stufen (Waffen), die nacheinander
+   entwickelt werden: Waffe +0 … +9  →  nächste Waffe +0 … +9  usw.
+
+   stage.item     : Kürzel der Waffe/Rüstung
+   stage.minLevel : „Ab Level“ laut Wiki
+   stage.craft    : Entwicklung aus der vorherigen Waffe (+9)
+                    yang = Preis, mats = Materialien, place = Startpunkt
+   stage.ups      : Upp-Schritte +0→+1 … +8→+9 (Index 0 = Schritt auf +1)
+                    yang   = Kosten pro Versuch
+                    chance = Erfolgschance in %
+                    pity   = Pity: nach so vielen Fails gelingt der
+                             nächste Versuch sicher (null = kein Pity)
+                    mats   = Materialien pro Versuch
+
+   Regeln (Society): Bei einem Fail sind Material und Yang weg, die Stufe
+   bleibt, weil immer ein Magischer Stein benutzt wird. Die Steine selbst
+   werden (noch) nicht mitgezählt.
+   ===================================================================== */
+
+const k = 1_000, kk = 1_000_000;
+
+const UPGRADE_LINES = {
+  "schwert-1h-pvp": {
+    name: "1-Hand-PvP-Schwert",
+    nameEn: "One-handed PvP sword",
+    stages: [
+      {
+        item: "wpn-05", // Schlachtschwert
+        minLevel: 65,
+        craft: null,
+        ups: [
+          { yang: 500*k,  chance: 100, pity: null, mats: {} },
+          { yang: 600*k,  chance: 100, pity: null, mats: {} },
+          { yang: 700*k,  chance: 100, pity: null, mats: {} },
+          { yang: 800*k,  chance: 100, pity: null, mats: {} },
+          { yang: 1*kk,   chance: 90,  pity: 1,    mats: {} },
+          { yang: 1.1*kk, chance: 85,  pity: 1,    mats: {} },
+          { yang: 1.2*kk, chance: 80,  pity: 2,    mats: { "mat-72": 3 } },
+          { yang: 1.3*kk, chance: 75,  pity: 2,    mats: { "mat-73": 3 } },
+          { yang: 1.5*kk, chance: 70,  pity: 2,    mats: { "mat-74": 3 } }
+        ]
+      },
+      {
+        item: "wpn-01", // Tritonschwert
+        minLevel: 80,
+        craft: { yang: 2*kk, mats: { "mat-71": 3, "mat-72": 5, "mat-73": 5, "mat-74": 5 } },
+        ups: [
+          { yang: 2*kk,   chance: 100, pity: null, mats: {} },
+          { yang: 2.2*kk, chance: 100, pity: null, mats: {} },
+          { yang: 2.4*kk, chance: 100, pity: null, mats: {} },
+          { yang: 2.6*kk, chance: 100, pity: null, mats: {} },
+          { yang: 2.8*kk, chance: 90,  pity: 1,    mats: {} },
+          { yang: 3*kk,   chance: 85,  pity: 1,    mats: {} },
+          { yang: 3.2*kk, chance: 80,  pity: 2,    mats: { "mat-72": 5 } },
+          { yang: 3.4*kk, chance: 75,  pity: 2,    mats: { "mat-73": 5 } },
+          { yang: 3.5*kk, chance: 70,  pity: 2,    mats: { "mat-74": 5 } }
+        ]
+      },
+      {
+        item: "wpn-06", // Runenschwert
+        minLevel: 105,
+        craft: { yang: 5*kk, place: "Seon-Pyeong", mats: { "mat-01": 5, "mat-02": 5, "mat-03": 5, "mat-04": 5 } },
+        ups: [
+          { yang: 5*kk,   chance: 100, pity: null, mats: { "mat-10": 100 } },
+          { yang: 5.2*kk, chance: 100, pity: null, mats: { "mat-10": 100 } },
+          { yang: 5.4*kk, chance: 100, pity: null, mats: { "mat-10": 50,  "mat-72": 5 } },
+          { yang: 5.6*kk, chance: 100, pity: null, mats: { "mat-10": 75,  "mat-73": 5 } },
+          { yang: 5.8*kk, chance: 100, pity: null, mats: { "mat-10": 100, "mat-74": 5 } },
+          { yang: 6*kk,   chance: 100, pity: null, mats: { "mat-10": 125, "mat-01": 3, "mat-03": 3 } },
+          { yang: 6.3*kk, chance: 100, pity: null, mats: { "mat-10": 150, "mat-02": 3, "mat-04": 3 } },
+          { yang: 6.6*kk, chance: 100, pity: null, mats: { "mat-10": 175, "mat-04": 5, "mat-03": 5 } },
+          { yang: 7*kk,   chance: 100, pity: null, mats: { "mat-10": 200, "mat-01": 5, "mat-02": 5, "mat-76": 2 } }
+        ]
+      },
+      {
+        item: "wpn-07", // Kyanitschwert
+        minLevel: 120,
+        craft: { yang: 50*kk, mats: { "mat-17": 1, "mat-23": 1, "mat-18": 1, "mat-19": 1, "mat-12": 1, "mat-22": 1, "mat-75": 1, "mat-26": 1 } },
+        ups: [
+          { yang: 50*kk,  chance: 100, pity: null, mats: { "mat-01": 3, "mat-02": 3, "mat-03": 3, "mat-04": 3 } },
+          { yang: 60*kk,  chance: 90,  pity: 2,    mats: { "mat-12": 1, "mat-19": 1 } },
+          { yang: 70*kk,  chance: 80,  pity: 2,    mats: { "mat-17": 1, "mat-26": 1 } },
+          { yang: 80*kk,  chance: 80,  pity: 2,    mats: { "mat-18": 1, "mat-22": 1 } },
+          { yang: 90*kk,  chance: 80,  pity: 2,    mats: { "mat-75": 1, "mat-23": 1 } },
+          { yang: 100*kk, chance: 75,  pity: 2,    mats: { "mat-13": 2, "mat-20": 2 } },
+          { yang: 110*kk, chance: 70,  pity: 2,    mats: { "mat-15": 2, "mat-25": 2 } },
+          { yang: 120*kk, chance: 65,  pity: 2,    mats: { "mat-14": 2, "mat-21": 2 } },
+          { yang: 130*kk, chance: 60,  pity: 2,    mats: { "mat-16": 2, "mat-24": 1, "mat-09": 1 } }
+        ]
+      }
+    ]
+  }
+};

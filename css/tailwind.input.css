@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
+
+  --color-ink-950: #110d09;
+  --color-ink-900: #17130e;
+  --color-ink-800: #1e1912;
+  --color-ink-700: #2a231a;
+
+  --color-parch-100: #f1e9da;
+  --color-parch-200: #e2d6c1;
+  --color-parch-300: #c4b69e;
+  --color-parch-400: #9b8e78;
+  --color-parch-500: #75695a;
+
+  --color-gold-200: #f3d79a;
+  --color-gold-300: #e6bd6c;
+  --color-gold-400: #d4a24c;
+  --color-gold-500: #b7853a;
+  --color-gold-line: rgb(212 162 76 / 0.16);
+}
