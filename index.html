@@ -23,7 +23,21 @@
     <canvas class="hero-embers" id="hero-embers" aria-hidden="true"></canvas>
 
     <!-- Top bar -->
-    <div class="hero-top relative z-10 mx-auto flex max-w-6xl items-center justify-end px-5 pt-5 sm:px-8">
+    <div class="hero-top relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 pt-5 sm:px-8">
+      <!-- Hinweis: Seite befindet sich im Aufbau -->
+      <div class="wip-sign" role="note">
+        <span class="wip-sign-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m14 12-8.6 8.6a2.1 2.1 0 0 1-3-3L11 9"/>
+            <path d="M17.6 15 22 10.6"/>
+            <path d="m20.9 11.7-1.2-1.2a3.2 3.2 0 0 1-1-2.3v-.8l-2.7-2.7a5.6 5.6 0 0 0-3.9-1.6H9l.9.8A6.2 6.2 0 0 1 12 8.4V10l2 2h2.5l2.3 1.9"/>
+          </svg>
+        </span>
+        <span class="wip-sign-title" data-i18n="wipSign.title">Im Aufbau</span>
+        <span class="wip-sign-short" data-i18n="wipSign.short">Im Aufbau</span>
+        <span class="wip-sign-sep" aria-hidden="true"></span>
+        <span class="wip-sign-text" data-i18n="wipSign.text">Es kommen laufend neue Funktionen dazu</span>
+      </div>
       <div class="flex items-center gap-2">
         <div class="lang-switch" role="group" data-i18n-attr="aria-label:lang.label">
           <button type="button" data-lang="de">DE</button>
@@ -302,14 +316,14 @@
         <p class="eyebrow" data-i18n="st.eyebrow">Fertigkeitsbaumsystem</p>
         <h2 id="st-title" class="section-title" data-i18n="skill.title">Skilltree-Kalkulator</h2>
         <div class="wip-note mt-3"><span class="wip-badge" data-i18n="beta">Beta</span><p data-i18n="st.wip">Noch in Arbeit: Einige Werte, Voraussetzungen und Namen fehlen noch oder können falsch sein. Bitte die Liste im Spiel gegenchecken – Fehler gerne an uns auf Discord melden.</p></div>
-        <p class="mt-3 max-w-2xl text-sm text-parch-400" data-i18n="st.intro">Tippe auf einen Bonus – der Baum füllt sich bis dorthin und du siehst alle Items, die du bis zu diesem Punkt brauchst.</p>
+        <p class="mt-3 max-w-2xl text-sm text-parch-400" data-i18n="st.intro">Tippe in jedem Zweig auf dein Ziel – die Zweige lassen sich kombinieren. Der Baum füllt sich bis dorthin und du siehst alle Items, die du brauchst.</p>
         <div class="st-wrap mt-5">
           <div class="st-tree panel">
             <svg id="st-svg" viewBox="15 20 415 300" role="group" aria-labelledby="st-title"></svg>
             <div id="st-legend" class="st-legend"></div>
             <ul class="st-rules">
               <li data-i18n="st.rule1">Boni werden von unten nach oben in fester Reihenfolge freigeschaltet – nichts kann übersprungen werden.</li>
-              <li data-i18n="st.rule2">Zweig II (PvP) braucht aus Zweig I nur die Heilfähigkeit.</li>
+              <li data-i18n="st.rule2">Zweig II (PvP) braucht aus Zweig I nur Stufe 1 (TP-Spot).</li>
               <li data-i18n="st.rule3">Zweig III (Yohara) braucht Zweig I vollständig.</li>
             </ul>
           </div>

@@ -5,7 +5,8 @@
    name   = deutscher Tooltip-Name, nameEn = englischer Name
             (fehlt nameEn, wird auf Englisch der deutsche Name gezeigt)
             Geprüft mit englischem Client: Battle Sword, Rune Sword,
-            Kyanite Sword, Titanium Dioxide. Alle anderen nameEn sind
+            Kyanite Sword, Titanium Dioxide, Partisan, Soul Stealing Blade,
+            Solar Blade, Kyanite Blade. Alle anderen nameEn sind
             Übersetzungsvorschläge und werden noch mit dem Client abgeglichen.
    Kürzel (mat-XX, wpn-XX, arm-XX) gehören zu den Icons in assets/items/.
    ===================================================================== */
@@ -99,7 +100,7 @@ const MATERIALS = {
   "mat-87": { name: "Blitz-Elementarfragment", icon: "assets/items/mat-87.png" }, // Skilltree
   "mat-88": { name: "Feuer-Elementarfragment", icon: "assets/items/mat-88.png" }, // Skilltree
   "mat-89": { name: "Handschuh- und Ringfragment", icon: "assets/items/mat-89.png" }, // Skilltree
-  "mat-90": { name: "Feuerrune der Aura", icon: "assets/items/mat-90.png" }, // Skilltree
+  "mat-90": { name: "Feuerrune der Aura", nameEn: "Aura Fire Rune", icon: "assets/items/mat-90.png" }, // Skilltree
   "mat-91": { name: "Aura-Kostüm verzaubern", icon: "assets/items/mat-91.png" }, // Skilltree
   "mat-92": { name: "Flammenblatt", icon: "assets/items/mat-92.png" }, // Skilltree
   "mat-93": { name: "Flasche mit Elementaressenz", icon: "assets/items/mat-93.png" }, // Skilltree
@@ -117,16 +118,24 @@ const MATERIALS = {
   "mat-105": { name: "Kristall der Elemente", icon: "assets/items/mat-105.png" }, // Skilltree
   "mat-106": { name: "Sand der Elemente", icon: "assets/items/mat-106.png" }, // Skilltree
   "mat-107": { name: "Rote SungMa-Rune", icon: "assets/items/mat-107.png" }, // Skilltree
+  // Skilltree-Schlüssel – deutsche Namen vorläufig übersetzt, Nutzer reicht nach
+  "mat-108": { name: "Cor-Draconis-Truhe", nameEn: "Cor Draconis Chest", icon: "assets/items/mat-108.png" },
+  "mat-109": { name: "Eisrune-der-Aura-Truhe", nameEn: "Aura Ice Rune Chest", icon: "assets/items/mat-109.png" },
+  "mat-110": { name: "Energiefragment-Truhe", nameEn: "Energy Fragment Chest", icon: "assets/items/mat-110.png" },
+  "mat-111": { name: "Flammenblatt-Truhe", nameEn: "Flaming Leaf Chest", icon: "assets/items/mat-111.png" },
 };
 
 const WEAPONS = {
   "wpn-01": { name: "Tritonschwert", nameEn: "Triton Sword", icon: "assets/items/wpn-01.png" },
-  "wpn-02": { name: "Halbmenschenklinge", nameEn: "Half-Human Blade", icon: "assets/items/wpn-02.png" },
+  "wpn-02": { name: "Halbmenschenklinge", nameEn: "Soul Stealing Blade", icon: "assets/items/wpn-02.png" },
   "wpn-03": { name: "Zodiakschwert", nameEn: "Zodiac Sword", icon: "assets/items/wpn-03.png" },
   "wpn-04": { name: "Zodiakglefe", nameEn: "Zodiac Glaive", icon: "assets/items/wpn-04.png" },
   "wpn-05": { name: "Schlachtschwert", nameEn: "Battle Sword", icon: "assets/items/wpn-05.png" },
   "wpn-06": { name: "Runenschwert", nameEn: "Rune Sword", icon: "assets/items/wpn-06.png" },
   "wpn-07": { name: "Kyanitschwert", nameEn: "Kyanite Sword", icon: "assets/items/wpn-07.png" },
+  "wpn-08": { name: "Partisane", nameEn: "Partisan", icon: "assets/items/wpn-08.png" },
+  "wpn-09": { name: "Sonnenschwert", nameEn: "Solar Blade", icon: "assets/items/wpn-09.png" },
+  "wpn-10": { name: "Kyanitklinge", nameEn: "Kyanite Blade", icon: "assets/items/wpn-10.png" },
 };
 
 const ARMORS = {
@@ -135,6 +144,10 @@ const ARMORS = {
   "arm-03": { name: "Teufelshornpanzer", nameEn: "Devil Horn Plate", icon: "assets/items/arm-03.png" },
   "arm-04": { name: "Blaustahl-Panzer", nameEn: "Blue Steel Plate", icon: "assets/items/arm-04.png" },
   "arm-05": { name: "Schlangenmantel", nameEn: "Serpent Mantle", icon: "assets/items/arm-05.png" },
+  // Deutsche Namen arm-06 … arm-08 vorläufig übersetzt – Nutzer reicht die echten nach
+  "arm-06": { name: "Schwarzstahlpanzer", nameEn: "Black Steel Armour", icon: "assets/items/arm-06.png" },
+  "arm-07": { name: "Magmaglutpanzer", nameEn: "Magma Glow Armour", icon: "assets/items/arm-07.png" },
+  "arm-08": { name: "Kyanitpanzer", nameEn: "Kyanite Armour", icon: "assets/items/arm-08.png" },
 };
 
 
@@ -195,78 +208,101 @@ const EQUIP_SLOTS = {
 
 const k = 1_000, kk = 1_000_000;
 
-const UPGRADE_LINES = {
-  "schwert-1h-pvp": {
-    name: "1-Hand-Schwert",
-    nameEn: "One-handed sword",
-    category: "pvp",
-    slot: "weapon",
-    classes: ["warrior", "ninja", "sura"],
-    stages: [
-      {
-        item: "wpn-05", // Schlachtschwert
-        minLevel: 65,
-        craft: null,
-        ups: [
-          { yang: 500*k,  chance: 100, pity: null, mats: {} },
-          { yang: 600*k,  chance: 100, pity: null, mats: {} },
-          { yang: 700*k,  chance: 100, pity: null, mats: {} },
-          { yang: 800*k,  chance: 100, pity: null, mats: {} },
-          { yang: 1*kk,   chance: 90,  pity: 1,    mats: {} },
-          { yang: 1.1*kk, chance: 85,  pity: 1,    mats: {} },
-          { yang: 1.2*kk, chance: 80,  pity: 2,    mats: { "mat-72": 3 } },
-          { yang: 1.3*kk, chance: 75,  pity: 2,    mats: { "mat-73": 3 } },
-          { yang: 1.5*kk, chance: 70,  pity: 2,    mats: { "mat-74": 3 } }
-        ]
-      },
-      {
-        item: "wpn-01", // Tritonschwert
-        minLevel: 80,
-        craft: { yang: 2*kk, mats: { "mat-71": 3, "mat-72": 5, "mat-73": 5, "mat-74": 5 } },
-        ups: [
-          { yang: 2*kk,   chance: 100, pity: null, mats: {} },
-          { yang: 2.2*kk, chance: 100, pity: null, mats: {} },
-          { yang: 2.4*kk, chance: 100, pity: null, mats: {} },
-          { yang: 2.6*kk, chance: 100, pity: null, mats: {} },
-          { yang: 2.8*kk, chance: 90,  pity: 1,    mats: {} },
-          { yang: 3*kk,   chance: 85,  pity: 1,    mats: {} },
-          { yang: 3.2*kk, chance: 80,  pity: 2,    mats: { "mat-72": 5 } },
-          { yang: 3.4*kk, chance: 75,  pity: 2,    mats: { "mat-73": 5 } },
-          { yang: 3.5*kk, chance: 70,  pity: 2,    mats: { "mat-74": 5 } }
-        ]
-      },
-      {
-        item: "wpn-06", // Runenschwert
-        minLevel: 105,
-        craft: { yang: 5*kk, place: "Seon-Pyeong", mats: { "mat-01": 5, "mat-02": 5, "mat-03": 5, "mat-04": 5 } },
-        ups: [
-          { yang: 5*kk,   chance: 100, pity: null, mats: { "mat-10": 100 } },
-          { yang: 5.2*kk, chance: 100, pity: null, mats: { "mat-10": 100 } },
-          { yang: 5.4*kk, chance: 100, pity: null, mats: { "mat-10": 50,  "mat-72": 5 } },
-          { yang: 5.6*kk, chance: 100, pity: null, mats: { "mat-10": 75,  "mat-73": 5 } },
-          { yang: 5.8*kk, chance: 100, pity: null, mats: { "mat-10": 100, "mat-74": 5 } },
-          { yang: 6*kk,   chance: 100, pity: null, mats: { "mat-10": 125, "mat-01": 3, "mat-03": 3 } },
-          { yang: 6.3*kk, chance: 100, pity: null, mats: { "mat-10": 150, "mat-02": 3, "mat-04": 3 } },
-          { yang: 6.6*kk, chance: 100, pity: null, mats: { "mat-10": 175, "mat-04": 5, "mat-03": 5 } },
-          { yang: 7*kk,   chance: 100, pity: null, mats: { "mat-10": 200, "mat-01": 5, "mat-02": 5, "mat-76": 2 } }
-        ]
-      },
-      {
-        item: "wpn-07", // Kyanitschwert
-        minLevel: 120,
-        craft: { yang: 50*kk, mats: { "mat-17": 1, "mat-23": 1, "mat-18": 1, "mat-19": 1, "mat-12": 1, "mat-22": 1, "mat-75": 1, "mat-26": 1 } },
-        ups: [
-          { yang: 50*kk,  chance: 100, pity: null, mats: { "mat-01": 3, "mat-02": 3, "mat-03": 3, "mat-04": 3 } },
-          { yang: 60*kk,  chance: 90,  pity: 2,    mats: { "mat-12": 1, "mat-19": 1 } },
-          { yang: 70*kk,  chance: 80,  pity: 2,    mats: { "mat-17": 1, "mat-26": 1 } },
-          { yang: 80*kk,  chance: 80,  pity: 2,    mats: { "mat-18": 1, "mat-22": 1 } },
-          { yang: 90*kk,  chance: 80,  pity: 2,    mats: { "mat-75": 1, "mat-23": 1 } },
-          { yang: 100*kk, chance: 75,  pity: 2,    mats: { "mat-13": 2, "mat-20": 2 } },
-          { yang: 110*kk, chance: 70,  pity: 2,    mats: { "mat-15": 2, "mat-25": 2 } },
-          { yang: 120*kk, chance: 65,  pity: 2,    mats: { "mat-14": 2, "mat-21": 2 } },
-          { yang: 130*kk, chance: 60,  pity: 2,    mats: { "mat-16": 2, "mat-24": 1, "mat-09": 1 } }
-        ]
-      }
+/* ---------- Kosten der PvP-Waffen ----------
+   Gilt für ALLE PvP-Waffenarten gleich (Stufe Lv 65 → 80 → 105 → 120).
+   Nur hier ändern – alle Waffen-Reihen unten übernehmen diese Werte. */
+const PVP_WEAPON_COSTS = [
+  { // Stufe 1 · Lv 65
+    minLevel: 65,
+    craft: null,
+    ups: [
+      { yang: 500*k,  chance: 100, pity: null, mats: {} },
+      { yang: 600*k,  chance: 100, pity: null, mats: {} },
+      { yang: 700*k,  chance: 100, pity: null, mats: {} },
+      { yang: 800*k,  chance: 100, pity: null, mats: {} },
+      { yang: 1*kk,   chance: 90,  pity: 1,    mats: {} },
+      { yang: 1.1*kk, chance: 85,  pity: 1,    mats: {} },
+      { yang: 1.2*kk, chance: 80,  pity: 2,    mats: { "mat-72": 3 } },
+      { yang: 1.3*kk, chance: 75,  pity: 2,    mats: { "mat-73": 3 } },
+      { yang: 1.5*kk, chance: 70,  pity: 2,    mats: { "mat-74": 3 } }
+    ]
+  },
+  { // Stufe 2 · Lv 80
+    minLevel: 80,
+    craft: { yang: 2*kk, mats: { "mat-71": 3, "mat-72": 5, "mat-73": 5, "mat-74": 5 } },
+    ups: [
+      { yang: 2*kk,   chance: 100, pity: null, mats: {} },
+      { yang: 2.2*kk, chance: 100, pity: null, mats: {} },
+      { yang: 2.4*kk, chance: 100, pity: null, mats: {} },
+      { yang: 2.6*kk, chance: 100, pity: null, mats: {} },
+      { yang: 2.8*kk, chance: 90,  pity: 1,    mats: {} },
+      { yang: 3*kk,   chance: 85,  pity: 1,    mats: {} },
+      { yang: 3.2*kk, chance: 80,  pity: 2,    mats: { "mat-72": 5 } },
+      { yang: 3.4*kk, chance: 75,  pity: 2,    mats: { "mat-73": 5 } },
+      { yang: 3.5*kk, chance: 70,  pity: 2,    mats: { "mat-74": 5 } }
+    ]
+  },
+  { // Stufe 3 · Lv 105
+    minLevel: 105,
+    craft: { yang: 5*kk, place: "Seon-Pyeong", mats: { "mat-01": 5, "mat-02": 5, "mat-03": 5, "mat-04": 5 } },
+    ups: [
+      { yang: 5*kk,   chance: 100, pity: null, mats: { "mat-10": 100 } },
+      { yang: 5.2*kk, chance: 100, pity: null, mats: { "mat-10": 100 } },
+      { yang: 5.4*kk, chance: 100, pity: null, mats: { "mat-10": 50,  "mat-72": 5 } },
+      { yang: 5.6*kk, chance: 100, pity: null, mats: { "mat-10": 75,  "mat-73": 5 } },
+      { yang: 5.8*kk, chance: 100, pity: null, mats: { "mat-10": 100, "mat-74": 5 } },
+      { yang: 6*kk,   chance: 100, pity: null, mats: { "mat-10": 125, "mat-01": 3, "mat-03": 3 } },
+      { yang: 6.3*kk, chance: 100, pity: null, mats: { "mat-10": 150, "mat-02": 3, "mat-04": 3 } },
+      { yang: 6.6*kk, chance: 100, pity: null, mats: { "mat-10": 175, "mat-04": 5, "mat-03": 5 } },
+      { yang: 7*kk,   chance: 100, pity: null, mats: { "mat-10": 200, "mat-01": 5, "mat-02": 5, "mat-76": 2 } }
+    ]
+  },
+  { // Stufe 4 · Lv 120
+    minLevel: 120,
+    craft: { yang: 50*kk, mats: { "mat-17": 1, "mat-23": 1, "mat-18": 1, "mat-19": 1, "mat-12": 1, "mat-22": 1, "mat-75": 1, "mat-26": 1 } },
+    ups: [
+      { yang: 50*kk,  chance: 100, pity: null, mats: { "mat-01": 3, "mat-02": 3, "mat-03": 3, "mat-04": 3 } },
+      { yang: 60*kk,  chance: 90,  pity: 2,    mats: { "mat-12": 1, "mat-19": 1 } },
+      { yang: 70*kk,  chance: 80,  pity: 2,    mats: { "mat-17": 1, "mat-26": 1 } },
+      { yang: 80*kk,  chance: 80,  pity: 2,    mats: { "mat-18": 1, "mat-22": 1 } },
+      { yang: 90*kk,  chance: 80,  pity: 2,    mats: { "mat-75": 1, "mat-23": 1 } },
+      { yang: 100*kk, chance: 75,  pity: 2,    mats: { "mat-13": 2, "mat-20": 2 } },
+      { yang: 110*kk, chance: 70,  pity: 2,    mats: { "mat-15": 2, "mat-25": 2 } },
+      { yang: 120*kk, chance: 65,  pity: 2,    mats: { "mat-14": 2, "mat-21": 2 } },
+      { yang: 130*kk, chance: 60,  pity: 2,    mats: { "mat-16": 2, "mat-24": 2, "mat-09": 1 } }
     ]
   }
+];
+
+/* Baut eine PvP-Waffen-Reihe: 4 Waffen (Lv 65, 80, 105, 120) + Kosten von oben */
+function pvpWeaponLine(name, nameEn, classes, items) {
+  return {
+    name, nameEn, category: "pvp", slot: "weapon", classes,
+    stages: items.map((item, i) => ({ item, ...PVP_WEAPON_COSTS[i] }))
+  };
+}
+
+/* Baut eine PvP-Rüstungs-Reihe: 3 Rüstungen (Lv 66, 105, 120).
+   Kosten wie bei den Waffen, nur ohne die Lv-80-Stufe; die erste Stufe gilt ab Lv 66. */
+function pvpArmorLine(name, nameEn, classes, items) {
+  const costs = [{ ...PVP_WEAPON_COSTS[0], minLevel: 66 }, PVP_WEAPON_COSTS[2], PVP_WEAPON_COSTS[3]];
+  return {
+    name, nameEn, category: "pvp", slot: "armor", classes,
+    stages: items.map((item, i) => ({ item, ...costs[i] }))
+  };
+}
+
+/* ---------- Upp-Reihen ----------
+   Neue PvP-Waffenart = eine Zeile:
+   "schluessel": pvpWeaponLine("Deutscher Name", "English name", [Klassen], [Waffe Lv65, Lv80, Lv105, Lv120]),
+   Neue PvP-Rüstung = eine Zeile:
+   "schluessel": pvpArmorLine("Deutscher Name", "English name", [Klassen], [Rüstung Lv66, Lv105, Lv120]),
+*/
+const UPGRADE_LINES = {
+  "schwert-1h-pvp": pvpWeaponLine("1-Hand-Schwert", "One-handed sword", ["warrior", "ninja", "sura"],
+                      ["wpn-05", "wpn-01", "wpn-06", "wpn-07"]),   // Schlachtschwert, Tritonschwert, Runenschwert, Kyanitschwert
+  "klinge-2h-pvp":  pvpWeaponLine("2-Hand-Waffe", "Two-handed weapon", ["warrior"],
+                      ["wpn-08", "wpn-02", "wpn-09", "wpn-10"]),   // Partisane, Halbmenschenklinge, Sonnenschwert, Kyanitklinge
+  "ruestung-krieger-pvp": pvpArmorLine("Krieger-Rüstung", "Warrior armour", ["warrior"],
+                      ["arm-06", "arm-07", "arm-08"]),             // Schwarzstahlpanzer, Magmaglutpanzer, Kyanitpanzer
 };

@@ -8,10 +8,31 @@
 
 const CHANGELOG = [
   {
+    version: "0.3",
+    date: "2026-11-22",
+    title: "Skilltree-Update", titleEn: "Skill tree update",
+    items: [
+      { type: "improved", de: "Skilltree: Zweige lassen sich jetzt kombinieren – ein Klick im PvP-Zweig wählt PvM und Yohara nicht mehr ab",
+                     en: "Skill tree: branches can now be combined – a click in the PvP branch no longer deselects PvM and Yohara" },
+      { type: "fixed", de: "Skilltree: Der PvP-Zweig braucht aus dem PvM-Zweig nur Stufe 1 (TP-Spot)",
+                     en: "Skill tree: the PvP branch only needs stage 1 (TP spot) from the PvM branch" },
+      { type: "new", de: "Baustellenschild im Kopfbereich – die Seite wächst laufend weiter",
+                     en: "Construction sign in the header – the site keeps growing" },
+      { type: "new", de: "Skilltree: Schalter „schon freigeschaltet?“ – rechnet den Skilltree-Schlüssel (1kkk Yang + Truhen) mit ein",
+                     en: "Skill tree: “already unlocked?” switch – includes the Skill Tree Key (1kkk Yang + chests)" }
+    ]
+  },
+  {
     version: "0.2",
     date: "2026-11-21",
     title: "Event-Helper", titleEn: "Event Helper",
     items: [
+      { type: "new", de: "Upp-Kalkulator: neue Reihe 2-Hand-Waffe (PvP, Krieger) – Partisane bis Kyanitklinge",
+                     en: "Upgrade Calculator: new line two-handed weapon (PvP, Warrior) – Partisan to Kyanite Blade" },
+      { type: "new", de: "Upp-Kalkulator: erste Rüstung – Krieger (PvP), Lv 66 bis Kyanit",
+                     en: "Upgrade Calculator: first armour – Warrior (PvP), Lv 66 up to Kyanite" },
+      { type: "fixed", de: "Upp-Kalkulator: Kyanitschwert +9 braucht 2 Weiße Drachenschuppen statt 1",
+                     en: "Upgrade Calculator: Kyanite Sword +9 needs 2 White Dragon Scales instead of 1" },
       { type: "new", de: "Neuer Reiter „Event-Helper“ mit Fischpuzzle-Helfer: zeigt für jedes Teil den besten Platz, wann du wegwerfen solltest und deine Chance auf die große Truhe",
                      en: "New “Event Helper” tab with a Fish Puzzle helper: shows the best spot for each piece, when to discard and your chance for the big chest" },
       { type: "improved", de: "Kopfbereich nutzt auf großen Bildschirmen die ganze Breite – größeres Logo, größere Charaktere",

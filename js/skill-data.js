@@ -3,15 +3,24 @@
    ---------------------------------------------------------------------
    Drei Zweige: I = PvM (orange), II = PvP (türkis), III = Yohara (lila).
    Boni werden in fester Reihenfolge 1 → 9 freigeschaltet (keine Sprünge).
-   Zweig II: braucht aus Zweig I nur die „Heilfähigkeit“  → requires.
+   Jeder Zweig hat sein eigenes Ziel – die Zweige lassen sich kombinieren.
+   Zweig II: braucht aus Zweig I nur Stufe 1 (TP-Spot)    → requires.
    Zweig III: braucht Zweig I vollständig                → requires.
    x/y  = Position im Baum (Koordinaten wie im Spiel-Fenster, 440×320)
    mats = benötigte Items für die Lieferung dieser Stufe (Ingame-Tabelle)
    bonus/bonusEn = Name des Bonus (Tooltip im Spiel) – noch offen
    ===================================================================== */
 
-/* Schlüssel zum Freischalten + Yang pro Stufe – Angaben folgen */
-const SKILL_KEY = { icon: "assets/skill/key.png", perNode: null };
+/* Skilltree-Schlüssel: wird EINMAL gebraucht, um den Skilltree freizuschalten
+   (ab Level 120). Im Rechner per Schalter „schon freigeschaltet?“ zu- oder abwählbar.
+   yang = Preis, mats = benötigte Items (laut Tooltip im Spiel) */
+const SKILL_KEY = {
+  icon: "assets/skill/key.png",
+  name: "Skilltree-Schlüssel", nameEn: "Skill Tree Key",
+  minLevel: 120,
+  yang: 1000000000,   // 1kkk
+  mats: { "mat-108": 20, "mat-90": 500, "mat-109": 3, "mat-110": 3, "mat-111": 3 }
+};
 const SKILL_YANG = null;   // z. B. [1000000, 2000000, …] pro Stufe, sobald bekannt
 
 const SKILL_TREE = {
@@ -42,7 +51,7 @@ const SKILL_TREE = {
   },
   pvp: {
     name: "PvP-Zweig", nameEn: "PvP branch", roman: "II", color: "#38c9c9",
-    requires: null /* Zweig I bis „Heilfähigkeit“ – Stufe folgt */,
+    requires: { branch: "pvm", upto: 1 },   // TP-Spot = Stufe 1 im PvM-Zweig
     edges: [[1, 2], [2, 3], [2, 4], [4, 5], [4, 6], [6, 7], [7, 8], [7, 9]],
     nodes: [
       { x: 210, y: 300, icon: "assets/skill/pvp-1.png", bonus: "", bonusEn: "",

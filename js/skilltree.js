@@ -1,13 +1,19 @@
 /* =====================================================================
    Origins2 Helper – Skilltree-Kalkulator
    Daten: js/skill-data.js (SKILL_TREE, SKILL_KEY, SKILL_YANG)
-   Klick auf einen Bonus = Baum füllt sich bis dahin (feste Reihenfolge,
-   inkl. Voraussetzungen anderer Zweige) + Einkaufsliste.
+   Jeder Zweig hat sein eigenes Ziel (kombinierbar). Klick auf einen Bonus =
+   dieser Zweig füllt sich bis dahin (feste Reihenfolge, inkl. Voraussetzungen
+   anderer Zweige) + Einkaufsliste. Schalter: Skilltree-Schlüssel mitrechnen.
    ===================================================================== */
 
 const ST_ORDER = ["pvm", "pvp", "yohara"];
 const stItemName = id => L(itemInfo(id)) || t("st.unknown", id.replace("mat-", "#"));
-let stSel = null; // { b: "pvp", i: 4 }  (i = 0-basiert)
+/* Ziel pro Zweig (Anzahl Stufen, 0 = nichts gewählt). Zweige sind unabhängig. */
+let stSel = { pvm: 0, pvp: 0, yohara: 0 };
+/* Skilltree schon mit dem Schlüssel freigeschaltet? (sonst Schlüssel mitrechnen) */
+let stKeyOwned = true;
+
+const stAny = () => ST_ORDER.some(b => stSel[b] > 0);
 
 function stNodeName(b, i) {
   const n = SKILL_TREE[b].nodes[i];
@@ -15,7 +21,7 @@ function stNodeName(b, i) {
   return bonus || t("st.stage", i + 1);
 }
 
-/* Alle Stufen, die bis zum gewählten Punkt nötig sind: { pvm: 9, pvp: 5, … } */
+/* Alle Stufen, die für die Auswahl nötig sind (inkl. Voraussetzungen): { pvm: 9, pvp: 5, … } */
 function stNeeded(sel) {
   const need = {};
   const add = (b, upto) => {
@@ -24,27 +30,29 @@ function stNeeded(sel) {
     const r = SKILL_TREE[b].requires;
     if (r) add(r.branch, r.upto);
   };
-  if (sel) add(sel.b, sel.i + 1);
+  ST_ORDER.forEach(b => { if (sel[b] > 0) add(b, sel[b]); });
   return need;
 }
+
+const stKeyNeeded = () => !stKeyOwned && typeof SKILL_KEY !== "undefined" && SKILL_KEY.mats;
 
 function stTotals(need) {
   const mats = {}, order = [];
   let stages = 0;
+  const addMats = m => Object.entries(m).forEach(([id, q]) => {
+    if (!(id in mats)) { mats[id] = 0; order.push(id); }
+    mats[id] += q;
+  });
+  if (stKeyNeeded()) addMats(SKILL_KEY.mats);
   ST_ORDER.forEach(b => {
-    for (let i = 0; i < (need[b] || 0); i++) {
-      stages++;
-      Object.entries(SKILL_TREE[b].nodes[i].mats).forEach(([id, q]) => {
-        if (!(id in mats)) { mats[id] = 0; order.push(id); }
-        mats[id] += q;
-      });
-    }
+    for (let i = 0; i < (need[b] || 0); i++) { stages++; addMats(SKILL_TREE[b].nodes[i].mats); }
   });
   let yang = null;
   if (Array.isArray(SKILL_YANG)) {
     yang = 0; ST_ORDER.forEach(b => { for (let i = 0; i < (need[b] || 0); i++) yang += (SKILL_YANG[b] || SKILL_YANG)[i] || 0; });
   }
-  return { mats, order, stages, yang };
+  const keyYang = stKeyNeeded() ? (SKILL_KEY.yang || 0) : 0;
+  return { mats, order, stages, yang, keyYang };
 }
 
 /* ---------------- Baum zeichnen ---------------- */
@@ -68,7 +76,7 @@ function stRenderTree() {
   ST_ORDER.forEach(b => {
     const br = SKILL_TREE[b], n = need[b] || 0;
     br.nodes.forEach((nd, i) => {
-      const on = i < n, cur = stSel && stSel.b === b && stSel.i === i;
+      const on = i < n, cur = stSel[b] === i + 1;
       const label = `${L(br)} · ${stNodeName(b, i)}`;
       html += `<g class="st-node${on ? " is-on" : ""}${cur ? " is-cur" : ""}" style="--c:${br.color}" data-b="${b}" data-i="${i}" tabindex="0" role="button" aria-label="${uEsc(label)}">
         <title>${uEsc(label)}</title>
@@ -88,16 +96,21 @@ function stRenderTree() {
 }
 
 /* ---------------- Ergebnis ---------------- */
+function stSelLine(need) {
+  return ST_ORDER.filter(b => need[b]).map(b => {
+    const B = SKILL_TREE[b], req = !(stSel[b] > 0);
+    return `<span style="--c:${B.color}"><i></i>${uEsc(t("st.branchTo", B.roman + " " + L(B), need[b]))}${req ? ` <em>(${t("st.required")})</em>` : ""}</span>`;
+  }).join("");
+}
+
 function stRenderResult() {
   const out = document.getElementById("st-result");
   if (!out) return;
-  if (!stSel) {
+  if (!stAny()) {
     out.innerHTML = `<div class="st-empty"><p class="font-display text-parch-100">${t("st.pickTitle")}</p><p class="mt-1 text-sm text-parch-400">${t("st.pickText")}</p></div>`;
     return;
   }
-  const need = stNeeded(stSel), tot = stTotals(need), br = SKILL_TREE[stSel.b];
-  const extra = ST_ORDER.filter(b => b !== stSel.b && need[b]).map(b => t("st.alsoNeeded", L(SKILL_TREE[b]), need[b]));
-  const pending = stSel.b === "pvp" && !br.requires;
+  const need = stNeeded(stSel), tot = stTotals(need);
   const rows = tot.order.map(id => {
     const info = itemInfo(id), unknown = !L(info);
     return `<li class="st-item${unknown ? " is-unknown" : ""}">
@@ -105,23 +118,32 @@ function stRenderResult() {
       <span class="st-name">${uEsc(stItemName(id))}</span>
       <span class="st-qty">${fmtNum(tot.mats[id])}×</span></li>`;
   }).join("");
-  const stages = ST_ORDER.filter(b => need[b]).map(b => {
+  const keyLi = stKeyNeeded() ? `<li><span class="st-dot" style="--c:var(--color-gold-300)"></span><b>${uEsc(L(SKILL_KEY))}</b> ${fmtYang(SKILL_KEY.yang)} Yang <em>${Object.keys(SKILL_KEY.mats).length} ${t("st.items")}</em></li>` : "";
+  const stages = keyLi + ST_ORDER.filter(b => need[b]).map(b => {
     const B = SKILL_TREE[b];
     return Array.from({ length: need[b] }, (_, i) => `<li><span class="st-dot" style="--c:${B.color}"></span><b>${B.roman}·${i + 1}</b> ${uEsc(stNodeName(b, i))} <em>${Object.keys(B.nodes[i].mats).length} ${t("st.items")}</em></li>`).join("");
   }).join("");
   out.innerHTML = `
     <div class="st-res-head">
       <div>
-        <p class="eyebrow" style="color:${br.color}">${br.roman} · ${uEsc(L(br))}</p>
-        <h3 class="font-display text-xl font-semibold text-parch-100">${uEsc(t("st.upTo", stNodeName(stSel.b, stSel.i)))}</h3>
-        <p class="mt-1 text-xs text-parch-400">${t("st.stagesTotal", tot.stages)}${extra.length ? " · " + extra.join(" · ") : ""}</p>
+        <p class="eyebrow">${t("st.listTitle")}</p>
+        <h3 class="font-display text-xl font-semibold text-parch-100">${t("st.selTitle")}</h3>
+        <p class="st-sel">${stSelLine(need)}</p>
+        <p class="mt-1 text-xs text-parch-400">${t("st.stagesTotal", tot.stages)}</p>
       </div>
       <button type="button" class="btn-ghost-sq" id="st-reset">${t("st.reset")}</button>
     </div>
-    ${pending ? `<p class="st-note">${t("st.pvpPending")}</p>` : ""}
+    <div class="st-keyrow">
+      <span><img src="${SKILL_KEY.icon}" alt="">${t("st.keyQ")}</span>
+      <div class="seg seg-sm" role="radiogroup" aria-label="${uEsc(t("st.keyQ"))}">
+        <label><input type="radio" name="st-key" value="1"${stKeyOwned ? " checked" : ""}><span>${t("st.keyYes")}</span></label>
+        <label><input type="radio" name="st-key" value="0"${stKeyOwned ? "" : " checked"}><span>${t("st.keyNo")}</span></label>
+      </div>
+    </div>
+    ${stKeyOwned ? "" : `<p class="st-keyhint">${t("st.keyHint")}</p>`}
     <div class="st-extra">
-      <span><img src="${SKILL_KEY.icon}" alt=""> ${t("st.key")} <em>${SKILL_KEY.perNode ? fmtNum(SKILL_KEY.perNode * tot.stages) + "×" : t("st.tbd")}</em></span>
-      <span>${t("st.yang")} <em>${tot.yang != null ? fmtYang(tot.yang) : t("st.tbd")}</em></span>
+      <span><img src="${SKILL_KEY.icon}" alt=""> ${t("st.key")} <em>${stKeyOwned ? t("st.keyDone") : t("st.keyNeed", fmtYang(SKILL_KEY.yang))}</em></span>
+      <span>${t("st.yangStages")} <em>${tot.yang != null ? fmtYang(tot.yang) : t("st.tbd")}</em></span>
     </div>
     <ul class="st-list">${rows}</ul>
     <details class="st-stages"><summary>${t("st.perStage")}</summary><ol>${stages}</ol></details>
@@ -131,33 +153,41 @@ function stRenderResult() {
       <button type="button" class="btn-ghost-sq" id="st-copy">${t("st.copy")}</button>
       <button type="button" class="btn-ghost-sq" id="st-share">${t("st.share")}</button>
     </div>`;
-  document.getElementById("st-reset").addEventListener("click", () => stSelect(null));
+  document.getElementById("st-reset").addEventListener("click", () => stSelect({ pvm: 0, pvp: 0, yohara: 0 }));
+  out.querySelectorAll('input[name="st-key"]').forEach(r => r.addEventListener("change", () => {
+    stKeyOwned = r.value === "1";
+    try { localStorage.setItem("o2h.skillKey", stKeyOwned ? "1" : "0"); } catch {}
+    stRenderResult();
+  }));
   document.getElementById("st-dl-png").addEventListener("click", stDownloadPng);
   document.getElementById("st-dl-txt").addEventListener("click", stDownloadTxt);
   document.getElementById("st-copy").addEventListener("click", stCopy);
   document.getElementById("st-share").addEventListener("click", () => {
-    const url = shareUrl({ skill: `${stSel.b}-${stSel.i + 1}`, lang: LANG }).replace(/#.*$/, "") + "#skilltree";
+    const url = shareUrl({ skill: stSelString(), lang: LANG }).replace(/#.*$/, "") + "#skilltree";
     shareLinkOrCopy(url, t("st.shareText", stListTitle()));
   });
 }
 
+/* Auswahl als Text, z. B. "pvm-9,pvp-3" (für Link + localStorage) */
+function stSelString() { return ST_ORDER.filter(b => stSel[b] > 0).map(b => `${b}-${stSel[b]}`).join(","); }
+
 function stSelect(sel, scroll) {
   stSel = sel;
-  try { localStorage.setItem("o2h.skillSel", sel ? `${sel.b}-${sel.i + 1}` : ""); } catch {}
+  try { localStorage.setItem("o2h.skillSel", stSelString()); } catch {}
   stRenderTree(); stRenderResult();
-  if (scroll && sel && window.innerWidth < 900) document.getElementById("st-result").scrollIntoView({ behavior: "smooth", block: "start" });
+  if (scroll && stAny() && window.innerWidth < 900) document.getElementById("st-result").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 /* ---------------- Export ---------------- */
-function stListTitle() { return `${SKILL_TREE[stSel.b].roman} · ${L(SKILL_TREE[stSel.b])} – ${t("st.upTo", stNodeName(stSel.b, stSel.i))}`; }
+function stListTitle() { const need = stNeeded(stSel); return ST_ORDER.filter(b => need[b]).map(b => t("st.branchTo", SKILL_TREE[b].roman + " " + L(SKILL_TREE[b]), need[b])).join(" · "); }
 function stListItems() {
   const tot = stTotals(stNeeded(stSel));
   return { tot, items: tot.order.map(id => ({ id, name: stItemName(id), qty: tot.mats[id] })) };
 }
-function stFile(ext) { return (t("st.fileName") + "-" + stSel.b + "-" + (stSel.i + 1) + "." + ext); }
+function stFile(ext) { return t("st.fileName") + "-" + stSelString().replace(/,/g, "_") + "." + ext; }
 
 function stDownloadTxt() {
-  if (!stSel) return;
+  if (!stAny()) return;
   const { tot, items } = stListItems();
   const w = Math.max(...items.map(i => i.name.length), 10);
   const Ls = [
@@ -165,8 +195,8 @@ function stDownloadTxt() {
     "".padEnd(w + 12, "-"),
     ...items.map(i => `${i.name.padEnd(w)}  ${fmtNum(i.qty).padStart(8)}x`),
     "".padEnd(w + 12, "-"),
-    `${t("st.key")}: ${SKILL_KEY.perNode ? fmtNum(SKILL_KEY.perNode * tot.stages) : t("st.tbd")}`,
-    `${t("st.yang")}: ${tot.yang != null ? fmtYang(tot.yang) : t("st.tbd")}`,
+    `${t("st.key")}: ${stKeyOwned ? t("st.keyDone") : t("st.keyNeed", fmtYang(tot.keyYang))}`,
+    `${t("st.yangStages")}: ${tot.yang != null ? fmtYang(tot.yang) : t("st.tbd")}`,
     "", "Origins2 Helper by Society"
   ];
   triggerDownload(new Blob(["﻿" + Ls.join("\r\n")], { type: "text/plain;charset=utf-8" }), stFile("txt"));
@@ -174,17 +204,20 @@ function stDownloadTxt() {
 }
 
 async function stCopy(e) {
-  if (!stSel) return;
+  if (!stAny()) return;
   const { tot, items } = stListItems();
-  const Ls = [`**${stListTitle()}**`, t("st.stagesTotal", tot.stages), "", ...items.map(i => `• ${i.name}: **${fmtNum(i.qty)}**`), "", "_Origins2 Helper by Society_"];
+  const Ls = [`**${stListTitle()}**`, t("st.stagesTotal", tot.stages),
+    ...(stKeyOwned ? [] : [`${t("st.key")}: ${t("st.keyNeed", fmtYang(tot.keyYang))}`]),
+    "", ...items.map(i => `• ${i.name}: **${fmtNum(i.qty)}**`), "", "_Origins2 Helper by Society_"];
   const ok = typeof copyText === "function" ? await copyText(Ls.join("\n")) : false;
   if (typeof toast === "function") toast(ok ? t("upp.discordOk") : t("upp.discordFail"));
 }
 
 async function stDownloadPng() {
-  if (!stSel) return;
+  if (!stAny()) return;
   const { tot, items } = stListItems();
-  const br = SKILL_TREE[stSel.b];
+  const need = stNeeded(stSel), only = ST_ORDER.filter(b => stSel[b] > 0);
+  const br = only.length === 1 ? SKILL_TREE[only[0]] : { color: "#d4a24c", roman: "", name: "", nameEn: "" };
   try { await document.fonts.ready; } catch {}
   const S = 2, cols = items.length > 10 ? 2 : 1;
   const W = cols === 2 ? 660 : 390, PAD = 22, ROW = 40, HEAD = 96, FOOT = 58;
@@ -196,11 +229,11 @@ async function stDownloadPng() {
   g.strokeStyle = "rgba(212,162,76,0.45)"; g.lineWidth = 1; g.strokeRect(0.5, 0.5, W - 1, H - 1);
   g.fillStyle = br.color; g.fillRect(0, 0, W, 2);
   g.fillStyle = br.color; g.font = "600 10px Inter, Arial, sans-serif";
-  g.fillText((t("st.listTitle") + " · " + br.roman + " " + L(br)).toUpperCase().split("").join(String.fromCharCode(8202)), PAD, 28);
+  g.fillText((t("st.listTitle") + (br.roman ? " · " + br.roman + " " + L(br) : "")).toUpperCase().split("").join(String.fromCharCode(8202)), PAD, 28);
   g.fillStyle = "#f1e9da"; g.font = "600 18px Cinzel, Georgia, serif";
-  g.fillText(t("st.upTo", stNodeName(stSel.b, stSel.i)), PAD, 54, W - PAD * 2);
+  g.fillText(stListTitle(), PAD, 54, W - PAD * 2);
   g.fillStyle = "#9b8e78"; g.font = "400 11.5px Inter, Arial, sans-serif";
-  g.fillText(t("st.stagesTotal", tot.stages), PAD, 74);
+  g.fillText(t("st.stagesTotal", tot.stages) + (stKeyOwned ? "" : " · " + L(SKILL_KEY) + " 1×"), PAD, 74);
   g.fillStyle = "rgba(212,162,76,0.18)"; g.fillRect(PAD, HEAD - 8, W - PAD * 2, 1);
   const colW = (W - PAD * 2 - (cols - 1) * 18) / cols;
   const icons = await Promise.all(items.map(i => loadImg((typeof ITEM_ICON_DATA !== "undefined" && ITEM_ICON_DATA[i.id]) || itemInfo(i.id).icon)));
@@ -222,8 +255,8 @@ async function stDownloadPng() {
   });
   const fy = H - FOOT + 6;
   g.fillStyle = "rgba(212,162,76,0.18)"; g.fillRect(PAD, fy, W - PAD * 2, 1);
-  g.fillStyle = "#9b8e78"; g.font = "400 11px Inter, Arial, sans-serif"; g.fillText(t("st.yang"), PAD, fy + 22);
-  g.fillStyle = "#f3d79a"; g.font = "600 15px Inter, Arial, sans-serif"; g.fillText(tot.yang != null ? fmtYang(tot.yang) : t("st.tbd"), PAD, fy + 40);
+  g.fillStyle = "#9b8e78"; g.font = "400 11px Inter, Arial, sans-serif"; g.fillText(stKeyOwned ? t("st.yangStages") : t("st.yang") + " (" + L(SKILL_KEY) + ")", PAD, fy + 22);
+  g.fillStyle = "#f3d79a"; g.font = "600 15px Inter, Arial, sans-serif"; g.fillText(stKeyOwned ? (tot.yang != null ? fmtYang(tot.yang) : t("st.tbd")) : fmtYang(tot.keyYang + (tot.yang || 0)) + (tot.yang == null ? " + " + t("st.tbd") : ""), PAD, fy + 40);
   g.textAlign = "right"; g.fillStyle = "#c4b69e"; g.font = "600 11px Cinzel, Georgia, serif"; g.fillText("ORIGINS2 HELPER", W - PAD, fy + 26);
   g.fillStyle = "#d4a24c"; g.font = "500 10.5px Inter, Arial, sans-serif"; g.fillText("by Society", W - PAD, fy + 40);
   g.textAlign = "left";
@@ -234,18 +267,29 @@ async function stDownloadPng() {
 }
 
 /* ---------------- Start ---------------- */
+/* "pvm-9,pvp-3" (alt auch nur "pvp-3") → { pvm: 9, pvp: 3, yohara: 0 } */
 function stParse(v) {
-  const m = /^(pvm|pvp|yohara)-([1-9])$/.exec(v || "");
-  return m && SKILL_TREE[m[1]] ? { b: m[1], i: +m[2] - 1 } : null;
+  const sel = { pvm: 0, pvp: 0, yohara: 0 };
+  let ok = false;
+  String(v || "").split(",").forEach(part => {
+    const m = /^(pvm|pvp|yohara)-([1-9])$/.exec(part.trim());
+    if (m) { sel[m[1]] = +m[2]; ok = true; }
+  });
+  return ok ? sel : null;
 }
 function initSkilltree() {
   const svg = document.getElementById("st-svg");
   if (!svg || typeof SKILL_TREE === "undefined") return;
-  const pick = g => { const s = { b: g.dataset.b, i: +g.dataset.i }; stSelect(stSel && stSel.b === s.b && stSel.i === s.i ? null : s, true); };
+  // Klick setzt das Ziel nur in DIESEM Zweig; erneuter Klick aufs Ziel nimmt eine Stufe zurück
+  const pick = g => {
+    const b = g.dataset.b, i = +g.dataset.i;
+    stSelect({ ...stSel, [b]: stSel[b] === i + 1 ? i : i + 1 }, true);
+  };
   svg.addEventListener("click", e => { const g = e.target.closest(".st-node"); if (g) pick(g); });
   svg.addEventListener("keydown", e => { const g = e.target.closest(".st-node"); if (g && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); pick(g); } });
   let start = stParse(new URLSearchParams(location.search).get("skill"));
   if (!start) { try { start = stParse(localStorage.getItem("o2h.skillSel")); } catch {} }
-  stSelect(start);
+  try { stKeyOwned = localStorage.getItem("o2h.skillKey") !== "0"; } catch {}
+  stSelect(start || { pvm: 0, pvp: 0, yohara: 0 });
   window.addEventListener("langchange", () => { stRenderTree(); stRenderResult(); });
 }
