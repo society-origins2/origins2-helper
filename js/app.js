@@ -200,5 +200,28 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof initFishPuzzle === "function") initFishPuzzle();
   if (typeof initTeam === "function") initTeam();
   if (typeof initRunner === "function") initRunner();
+  layoutHeroCrew();
+  window.addEventListener("resize", () => { clearTimeout(window.__hcT); window.__hcT = setTimeout(layoutHeroCrew, 80); });
+  document.querySelectorAll(".hero-crew img, .hero-logo").forEach(i => { if (!i.complete) i.addEventListener("load", layoutHeroCrew, { once: true }); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutHeroCrew);
   if (typeof initVisitors === "function") initVisitors();
 });
+
+/* Hero: Logo + Text mittig zwischen den Charakter-Gruppen links und rechts */
+function layoutHeroCrew() {
+  const grid = document.querySelector(".hero-grid"), inner = document.querySelector(".hero-inner");
+  const L = document.querySelector(".hero-crew-left"), R = document.querySelector(".hero-crew-right");
+  if (!grid || !inner) return;
+  grid.style.removeProperty("--crew-l"); grid.style.removeProperty("--crew-r");
+  if (window.innerWidth < 1100) return;
+  const wl = L && L.offsetParent ? L.getBoundingClientRect().width : 0;
+  const wr = R && R.offsetParent ? R.getBoundingClientRect().width : 0;
+  const gap = 24, cs = getComputedStyle(inner);
+  const avail = inner.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const block = [...grid.children].reduce((a, c) => a + c.getBoundingClientRect().width, 0) + parseFloat(getComputedStyle(grid).columnGap || 0);
+  const sym = Math.max(wl, wr) + gap;
+  let pl = sym, pr = sym;
+  if (avail - 2 * sym < block) { pl = wl ? wl + gap : 0; pr = wr ? wr + gap : 0; }
+  grid.style.setProperty("--crew-l", pl + "px");
+  grid.style.setProperty("--crew-r", pr + "px");
+}

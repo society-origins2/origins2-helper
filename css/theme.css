@@ -1204,3 +1204,54 @@ a.tm-card:hover .tm-art img { filter: drop-shadow(0 0 14px rgb(88 101 242 / .5))
 .cl-details[open] .cl-count { display: none; }
 .cl-details .cl-items { padding-bottom: 0.3rem; }
 .cl-type { min-width: 6.4rem; }
+
+/* Drei Charaktere im Kopfbereich (Akrios · Lucid · xZcRiTiCaLZz) */
+.hero-creator.hc-3 { cursor: default; }
+@media (min-width: 1100px) {
+  .hero-crew .hero-creator.hc-3 { position: relative; right: auto; bottom: auto; display: flex; }
+  .hero-crew .hero-creator.hc-3 img { height: 165px; animation-delay: -4.1s; filter: drop-shadow(0 0 14px rgb(60 190 210 / 0.28)) drop-shadow(0 8px 18px rgb(0 0 0 / 0.6)); }
+}
+@media (min-width: 1100px) and (max-width: 1239px) { .hero-crew .hero-creator.hc-3 { display: none; } }
+@media (min-width: 1240px) and (max-width: 1499px) {
+  .hero-crew { gap: 0; }
+  .hero-crew .hero-creator img { height: 165px; }
+  .hero-crew .hero-creator.hc-2 img { height: 145px; }
+  .hero-crew .hero-creator.hc-3 img { height: 140px; }
+  .hero-text { padding-right: 25rem; }
+}
+@media (min-width: 1500px) {
+  .hero-crew .hero-creator.hc-3 img { height: 190px; }
+  .hero-text { padding-right: 36rem; }
+}
+@media (min-width: 1800px) {
+  .hero-crew .hero-creator.hc-3 img { height: 205px; }
+  .hero-text { padding-right: 38rem; }
+}
+@media (min-width: 1240px) and (max-width: 1499px) {
+  .hero-crew { gap: 0.7rem; }
+  .hero-crew .hc-role { font-size: 0.52rem; letter-spacing: 0.1em; }
+  .hero-crew .hc-name { font-size: 0.8rem; }
+}
+.hero-crew .hc-cap { white-space: nowrap; }
+@media (min-width: 1500px) and (max-width: 1799px) {
+  .hero-crew { gap: 0.6rem; }
+  .hero-crew .hero-creator img { height: 205px; }
+  .hero-crew .hero-creator.hc-2 img { height: 185px; }
+  .hero-crew .hero-creator.hc-3 img { height: 170px; }
+  .hero-text { padding-right: 33rem; }
+}
+@media (min-width: 1240px) and (max-width: 1365px) {
+  .hero-crew { gap: 0.45rem; right: 1.6rem; }
+  .hero-crew .hero-creator img { height: 148px; }
+  .hero-crew .hero-creator.hc-2 img { height: 128px; }
+  .hero-crew .hero-creator.hc-3 img { height: 124px; }
+  .hero-crew .hc-role { font-size: 0.5rem; letter-spacing: 0.06em; }
+}
+
+/* ===== Hero-Aufteilung: links eigener Charakter · Mitte Logo + Text · rechts weitere Charaktere ===== */
+@media (min-width: 1100px) {
+  .hero-crew-left { left: 2.5rem; right: auto; }
+  .hero-crew-right { right: 2.5rem; left: auto; }
+  .hero-text { padding-right: 0 !important; max-width: 36rem; }
+  .hero-grid { grid-template-columns: auto auto !important; justify-content: center; padding-left: var(--crew-l, 0px); padding-right: var(--crew-r, 0px); }
+}

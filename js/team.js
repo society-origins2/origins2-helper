@@ -21,7 +21,9 @@ const TEAM_MEMBERS = [
   { name: "xZcRiTiCaLZz", ranks: ["admin", "creator"],
     img: "assets/creator.png", discordId: "432306996344258560" },
   { name: "Lucid", ranks: ["creator"],
-    img: "assets/team/lucid.png", link: "https://kick.com/drtraube" }
+    img: "assets/team/lucid.png", link: "https://kick.com/drtraube" },
+  { name: "Akrios", ranks: ["helper"],
+    img: "assets/team/akrios.png" }
 ];
 
 /* Auswahl im Formular */

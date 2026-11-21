@@ -102,7 +102,7 @@ Der Nutzer schickt Screenshots aus dem Ingame-Wiki. Icons werden ausgeschnitten,
 - OFFEN: Bonus-Namen/-Werte (bonus/bonusEn), Schlüssel pro Stufe (SKILL_KEY.perNode), Yang pro Stufe (SKILL_YANG), welche PvM-Stufe die Heilfähigkeit ist.
 
 ## Creator im Kopfbereich
-- Zwei Figuren rechts im Hero: Lucid (assets/team/lucid.png, Link Kick drtraube, Klasse .hc-2) und xZcRiTiCaLZz (Discord). Ab 1100px sichtbar.
+- Hero-Aufteilung: links .hero-crew-left (xZcRiTiCaLZz), Mitte Logo+Text (zentriert per layoutHeroCrew() in app.js), rechts .hero-crew-right. Figuren: Akrios (Helper, assets/team/akrios.png, .hc-3, kein Link), Lucid (.hc-2, Kick drtraube), xZcRiTiCaLZz (Discord). Ab 1100px sichtbar; Akrios+Lucid erst ab 1240px. Neue Figuren: nur Größe/Position der Figuren anpassen, Logo und Text nicht verändern; Überlappung bei 1240–1920px prüfen.
 
 ## Besucherzähler (js/visitors.js)
 - GoatCounter (kostenlos, ohne Cookies). `GOATCOUNTER_CODE` leer = Zähler unsichtbar. In GoatCounter-Einstellungen „Allow adding visitor counts on your website“ aktivieren. Anzeige im Footer (TOTAL.json).
