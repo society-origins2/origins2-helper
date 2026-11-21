@@ -1190,3 +1190,17 @@ a.tm-card:hover .tm-art img { filter: drop-shadow(0 0 14px rgb(88 101 242 / .5))
 .fp-rules li b { display: inline-block; width: 1.4rem; color: var(--color-gold-200); }
 .fp-rules-note { margin-top: 0.6rem; font-size: 0.7rem; line-height: 1.5; color: var(--color-parch-500); }
 .fp-advice.is-inline { min-height: 0; margin-top: 0.9rem; padding: 0.8rem 0.9rem; border-radius: 10px; border: 1px solid var(--line-strong); background: rgb(0 0 0 / .25); }
+
+/* Changelog: pro Version einklappbar */
+.cl-list { gap: 0.55rem; }
+.cl-ver + .cl-ver { padding-top: 0.55rem; border-top: 1px solid var(--line); }
+.cl-details > summary { list-style: none; cursor: pointer; align-items: center; padding: 0.25rem 0; border-radius: 6px; user-select: none; }
+.cl-details > summary::-webkit-details-marker { display: none; }
+.cl-details > summary:hover .cl-title { color: var(--color-gold-200); }
+.cl-details > summary:focus-visible { outline: 2px solid var(--color-gold-300); outline-offset: 2px; }
+.cl-count { font-size: 0.62rem; font-weight: 700; min-width: 1.3rem; text-align: center; padding: 0.05rem 0.35rem; border-radius: 999px; color: var(--color-parch-400); background: rgb(255 255 255 / .06); }
+.cl-chev { width: 16px; height: 16px; color: var(--color-gold-300); transition: transform .2s; flex: none; }
+.cl-details[open] .cl-chev { transform: rotate(180deg); }
+.cl-details[open] .cl-count { display: none; }
+.cl-details .cl-items { padding-bottom: 0.3rem; }
+.cl-type { min-width: 6.4rem; }

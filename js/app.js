@@ -91,9 +91,10 @@ function initReferral() {
 }
 
 /* ---------- Reiter: zwischen den Bereichen blättern ---------- */
-const VIEWS = ["uebersicht", "upp-rechner", "skilltree", "bosse", "kalender", "minispiele", "guides", "team"];
+const VIEWS = ["uebersicht", "upp-rechner", "skilltree", "bosse", "kalender", "event-helper", "guides", "team"];
 
 function showView(name, scroll) {
+  if (name === "minispiele") name = "event-helper";
   if (!VIEWS.includes(name)) name = VIEWS[0];
   document.querySelectorAll("[data-view]").forEach(v => { v.hidden = v.dataset.view !== name; });
   document.querySelectorAll("[data-tab]").forEach(t => {

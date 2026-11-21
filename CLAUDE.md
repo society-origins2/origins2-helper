@@ -108,7 +108,7 @@ Der Nutzer schickt Screenshots aus dem Ingame-Wiki. Icons werden ausgeschnitten,
 - GoatCounter (kostenlos, ohne Cookies). `GOATCOUNTER_CODE` leer = Zähler unsichtbar. In GoatCounter-Einstellungen „Allow adding visitor counts on your website“ aktivieren. Anzeige im Footer (TOTAL.json).
 - Skilltree ist als „Beta“ markiert (Tab-Badge + Hinweis), bis alle Werte geprüft sind.
 
-## Minispiele (Reiter #minispiele)
+## Event-Helper (Reiter #event-helper, alter Link #minispiele leitet weiter)
 - Fischpuzzle: js/fish-solver.js (Regeln, Truhen-Grenzen FISH_TIERS, exakter Löser, läuft auch als Web-Worker) + js/fishpuzzle.js (Oberfläche).
 - Brett 6×4, 6 normale Formen (nicht drehbar) + Luxus 2×3, Formen aus dem Server-Code. Truhen-Grenzen (10/24) von Metin2 übernommen – für Origins2 vom User noch zu prüfen.
 - Löser: exakte Wahrscheinlichkeit für L (Memo über freie Felder/Versuche/Luxus), Eröffnungstabelle FISH_OPEN offline vorberechnet (Luxus 0–3). Ist L unmöglich → minimiert erwartete Restversuche (fishE, Uint8Array 16 MB, erst bei Bedarf).

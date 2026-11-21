@@ -135,7 +135,7 @@ function fpAfterChange() {
   }
   if (fpVisible()) setTimeout(fpPrefetch, 30);
 }
-function fpVisible() { const v = document.querySelector('[data-view="minispiele"]'); return v && !v.hidden; }
+function fpVisible() { const v = document.querySelector('[data-view="event-helper"]'); return v && !v.hidden; }
 
 function fpApply(mask) {
   const s = fp.pick;
