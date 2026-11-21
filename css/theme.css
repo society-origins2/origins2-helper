@@ -1063,3 +1063,32 @@ a.tm-card:hover .tm-art img { filter: drop-shadow(0 0 14px rgb(88 101 242 / .5))
   .hero-creator:not(.hc-2) img { height: 175px; }
   .hero-text { padding-right: 20rem; }
 }
+
+/* Logo nie stauchen: Breite folgt immer der Höhe */
+.hero-grid .hero-logo { max-width: none; width: auto; object-fit: contain; flex: none; }
+@media (min-width: 768px) { .hero-grid { grid-template-columns: auto minmax(0, 1fr); } }
+@media (min-width: 1100px) {
+  .hero-grid .hero-logo { height: 165px; }
+  .hero-grid { gap: 2rem; }
+}
+@media (min-width: 1440px) { .hero-text { padding-right: 21rem; } }
+@media (min-width: 1100px) and (max-width: 1439px) {
+  .hero-creator:not(.hc-2) img { height: 170px; }
+  .hero-creator.hc-2 { right: 11.2rem; }
+  .hero-creator.hc-2 img { height: 150px; }
+  .hero-text { padding-right: 19rem; }
+  .today-card { min-width: 11.5rem; }
+}
+@media (min-width: 1100px) and (max-width: 1239px) {
+  .hero-creator.hc-2 { display: none; }
+  .hero-text { padding-right: 12rem; }
+}
+
+/* Beta-Hinweis */
+.wip-note { display: flex; gap: 0.65rem; align-items: flex-start; max-width: 46rem; padding: 0.6rem 0.8rem; border-radius: 10px; border: 1px solid rgb(226 160 47 / .4); background: rgb(226 160 47 / .08); font-size: 0.78rem; line-height: 1.5; color: #ecd3a4; }
+.wip-badge { flex: none; margin-top: 0.1rem; padding: 0.1rem 0.45rem; border-radius: 999px; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1a1209; background: linear-gradient(180deg, #f1cf87, #d4a24c); }
+/* Besucherzähler */
+.visitor-count { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--color-parch-500); }
+.visitor-count[hidden] { display: none; }
+.visitor-count svg { width: 14px; height: 14px; color: var(--color-gold-400); }
+.visitor-count b { color: var(--color-gold-200); font-weight: 600; font-variant-numeric: tabular-nums; }

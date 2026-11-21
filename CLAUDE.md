@@ -103,3 +103,7 @@ Der Nutzer schickt Screenshots aus dem Ingame-Wiki. Icons werden ausgeschnitten,
 
 ## Creator im Kopfbereich
 - Zwei Figuren rechts im Hero: Lucid (assets/team/lucid.png, Link Kick drtraube, Klasse .hc-2) und xZcRiTiCaLZz (Discord). Ab 1100px sichtbar.
+
+## Besucherzähler (js/visitors.js)
+- GoatCounter (kostenlos, ohne Cookies). `GOATCOUNTER_CODE` leer = Zähler unsichtbar. In GoatCounter-Einstellungen „Allow adding visitor counts on your website“ aktivieren. Anzeige im Footer (TOTAL.json).
+- Skilltree ist als „Beta“ markiert (Tab-Badge + Hinweis), bis alle Werte geprüft sind.

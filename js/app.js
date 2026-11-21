@@ -198,4 +198,5 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof initSkilltree === "function") initSkilltree();
   if (typeof initTeam === "function") initTeam();
   if (typeof initRunner === "function") initRunner();
+  if (typeof initVisitors === "function") initVisitors();
 });

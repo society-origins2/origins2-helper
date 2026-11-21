@@ -68,6 +68,9 @@ const I18N = {
     "guides.title": "Guides",
     "guides.text": "Anleitungen und Tipps der Gilde Society – vom Einstieg bis zum Endgame.",
     "soon": "Bald",
+    "beta": "Beta",
+    "visitors.label": "Besucher bisher",
+    "st.wip": "Noch in Arbeit: Einige Werte, Voraussetzungen und Namen fehlen noch oder können falsch sein. Bitte die Liste im Spiel gegenchecken – Fehler gerne an uns auf Discord melden.",
     "nav.label": "Bereiche",
 
     "ticker.label": "Nächste Weltbosse",
@@ -338,6 +341,9 @@ const I18N = {
     "guides.title": "Guides",
     "guides.text": "Guides and tips from the guild Society – from your first steps to the endgame.",
     "soon": "Soon",
+    "beta": "Beta",
+    "visitors.label": "visitors so far",
+    "st.wip": "Work in progress: some values, requirements and names are still missing or may be wrong. Please double-check the list in game – feel free to report mistakes to us on Discord.",
     "nav.label": "Sections",
 
     "ticker.label": "Next world bosses",
