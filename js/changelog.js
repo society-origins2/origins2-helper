@@ -30,6 +30,8 @@ const CHANGELOG = [
                      en: "“Become a promoter”: apply with channel, referral code and character screenshot straight to our Discord" },
       { type: "new", de: "Skilltree-Kalkulator: Bonus antippen, Baum füllt sich bis dorthin – mit Einkaufsliste als Bild, Text oder für Discord",
                      en: "Skill Tree Calculator: tap a bonus, the tree fills up to it – with shopping list as image, text or for Discord" },
+      { type: "improved", de: "Kopfbereich nutzt auf großen Bildschirmen die ganze Breite – größeres Logo, größere Charaktere",
+                     en: "Header uses the full width on large screens – bigger logo, bigger characters" },
       { type: "new", de: "Besucherzähler im Footer",
                      en: "Visitor counter in the footer" },
       { type: "improved", de: "Skilltree-Kalkulator als Beta markiert – er ist noch nicht ganz fertig",
