@@ -107,6 +107,7 @@
         <a class="tab" href="#skilltree" data-tab="skilltree"><span data-i18n="tab.skill">Skilltree-Kalkulator</span> <em data-i18n="beta">Beta</em></a>
         <a class="tab" href="#bosse" data-tab="bosse" data-i18n="tab.bosses">Boss-Timer</a>
         <a class="tab" href="#kalender" data-tab="kalender"><span data-i18n="tab.calendar">Kalender</span> <em data-i18n="new">Neu</em></a>
+        <a class="tab" href="#minispiele" data-tab="minispiele"><span data-i18n="tab.games">Minispiele</span> <em data-i18n="new">Neu</em></a>
         <a class="tab" href="#guides" data-tab="guides"><span data-i18n="tab.guides">Guides</span> <em data-i18n="soon">Bald</em></a>
         <a class="tab" href="#team" data-tab="team"><span data-i18n="tab.team">Team</span> <em data-i18n="new">Neu</em></a>
       </div>
@@ -310,6 +311,57 @@
       </section>
     </div>
 
+    <!-- ========== VIEW: Minispiele ========== -->
+    <div class="view" data-view="minispiele" hidden>
+      <section aria-labelledby="mg-title">
+        <p class="eyebrow" data-i18n="mg.eyebrow">Event-Helfer</p>
+        <h2 id="mg-title" class="section-title" data-i18n="mg.title">Minispiele</h2>
+        <p class="mt-1 max-w-2xl text-sm text-parch-400" data-i18n="mg.intro">Helfer für die Event-Minispiele auf Origins2 – du gibst ein, was du im Spiel siehst, und bekommst den besten Zug.</p>
+        <div class="mg-nav mt-5" role="list">
+          <span class="mg-chip is-active" role="listitem">🎣 <span data-i18n="fp.title">Fischpuzzle</span></span>
+          <span class="mg-chip is-soon" role="listitem">🃏 Black Jack <em data-i18n="soon">Bald</em></span>
+          <span class="mg-chip is-soon" role="listitem">👑 Catch the King <em data-i18n="soon">Bald</em></span>
+        </div>
+
+        <div id="fp-root" class="fp-wrap mt-5">
+          <div class="fp-main panel">
+            <div class="fp-head">
+              <div>
+                <h3 class="font-display text-xl font-semibold text-parch-100" data-i18n="fp.title">Fischpuzzle</h3>
+                <p class="mt-0.5 text-xs text-parch-400" data-i18n="fp.sub">6×4 Felder · jedes Teil zählt als Versuch – auch wenn du es wegwirfst</p>
+              </div>
+              <div class="fp-head-btns">
+                <button type="button" id="fp-undo" class="btn-ghost-sq" data-i18n="fp.undo">Rückgängig</button>
+                <button type="button" id="fp-reset" class="btn-ghost-sq" data-i18n="fp.reset">Neues Puzzle</button>
+              </div>
+            </div>
+            <div class="fp-stats">
+              <span><em data-i18n="fp.attempts">Versuche</em><b id="fp-used">0</b></span>
+              <span><em data-i18n="fp.freeCells">Freie Felder</em><b id="fp-free">24</b></span>
+              <span><em data-i18n="fp.bestChest">Beste Truhe möglich</em><b id="fp-tier" class="fp-tier">L</b></span>
+              <span class="fp-luxbox"><em data-i18n="fp.luxBoxes">Luxus-Truhen</em>
+                <span class="fp-stepper"><button type="button" id="fp-lux-minus" aria-label="−">−</button><b id="fp-lux">0</b><button type="button" id="fp-lux-plus" aria-label="+">+</button></span></span>
+            </div>
+            <div id="fp-board" class="fp-board" role="grid" aria-label="Fischpuzzle"></div>
+            <p class="fp-pick-label" data-i18n="fp.pickLabel">Welches Teil kam aus der Truhe?</p>
+            <div id="fp-pieces" class="fp-pieces"></div>
+          </div>
+          <aside class="fp-side panel">
+            <div id="fp-advice" class="fp-advice" aria-live="polite"></div>
+            <div class="fp-rules">
+              <p class="fp-rules-title" data-i18n="fp.rulesTitle">Truhen</p>
+              <ul>
+                <li><b>L</b> <span data-i18n="fp.ruleL">bis 10 Versuche</span></li>
+                <li><b>M</b> <span data-i18n="fp.ruleM">11 – 24 Versuche</span></li>
+                <li><b>S</b> <span data-i18n="fp.ruleS">ab 25 Versuchen</span></li>
+              </ul>
+              <p class="fp-rules-note" data-i18n="fp.rulesNote">Die Grenzen sind von Metin2 übernommen – für Origins2 prüfen wir sie noch. Die Chancen sind exakt berechnet: Der Helfer geht alle möglichen Teile durch, die noch kommen können.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+
     <!-- ========== VIEW: Guides ========== -->
     <div class="view" data-view="guides" hidden>
       <section class="soon-view panel">
@@ -490,6 +542,8 @@
   <script src="js/changelog.js"></script>
   <script src="js/apply.js"></script>
   <script src="js/team.js"></script>
+  <script src="js/fish-solver.js"></script>
+  <script src="js/fishpuzzle.js"></script>
   <script src="js/runner.js"></script>
   <script src="js/visitors.js"></script>
   <script src="js/app.js"></script>

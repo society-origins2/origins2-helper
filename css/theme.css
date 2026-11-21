@@ -1128,3 +1128,65 @@ a.tm-card:hover .tm-art img { filter: drop-shadow(0 0 14px rgb(88 101 242 / .5))
   .hero-crew .hero-creator.hc-2 img { height: 220px; }
   .hero-text { padding-right: 29rem; }
 }
+
+/* ---------------- Minispiele ---------------- */
+.mg-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.mg-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.85rem; border-radius: 999px; font-size: 0.82rem; border: 1px solid var(--line); color: var(--color-parch-300); background: rgb(0 0 0 / .2); }
+.mg-chip.is-active { color: #1a1209; font-weight: 600; border-color: transparent; background: linear-gradient(180deg, #f1cf87, #d4a24c); }
+.mg-chip.is-soon { opacity: .6; }
+.mg-chip em { font-style: normal; font-size: 0.58rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--color-gold-300); border: 1px solid var(--line-strong); border-radius: 4px; padding: 0.05rem 0.3rem; }
+
+/* Fischpuzzle */
+.fp-wrap { display: grid; gap: 1rem; }
+@media (min-width: 900px) { .fp-wrap { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: start; } .fp-side { position: sticky; top: 7.5rem; } }
+.fp-main { padding: 1.1rem; }
+.fp-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.7rem; align-items: flex-start; }
+.fp-head-btns { display: flex; gap: 0.4rem; }
+.fp-head-btns .btn-ghost-sq { padding: 0.4rem 0.7rem; font-size: 0.76rem; }
+.fp-head-btns .btn-ghost-sq:disabled { opacity: .4; cursor: default; }
+.fp-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.9rem; }
+@media (min-width: 560px) { .fp-stats { grid-template-columns: repeat(4, 1fr); } }
+.fp-stats > span { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.5rem 0.65rem; border-radius: 9px; border: 1px solid var(--line); background: rgb(0 0 0 / .2); }
+.fp-stats em { font-style: normal; font-size: 0.6rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-parch-500); }
+.fp-stats b { font-size: 1.15rem; font-weight: 700; color: var(--color-parch-100); font-variant-numeric: tabular-nums; }
+.fp-tier[data-tier="L"] { color: #f1cf87; } .fp-tier[data-tier="M"] { color: #d6d6d6; } .fp-tier[data-tier="S"] { color: #d39a6a; }
+.fp-stepper { display: inline-flex; align-items: center; gap: 0.5rem; }
+.fp-stepper button { width: 1.5rem; height: 1.5rem; border-radius: 6px; border: 1px solid var(--line-strong); color: var(--color-gold-200); background: rgb(0 0 0 / .3); line-height: 1; }
+.fp-stepper button:hover { border-color: var(--color-gold-300); }
+.fp-board {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin: 1rem auto 0; width: min(100%, 440px);
+  padding: 8px; border-radius: 12px; border: 1px solid var(--line-strong);
+  background: radial-gradient(80% 90% at 50% 40%, rgb(40 90 120 / .25), transparent 75%), #0b0907;
+}
+.fp-cell { aspect-ratio: 1; border-radius: 7px; border: 1px solid rgb(255 255 255 / .07); background: rgb(255 255 255 / .03); cursor: pointer; transition: background .15s, box-shadow .15s, transform .15s; }
+.fp-cell:hover { background: rgb(255 255 255 / .08); }
+.fp-cell.is-filled { background: linear-gradient(180deg, color-mix(in srgb, var(--c) 92%, white), color-mix(in srgb, var(--c) 70%, black)); border-color: rgb(0 0 0 / .35); box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 2px 6px rgb(0 0 0 / .4); cursor: default; }
+.fp-cell.is-ghost { background: color-mix(in srgb, var(--c) 30%, transparent); border: 2px dashed var(--c); box-shadow: 0 0 14px color-mix(in srgb, var(--c) 60%, transparent); animation: fpGhost 1.2s ease-in-out infinite; }
+@keyframes fpGhost { 50% { transform: scale(.94); } }
+@media (prefers-reduced-motion: reduce) { .fp-cell.is-ghost { animation: none; } }
+.fp-pick-label { margin-top: 1.1rem; text-align: center; font-size: 0.7rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--color-gold-300); }
+.fp-pieces { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 0.6rem; }
+.fp-piece { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; min-width: 3.6rem; height: 3.6rem; padding: 0.4rem; border-radius: 10px; border: 1px solid var(--line); background: rgb(0 0 0 / .25); transition: border-color .15s, transform .15s, background .15s; }
+.fp-piece:hover:not(:disabled) { border-color: var(--line-strong); transform: translateY(-2px); }
+.fp-piece.is-active { border-color: var(--color-gold-300); background: rgb(212 162 76 / .14); box-shadow: 0 0 0 1px var(--color-gold-300); }
+.fp-piece:disabled { opacity: .35; cursor: default; }
+.fp-piece.is-lux { min-width: 4.6rem; border-color: rgb(241 207 135 / .5); }
+.fp-piece span { font-size: 0.55rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--color-gold-200); }
+.fp-side { padding: 1.1rem; }
+.fp-advice { min-height: 7.5rem; }
+.fp-advice-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--color-parch-100); }
+.fp-advice-sub { margin-top: 0.3rem; font-size: 0.82rem; color: var(--color-gold-200); font-variant-numeric: tabular-nums; }
+.fp-advice-btns { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+.fp-advice-btns .btn-gold, .fp-advice-btns .btn-ghost-sq { padding: 0.5rem 0.85rem; font-size: 0.8rem; }
+.fp-advice-hint { margin-top: 0.7rem; font-size: 0.72rem; color: var(--color-parch-500); }
+.fp-tip { margin-top: 0.7rem; font-size: 0.78rem; color: #ecd3a4; padding: 0.45rem 0.65rem; border-radius: 8px; border: 1px solid rgb(226 160 47 / .35); background: rgb(226 160 47 / .07); }
+.fp-think { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--color-parch-300); }
+.fp-spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgb(212 162 76 / .25); border-top-color: var(--color-gold-300); animation: fpSpin .8s linear infinite; }
+@keyframes fpSpin { to { transform: rotate(360deg); } }
+.fp-done { text-align: center; padding: 1rem 0; }
+.fp-rules { margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid var(--line); }
+.fp-rules-title { font-size: 0.62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--color-gold-300); }
+.fp-rules ul { margin-top: 0.4rem; display: grid; gap: 0.2rem; font-size: 0.8rem; color: var(--color-parch-300); }
+.fp-rules li b { display: inline-block; width: 1.4rem; color: var(--color-gold-200); }
+.fp-rules-note { margin-top: 0.6rem; font-size: 0.7rem; line-height: 1.5; color: var(--color-parch-500); }
+.fp-advice.is-inline { min-height: 0; margin-top: 0.9rem; padding: 0.8rem 0.9rem; border-radius: 10px; border: 1px solid var(--line-strong); background: rgb(0 0 0 / .25); }

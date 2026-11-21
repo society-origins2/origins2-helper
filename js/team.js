@@ -6,7 +6,7 @@
    HELPER_WEBHOOK: Webhook-URL des Kanals für Helfer-Bewerbungen
    ===================================================================== */
 
-const HELPER_WEBHOOK = "";
+const HELPER_WEBHOOK = "https://discord.com/api/webhooks/1573428209868079114/LcKyd_Yox6cuWcnlmLcdTp9BXOHaCwiLvCmPk3_FWD-b1EjC-U4h76hxkJ3sbKZDOUNK";
 
 /* Ränge: admin = leitet die Seite · creator = macht Content (Stream/Video)
    helper = wirkt mit (Daten, Übersetzen, Testen …), macht aber keinen Content
