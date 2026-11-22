@@ -157,7 +157,7 @@ function stRenderResult() {
   const rows = viewOrder.map(id => {
     const info = itemInfo(id), unknown = !L(info), b = bought.has(id), p = prices[id] || 0;
     return `<li class="mg-tile st-tile${b ? " is-bought" : ""}${id === stJustBought ? " just-bought" : ""}" data-buy="${uEsc(id)}" role="checkbox" tabindex="0" aria-checked="${b}" title="${uEsc(t("upp.buyToggle"))}">
-      <span class="mt-ico">${checkMark}<img src="${info.icon}" alt="" loading="lazy"></span>
+      <span class="mt-ico">${checkMark}<img src="${info.icon}?v=${ASSET_V}" alt="" loading="lazy"></span>
       <span class="mg-name${unknown ? " is-unknown" : ""}" title="${uEsc(stItemName(id))}">${uEsc(stItemName(id))}</span>
       <span class="mg-avg tabular-nums">${fmtNum(tot.mats[id])}×</span>
       ${editPrices ? `<div class="mg-price mt-price">${priceField(id, prices)}<span class="mg-cost tabular-nums">${p ? "= " + fmtYang(costOf(id)) : ""}</span></div>`
@@ -182,7 +182,7 @@ function stRenderResult() {
       </div>
     </div>
     <div class="st-keyrow">
-      <span><img src="${SKILL_KEY.icon}" alt="">${t("st.keyQ")}</span>
+      <span><img src="${SKILL_KEY.icon}?v=${ASSET_V}" alt="">${t("st.keyQ")}</span>
       <div class="seg seg-sm" role="radiogroup" aria-label="${uEsc(t("st.keyQ"))}">
         <label><input type="radio" name="st-key" value="1"${stKeyOwned ? " checked" : ""}><span>${t("st.keyYes")}</span></label>
         <label><input type="radio" name="st-key" value="0"${stKeyOwned ? "" : " checked"}><span>${t("st.keyNo")}</span></label>
@@ -190,7 +190,7 @@ function stRenderResult() {
     </div>
     ${stKeyOwned ? "" : `<p class="st-keyhint">${t("st.keyHint")}</p>`}
     <div class="st-extra">
-      <span><img src="${SKILL_KEY.icon}" alt=""> ${t("st.key")} <em>${stKeyOwned ? t("st.keyDone") : t("st.keyNeed", fmtYang(SKILL_KEY.yang))}</em></span>
+      <span><img src="${SKILL_KEY.icon}?v=${ASSET_V}" alt=""> ${t("st.key")} <em>${stKeyOwned ? t("st.keyDone") : t("st.keyNeed", fmtYang(SKILL_KEY.yang))}</em></span>
       <span>${t("st.yangStages")} <em>${tot.yang != null ? fmtYang(tot.yang) : t("st.tbd")}</em></span>
       ${anyPrice ? `<span>${t("st.matValue")} <em>${fmtYang(matValue)}</em></span>` : ""}
     </div>

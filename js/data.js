@@ -11,6 +11,8 @@
    Kürzel (mat-XX, wpn-XX, arm-XX) gehören zu den Icons in assets/items/.
    ===================================================================== */
 
+const ASSET_V = "20261122-21";   // Cache-Buster für Item-Icons (bei Icon-Änderung hochzählen)
+
 const MATERIALS = {
   "mat-01": { name: "Rubin-Gravurmesser", nameEn: "Ruby Engraving Knife", icon: "assets/items/mat-01.png" },
   "mat-02": { name: "Goldschelle", nameEn: "Gold Clasp", icon: "assets/items/mat-02.png" },

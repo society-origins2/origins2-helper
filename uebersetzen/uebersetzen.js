@@ -192,7 +192,7 @@ function render() {
   $("tr-list").innerHTML = list.length ? list.map(it => `
     <article class="tr-row panel${entryDone(state.entries[it.id]) ? " is-done" : ""}" data-row="${it.id}">
       <div class="tr-item">
-        <span class="tr-ico tr-ico-${it.g}"><img src="../${esc(it.icon)}" alt="" loading="lazy"></span>
+        <span class="tr-ico tr-ico-${it.g}"><img src="../${esc(it.icon)}?v=${ASSET_V}" alt="" loading="lazy"></span>
         <span class="tr-id">${it.id}</span>
       </div>
       ${langs.map(l => langCell(it, l)).join("")}

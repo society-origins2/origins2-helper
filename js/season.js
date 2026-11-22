@@ -89,10 +89,45 @@ function xmasStopSnow() {
   snow = null;
 }
 
+/* Deko (Mistelzweig, Schleifchen, Weihnachtsbaum) – nur im Weihnachtsmodus */
+const XMAS_MISTLETOE = `<svg viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M40 0v14M40 14c-6 2-12 8-15 16M40 14c6 2 12 8 15 16" stroke="#6b7d3a" stroke-width="2" stroke-linecap="round"/>
+  <g fill="#4f6b2e" stroke="#3c531f" stroke-width="1">
+    <path d="M25 30c-7-1-13 3-16 10 7 2 14-1 18-8z"/><path d="M25 30c-6 3-9 9-9 17 7-2 11-8 12-15z"/>
+    <path d="M55 30c7-1 13 3 16 10-7 2-14-1-18-8z"/><path d="M55 30c6 3 9 9 9 17-7-2-11-8-12-15z"/>
+    <path d="M33 34c-5 3-8 9-8 16 6-2 10-7 11-13z"/><path d="M47 34c5 3 8 9 8 16-6-2-10-7-11-13z"/>
+  </g>
+  <g fill="#f3ede1" stroke="#cbb68f" stroke-width="0.6">
+    <circle cx="24" cy="44" r="3"/><circle cx="31" cy="48" r="2.6"/><circle cx="56" cy="44" r="3"/><circle cx="49" cy="48" r="2.6"/><circle cx="40" cy="30" r="2.4"/>
+  </g></svg>`;
+const XMAS_BOW = `<svg viewBox="0 0 60 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M30 22c-8-10-26-12-26 0s18 10 26 0z" fill="#b23b36" stroke="#7d1f1b" stroke-width="1.2"/>
+  <path d="M30 22c8-10 26-12 26 0s-18 10-26 0z" fill="#c9433d" stroke="#7d1f1b" stroke-width="1.2"/>
+  <path d="M30 22c-5 6-7 14-6 22M30 22c5 6 7 14 6 22" stroke="#b23b36" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="30" cy="22" r="5.5" fill="#d9a441" stroke="#7d1f1b" stroke-width="1"/></svg>`;
+const XMAS_TREE = `<svg viewBox="0 0 90 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M45 6 58 34H32zM38 30h14l12 28H26zM31 54h28l15 34H16z" fill="#2f6b3a" stroke="#1f4a28" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="39" y="86" width="12" height="16" rx="2" fill="#6b4a2a"/>
+  <path d="M45 2l3 6 6 1-4 5 1 6-6-3-6 3 1-6-4-5 6-1z" fill="#f2c14e" stroke="#c98f24" stroke-width="1"/>
+  <g><circle cx="38" cy="30" r="3" fill="#e5484d"/><circle cx="54" cy="46" r="3" fill="#4f9dde"/><circle cx="34" cy="60" r="3" fill="#f2c14e"/><circle cx="56" cy="70" r="3" fill="#e5484d"/><circle cx="45" cy="50" r="3" fill="#f3ede1"/><circle cx="30" cy="78" r="3" fill="#4f9dde"/><circle cx="60" cy="82" r="3" fill="#f2c14e"/></g></svg>`;
+
+function xmasBuildDeco() {
+  if (document.querySelector(".xmas-deco") || xmasIsMini()) return;
+  const d = document.createElement("div");
+  d.className = "xmas-deco"; d.setAttribute("aria-hidden", "true");
+  d.innerHTML =
+    `<div class="xmas-mistle xmas-mistle-l">${XMAS_MISTLETOE}</div>` +
+    `<div class="xmas-mistle xmas-mistle-r">${XMAS_MISTLETOE}</div>` +
+    `<div class="xmas-bow">${XMAS_BOW}</div>` +
+    `<div class="xmas-tree">${XMAS_TREE}</div>`;
+  document.body.appendChild(d);
+}
+function xmasRemoveDeco() { document.querySelector(".xmas-deco")?.remove(); }
+
 function xmasApply(on) {
   document.documentElement.classList.toggle("xmas", on);
   document.querySelectorAll("[data-xmas-toggle]").forEach(b => b.setAttribute("aria-checked", on ? "true" : "false"));
-  if (on) xmasStartSnow(); else xmasStopSnow();
+  if (on) { xmasStartSnow(); xmasBuildDeco(); } else { xmasStopSnow(); xmasRemoveDeco(); }
 }
 function xmasState() {
   let saved = null;

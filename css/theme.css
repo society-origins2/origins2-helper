@@ -1718,3 +1718,13 @@ html.xmas .hero::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
   background: radial-gradient(120% 60% at 50% -10%, rgb(120 170 255 / .10), transparent 60%);
 }
+
+/* Weihnachts-Deko (Mistelzweig, Schleife, Baum) – nur im Weihnachtsmodus */
+.xmas-deco { position: fixed; inset: 0; z-index: 44; pointer-events: none; }
+.xmas-deco svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 2px 4px rgb(0 0 0 / .5)); }
+.xmas-mistle { position: absolute; top: 0; width: 76px; height: 58px; opacity: .92; }
+.xmas-mistle-l { left: 10px; transform: rotate(-6deg); }
+.xmas-mistle-r { right: 10px; transform: scaleX(-1) rotate(-6deg); }
+.xmas-bow { position: absolute; top: 2px; left: 50%; width: 46px; height: 34px; transform: translateX(-50%); opacity: .9; }
+.xmas-tree { position: absolute; left: 14px; bottom: 10px; width: 62px; height: 84px; opacity: .9; }
+@media (max-width: 860px) { .xmas-bow, .xmas-tree { display: none; } .xmas-mistle { width: 56px; height: 42px; } }

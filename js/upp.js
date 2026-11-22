@@ -313,7 +313,7 @@ function renderChain(line, from, to) {
     const info = itemInfo(s.item);
     return `${i ? `<span class="chain-arrow${i > fs && i <= ts ? " is-on" : ""}" aria-hidden="true">›</span>` : ""}
       <div class="chain-item${active ? " is-on" : ""}">
-        <span class="chain-ico"><img src="${uEsc(info.icon)}" alt=""></span>
+        <span class="chain-ico"><img src="${uEsc(info.icon)}?v=${ASSET_V}" alt=""></span>
         <span class="chain-name">${uEsc(itemName(s.item))}</span>
         <span class="chain-lv">${t("upp.fromLv", s.minLevel)}</span>
       </div>`;
@@ -333,7 +333,7 @@ function renderAltRow(lineId, line, from, to, sel) {
       const s = line.stages[i], info = itemInfo(s.item), cur = sel[i] || "";
       const opts = [["", t("upp.altStd")], ...Object.keys(s.alt).map(k => [k, L(ALT_MATS[k]) || k])];
       return `<div class="alt-item">
-        <span class="alt-name"><span class="alt-ico"><img src="${uEsc(info.icon)}" alt=""></span>${uEsc(itemName(s.item))}</span>
+        <span class="alt-name"><span class="alt-ico"><img src="${uEsc(info.icon)}?v=${ASSET_V}" alt=""></span>${uEsc(itemName(s.item))}</span>
         <div class="seg seg-sm" role="radiogroup" aria-label="${uEsc(t("upp.altLabel") + ": " + itemName(s.item))}">${opts.map(([v, l]) =>
           `<label><input type="radio" name="upp-alt-${i}" value="${v}" data-stage="${i}"${v === cur ? " checked" : ""}><span>${uEsc(l)}</span></label>`).join("")}</div>
       </div>`;
@@ -432,7 +432,7 @@ function renderResult() {
     const p = prices[id] || 0;
     return `
       <tr data-mat="${uEsc(id)}" class="${bought.has(id) ? "is-bought" : ""}${id === uppJustBought ? " just-bought" : ""}" data-buy="${uEsc(id)}" title="${uEsc(t("upp.buyToggle"))}">
-        <td class="mt-item"><span class="mt-ico">${checkMark}<img src="${uEsc(info.icon)}" alt=""></span><span class="mt-name${info.name ? "" : " is-unknown"}">${uEsc(itemName(id))}</span></td>
+        <td class="mt-item"><span class="mt-ico">${checkMark}<img src="${uEsc(info.icon)}?v=${ASSET_V}" alt=""></span><span class="mt-name${info.name ? "" : " is-unknown"}">${uEsc(itemName(id))}</span></td>
         <td class="tabular-nums">${fmtNum(res.min.mats[id] || 0)}</td>
         <td class="tabular-nums is-main">${fmtNum(avgQty(id))}</td>
         <td class="tabular-nums">${fmtNum(res.p90.mats[id] || 0)}</td>
@@ -446,7 +446,7 @@ function renderResult() {
     const p = prices[id] || 0;
     return `
       <li class="mg-tile${bought.has(id) ? " is-bought" : ""}${id === uppJustBought ? " just-bought" : ""}" data-mat="${uEsc(id)}" data-buy="${uEsc(id)}" role="checkbox" tabindex="0" aria-checked="${bought.has(id)}" title="${uEsc(t("upp.buyToggle"))}">
-        <span class="mt-ico">${checkMark}<img src="${uEsc(info.icon)}" alt=""></span>
+        <span class="mt-ico">${checkMark}<img src="${uEsc(info.icon)}?v=${ASSET_V}" alt=""></span>
         <span class="mg-name${info.name ? "" : " is-unknown"}" title="${uEsc(itemName(id))}">${uEsc(itemName(id))}</span>
         <span class="mg-side tabular-nums">${t("upp.colAvg")} ${fmtNum(avgQty(id))} · ${t("upp.colP90")} ${fmtNum(res.p90.mats[id] || 0)}</span>
         <span class="mg-avg tabular-nums"><small>${t("upp.colMin")}</small>${fmtNum(minQty(id))}×</span>
