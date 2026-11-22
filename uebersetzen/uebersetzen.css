@@ -30,7 +30,7 @@
 
 /* Liste */
 .tr-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
-.tr-row { display: grid; grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; align-items: center; padding: 0.8rem 1rem; transition: border-color .2s; }
+.tr-row { display: grid; grid-template-columns: 5rem repeat(var(--tr-cols, 2), minmax(0, 1fr)); gap: 1rem; align-items: center; padding: 0.8rem 1rem; transition: border-color .2s; }
 .tr-row.is-done { border-color: rgb(212 162 76 / .4); }
 .tr-item { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
 .tr-ico { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 10px; background: #0c0907; border: 1px solid var(--line); overflow: hidden; }
@@ -69,3 +69,13 @@
 .tr-lang.is-folded .tr-edit { display: none; }
 .tr-fix { margin-left: auto; flex: none; padding: 0; border: 0; background: none; font-size: 0.74rem; color: var(--color-parch-500); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .tr-fix:hover { color: var(--color-gold-200); }
+
+/* Sprachauswahl & Vorlage bei RO/TR */
+.tr-mylangs { align-items: center; margin-top: 0.8rem; }
+.tr-mylangs .field-label { min-width: 7rem; }
+.tr-ref { font-size: 0.72rem; color: var(--color-parch-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 1023px) { .tr-row { grid-template-columns: 5rem repeat(min(var(--tr-cols, 2), 2), minmax(0, 1fr)); } }
+/* bei 3–4 Sprachen: Namen umbrechen statt abschneiden */
+.tr-cur { flex-wrap: wrap; row-gap: 0.25rem; }
+.tr-cur-name { white-space: normal; overflow-wrap: anywhere; }
+.tr-ref { white-space: normal; }

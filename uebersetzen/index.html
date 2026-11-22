@@ -11,9 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/tailwind.css?v=20261122-12">
-  <link rel="stylesheet" href="../css/theme.css?v=20261122-12">
-  <link rel="stylesheet" href="uebersetzen.css?v=20261122-12">
+  <link rel="stylesheet" href="../css/tailwind.css?v=20261122-13">
+  <link rel="stylesheet" href="../css/theme.css?v=20261122-13">
+  <link rel="stylesheet" href="uebersetzen.css?v=20261122-13">
 </head>
 <body class="min-h-screen bg-ink-950 text-parch-100 font-sans antialiased">
 
@@ -25,6 +25,8 @@
     <div class="lang-switch" role="group" aria-label="Sprache / Language">
       <button type="button" data-lang="de">DE</button>
       <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ro">RO</button>
+      <button type="button" data-lang="tr">TR</button>
     </div>
   </header>
 
@@ -58,6 +60,10 @@
             <span data-t="send">Direkt senden</span></button>
         </div>
       </div>
+      <div class="tr-bar-row tr-mylangs">
+        <span class="field-label" data-t="myLangs">Meine Sprachen</span>
+        <div class="chips chips-sm" id="tr-langs"></div>
+      </div>
       <div class="tr-bar-row tr-filters">
         <div class="seg seg-sm" role="radiogroup" id="tr-show">
           <label><input type="radio" name="tr-show" value="todo" checked><span data-t="showTodo">Zu erledigen</span></label>
@@ -74,8 +80,8 @@
     <p class="tr-saved" data-t="saved">Deine Eingaben werden automatisch in diesem Browser gespeichert.</p>
   </main>
 
-  <script src="../js/data.js?v=20261122-12"></script>
-  <script src="../js/feedback.js?v=20261122-12"></script>   <!-- nur für FEEDBACK_WEBHOOK -->
-  <script src="uebersetzen.js?v=20261122-12"></script>
+  <script src="../js/data.js?v=20261122-13"></script>
+  <script src="../js/feedback.js?v=20261122-13"></script>   <!-- nur für FEEDBACK_WEBHOOK -->
+  <script src="uebersetzen.js?v=20261122-13"></script>
 </body>
 </html>
