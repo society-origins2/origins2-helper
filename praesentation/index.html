@@ -103,6 +103,12 @@ h3 { font-family: var(--font-display); font-size: 25px; font-weight: 600; color:
 .ig-grid .tag { position: absolute; left: 12px; bottom: 12px; padding: 5px 12px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--gold-200);
   background: rgb(17 13 9 / .85); border: 1px solid var(--line-strong); }
 
+.dock-row { display: flex; align-items: center; gap: 36px; margin-top: 14px; }
+.dock-row .lead { flex: 1; }
+.dock-fig { flex: none; width: 360px; text-align: center; }
+.dock-fig img { width: 100%; display: block; border-radius: 12px; border: 1px solid var(--line-strong); box-shadow: 0 0 0 6px rgb(212 162 76 / .06), 0 14px 40px rgb(0 0 0 / .55); }
+.dock-fig figcaption { margin-top: 8px; font-size: 14px; color: var(--parch-500); letter-spacing: .04em; }
+
 /* Ablauf-Diagramm */
 .flow { display: grid; grid-template-columns: 1fr 50px 1fr 50px 1fr 50px 1fr; align-items: stretch; margin-top: 36px; }
 .flow .step { padding: 22px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgb(17 13 9 / .7); text-align: center; }
@@ -173,6 +179,7 @@ a.btn { text-decoration: none; }
     <span class="pill"><span lang="de">Kostenlos &amp; ohne Werbung</span><span lang="en">Free &amp; ad-free</span></span>
     <span class="pill"><span lang="de">Deutsch &amp; Englisch</span><span lang="en">German &amp; English</span></span>
     <span class="pill"><span lang="de">PC &amp; Handy</span><span lang="en">PC &amp; mobile</span></span>
+    <span class="pill"><span lang="de">Mini-Leiste fürs Spiel</span><span lang="en">In-game mini bar</span></span>
   </div>
   <div class="cta-row">
     <a class="cta" href="https://society-origins2.github.io/origins2-helper/" target="_blank" rel="noopener"><span lang="de">Zur Website</span><span lang="en">Open the website</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11 3h6v6h-2V6.4l-6.3 6.3-1.4-1.4L13.6 5H11V3zM5 5h3v2H5v8h8v-3h2v5H3V5h2z"/></svg></a>
@@ -225,7 +232,7 @@ a.btn { text-decoration: none; }
       <div class="card"><h3><span lang="de">Boss-Timer</span><span lang="en">Boss Timer</span></h3><p><span lang="de">Live-Countdowns mit Ton</span><span lang="en">Live countdowns with sound</span></p></div>
       <div class="card"><h3><span lang="de">Eventkalender</span><span lang="en">Event Calendar</span></h3><p><span lang="de">Monat, Woche, Tag – mit Erinnerung</span><span lang="en">Month, week, day – with reminders</span></p></div>
       <div class="card"><h3><span lang="de">Fischpuzzle</span><span lang="en">Fish Puzzle</span></h3><p><span lang="de">Bester Zug, exakt berechnet</span><span lang="en">Best move, calculated exactly</span></p></div>
-      <div class="card"><h3><span lang="de">Mini-Fenster</span><span lang="en">Mini window</span></h3><p><span lang="de">Schwebt über dem Spiel</span><span lang="en">Floats over the game</span></p></div>
+      <div class="card"><h3><span lang="de">Mini-Fenster &amp; Mini-Leiste</span><span lang="en">Mini windows &amp; mini bar</span></h3><p><span lang="de">Schwebt über dem Spiel, per Klick auf- und zuklappbar</span><span lang="en">Floats over the game, opens and collapses with a click</span></p></div>
     </div>
   </div>
   <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
@@ -297,9 +304,12 @@ a.btn { text-decoration: none; }
 <!-- 7 · Mini-Fenster im Spiel -->
 <section class="slide" data-name="im-spiel">
   <p class="eyebrow"><span lang="de">Direkt im Spiel</span><span lang="en">Right in the game</span></p>
-  <h2><span lang="de">Mini-Fenster über dem Client</span><span lang="en">Mini windows over the client</span></h2>
-  <p class="lead" style="margin-top:10px;font-size:20px"><span lang="de">Ideal mit nur einem Bildschirm: Rechner, Skilltree, Fischpuzzle oder Boss-Leiste schweben als kleines Fenster über dem Spiel. Es bleibt ein Browserfenster – der Client wird nicht verändert.</span><span lang="en">Ideal with a single screen: calculator, skill tree, fish puzzle or boss bar float as a small window over the game. It is still just a browser window – the client is not changed.</span></p>
-  <div class="ig-grid" style="margin-top:22px">
+  <h2><span lang="de">Mini-Leiste über dem Client</span><span lang="en">Mini bar over the client</span></h2>
+  <div class="dock-row">
+    <p class="lead" style="margin-top:0;font-size:20px"><span lang="de">Ideal mit nur einem Bildschirm: Die kleine <b class="gold">Mini-Leiste</b> schwebt über dem Spiel. Ein Klick klappt Rechner, Skilltree, Fischpuzzle oder Boss-Timer auf – ein Klick klappt sie wieder ein. Es bleibt ein Browserfenster, der Client wird nicht verändert.</span><span lang="en">Ideal with a single screen: the small <b class="gold">mini bar</b> floats over the game. One click opens the calculator, skill tree, fish puzzle or boss timer – one click collapses it again. It is still just a browser window – the client is not changed.</span></p>
+    <figure class="dock-fig"><img lang="de" src="img/dock-de.png" alt="Mini-Leiste"><img lang="en" src="img/dock-en.png" alt="Mini bar"><figcaption><span lang="de">Die Mini-Leiste</span><span lang="en">The mini bar</span></figcaption></figure>
+  </div>
+  <div class="ig-grid" style="margin-top:20px">
     <div class="shot"><img src="img/ig-upp.jpg" alt="Upp-Kalkulator als Mini-Fenster neben dem Schmied"><span class="tag"><span lang="de">Uppen beim Schmied</span><span lang="en">Upgrading at the blacksmith</span></span></div>
     <div class="shot"><img src="img/ig-skill.jpg" alt="Skilltree als Mini-Fenster"><span class="tag">Skilltree</span></div>
     <div class="shot"><img src="img/ig-fish.jpg" alt="Fischpuzzle als Mini-Fenster" style="object-position:center 20%"><span class="tag"><span lang="de">Fischpuzzle</span><span lang="en">Fish puzzle</span></span></div>
@@ -339,7 +349,7 @@ a.btn { text-decoration: none; }
         <li><span lang="de">Upp-Reihen: 1-Hand- und 2-Hand-Waffen, Krieger-Rüstung (PvP)</span><span lang="en">Upgrade lines: one- and two-handed weapons, warrior armour (PvP)</span></li>
         <li><span lang="de">Skilltree mit allen Lieferungen und Schlüssel</span><span lang="en">Skill tree with every delivery and the key</span></li>
         <li><span lang="de">Boss-Timer, Eventkalender, Fischpuzzle-Helfer</span><span lang="en">Boss timer, event calendar, fish puzzle helper</span></li>
-        <li><span lang="de">Mini-Fenster, Deutsch &amp; Englisch, PC &amp; Handy</span><span lang="en">Mini windows, German &amp; English, PC &amp; mobile</span></li>
+        <li><span lang="de">Mini-Fenster &amp; Mini-Leiste, Deutsch &amp; Englisch, PC &amp; Handy</span><span lang="en">Mini windows &amp; mini bar, German &amp; English, PC &amp; mobile</span></li>
       </ul>
     </div>
     <div class="card" style="flex:1">

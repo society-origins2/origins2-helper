@@ -311,6 +311,7 @@ function setupBossMini(embedded) {
       <span class="ticker-clock tabular-nums" id="server-clock">--:--:--</span>
       <div class="bm-btns">
         <button type="button" class="bm-pick" id="bm-pick" title="${esc(t("boss.pick"))}"></button>
+        ${embedded ? "" : `<button type="button" class="bm-pick" data-collapse title="${esc(t("dock.collapse"))}" aria-label="${esc(t("dock.collapse"))}">${typeof COLLAPSE_SVG !== "undefined" ? COLLAPSE_SVG : "▴"}</button>`}
         ${embedded ? "" : `<button type="button" class="bm-pick bm-orient" id="bm-orient" title="${esc(t(orient === "v" ? "boss.toH" : "boss.toV"))}">${ORIENT_SVG[orient]}<span class="bm-btxt">${t(orient === "v" ? "boss.toHShort" : "boss.toVShort")}</span></button>`}
       </div>
     </div><div class="bm-list" id="boss-mini-list"></div>`;
@@ -333,7 +334,10 @@ function setupBossMini(embedded) {
     try { (window.parent !== window ? window.parent : window).resizeTo(w, h); } catch {}
     box.remove(); setupBossMini(false); tick();
   });
-  box.addEventListener("click", e => { const it = e.target.closest("[data-pick]"); if (it) toggleBossHidden(it.dataset.pick); });
+  box.addEventListener("click", e => {
+    if (e.target.closest("[data-collapse]") && typeof miniGo === "function") return miniGo("dock");
+    const it = e.target.closest("[data-pick]"); if (it) toggleBossHidden(it.dataset.pick);
+  });
   box.addEventListener("keydown", e => { const it = e.target.closest("[data-pick]"); if (it && (e.key === " " || e.key === "Enter")) { e.preventDefault(); toggleBossHidden(it.dataset.pick); } });
   renderBossMini();
 }

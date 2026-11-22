@@ -18,6 +18,10 @@ const CHANGELOG = [
                      en: "Skill tree: the PvP branch only needs stage 1 (TP spot) from the PvM branch" },
       { type: "new", de: "Boss-Timer als schmales, waagerechtes Mini-Fenster – alle Bosse mit Countdown in einer Leiste über dem Spiel",
                      en: "Boss Timer as a slim horizontal mini window – all bosses with countdown in one bar over the game" },
+      { type: "new", de: "Promoter-Code CRITICALZ erklärt: Vorteile ab Level 30, 50, 75 und 90, Eingabe mit F9, Live-Status und Link zum Stream – auf der Seite und in der Mini-Leiste",
+                     en: "Promoter code CRITICALZ explained: rewards at level 30, 50, 75 and 90, entry with F9, live status and stream link – on the site and in the mini bar" },
+      { type: "new", de: "Mini-Leiste: ganz kleines schwebendes Fenster, über das du Upp-Kalkulator, Skilltree, Fischpuzzle und Boss-Timer auf- und wieder zuklappst – ohne zurück in den Browser",
+                     en: "Mini bar: a tiny floating window to open and collapse the Upgrade Calculator, skill tree, fish puzzle and boss timer – without going back to the browser" },
       { type: "improved", de: "Footer: Urheberrechtshinweis ergänzt",
                      en: "Footer: copyright notice added" },
       { type: "improved", de: "Boss-Timer: Spawnzeiten, Countdowns und Balken stehen in jeder Reihe auf gleicher Höhe",
@@ -123,7 +127,7 @@ const ROADMAP = [
   { status: "planned",  de: "Englische Übersetzung der ganzen Seite verbessern",        en: "Improve the English translation of the whole site" },
   { status: "planned",  de: "Weitere Sprachen (z. B. Türkisch, Rumänisch, Polnisch)",   en: "More languages (e.g. Turkish, Romanian, Polish)" },
   { status: "planned",  de: "Bug- & Support-Formular (vor der Beta)",                   en: "Bug & support form (before beta)" },
-  { status: "planned",  de: "Discord-Login und Erinnerungen per Discord-DM",            en: "Discord login and reminders via Discord DM" },
+  { status: "planned",  de: "Discord-Login (optional) und Erinnerungen per Discord-DM", en: "Discord login (optional) and reminders via Discord DM" },
   { status: "planned",  de: "Gilden-/Server-Warehouse (Marktplatz für EQ & Upp-Items)", en: "Guild/server warehouse (market for gear & upgrade items)" },
   { status: "idea",     de: "Persönliches Notizfeld",                                    en: "Personal notes" }
 ];

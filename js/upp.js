@@ -17,7 +17,61 @@ const MINI_TOOLS = [
 const MINI_W = 470, MINI_H = 800;   // gleiche Größe für alle, damit das Wechseln passt
 const MINI_MODE = new URLSearchParams(location.search).get("mini");
 function miniUrl(mode, hash) { return location.pathname + "?mini=" + mode + "&lang=" + (typeof LANG !== "undefined" ? LANG : "de") + "#" + hash; }
+/* ---------------- Mini-Leiste („Fernbedienung“, ?mini=dock) ----------------
+   Ganz kleines schwebendes Fenster mit Knöpfen für alle Mini-Fenster. Ein Klick klappt
+   DASSELBE Fenster zum gewünschten Werkzeug auf (Chrome erlaubt nur ein schwebendes Fenster),
+   der Einklapp-Knopf oben macht es wieder zur kleinen Leiste. */
+const MINI_DOCK_SIZE = [420, 64];
+const MINI_REF_CODE = "CRITICALZ";   // Referral-Code zum Kopieren in der Mini-Leiste
+const MINI_HASH = { dock: "uebersicht", upp: "upp-rechner", skill: "skilltree", fish: "event-helper", boss: "bosse", ref: "uebersicht" };
+const MINI_REF_SIZE = [420, 780];
+const MINI_ICON = {"upp": "<path d=\"m14 12-8.6 8.6a2.1 2.1 0 0 1-3-3L11 9\"/><path d=\"M17.6 15 22 10.6\"/><path d=\"m20.9 11.7-1.2-1.2a3.2 3.2 0 0 1-1-2.3v-.8l-2.7-2.7a5.6 5.6 0 0 0-3.9-1.6H9l.9.8A6.2 6.2 0 0 1 12 8.4V10l2 2h2.5l2.3 1.9\"/>", "skill": "<circle cx=\"12\" cy=\"4.5\" r=\"2\"/><circle cx=\"5\" cy=\"13\" r=\"2\"/><circle cx=\"19\" cy=\"13\" r=\"2\"/><circle cx=\"12\" cy=\"20\" r=\"2\"/><path d=\"M11 6.3 6.2 11.4M13 6.3l4.8 5.1M6.3 14.6l4.6 3.8M17.7 14.6l-4.6 3.8\"/>", "fish": "<rect x=\"3\" y=\"3\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"13\" y=\"3\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"3\" y=\"13\" width=\"8\" height=\"8\" rx=\"1.5\"/><path d=\"M14 17h6M17 14v6\"/>", "boss": "<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2.5 2M9 2h6\"/>"};
+function miniSize(mode) {
+  if (mode === "dock") return MINI_DOCK_SIZE;
+  if (mode === "ref") return MINI_REF_SIZE;
+  if (mode === "boss" && typeof BOSS_MINI_SIZES !== "undefined") return BOSS_MINI_SIZES[typeof bossOrient === "function" ? bossOrient() : "h"];
+  return [MINI_W, MINI_H];
+}
+/* Fenstergröße anpassen – klappt im schwebenden Fenster und im Popup (braucht einen Klick) */
+function miniResize(w, h) {
+  // Im schwebenden Fenster läuft die Seite in einem iframe: das Fenster selbst um die Größe bitten
+  // (klappt auch, wenn die Seite lokal als Datei geöffnet ist)
+  if (window.parent !== window) { try { window.parent.postMessage({ o2hResize: [w, h] }, "*"); } catch {} return; }
+  try { window.resizeTo(w + (window.outerWidth - window.innerWidth), h + (window.outerHeight - window.innerHeight)); } catch {}
+}
+function miniGo(mode) {
+  const [w, h] = miniSize(mode);
+  miniResize(w, h);
+  location.href = miniUrl(mode, MINI_HASH[mode]);
+}
+const COLLAPSE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>';
+function buildMiniDock() {
+  document.documentElement.classList.add("is-mini", "is-mini-dock");
+  const dock = document.createElement("div");
+  dock.id = "mini-dock";
+  const old = document.getElementById("server-clock"); if (old) old.removeAttribute("id");   // Uhr nur einmal
+  const draw = () => {
+    dock.innerHTML = `<div class="md-clock"><span>${t("boss.serverTime")}</span><b class="tabular-nums" id="server-clock">--:--:--</b></div>` +
+      ["upp", "skill", "fish", "boss"].map(m => `<button type="button" class="md-btn" data-go="${m}" title="${uEsc(t("dock." + m + "Title"))}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${MINI_ICON[m]}</svg>
+        <span>${t("dock." + m)}</span></button>`).join("") +
+      // Referral-Code mit einem Klick kopieren
+      `<button type="button" class="md-btn md-ref" data-go="ref" title="${uEsc(t("ri.title"))}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v9H5v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
+        <span>${MINI_REF_CODE}</span></button>`;
+  };
+  draw(); window.addEventListener("langchange", draw);
+  dock.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) miniGo(b.dataset.go); });
+  // Falls das Fenster zu groß aufgeht: beim ersten Antippen auf Leisten-Größe ziehen
+  document.addEventListener("pointerdown", e => {
+    if (e.target.closest("[data-go]")) return;
+    const [w, h] = MINI_DOCK_SIZE; if (innerHeight > h + 40) miniResize(w, h);
+  });
+  document.body.prepend(dock);
+  document.title = "Origins2 Helper";
+}
 function buildMiniNav() {
+  if (MINI_MODE === "dock") return buildMiniDock();
   if (!MINI_TOOLS.some(x => x.mode === MINI_MODE)) return;
   const nav = document.createElement("nav");
   nav.className = "mini-nav";
@@ -26,9 +80,14 @@ function buildMiniNav() {
     `<a href="${miniUrl(x.mode, x.hash)}"${x.mode === MINI_MODE ? ' class="is-active" aria-current="page"' : ""}>${t(x.key)}</a>`).join("") +
     // Boss-Liste oben einblenden – so hat man Bosse + Rechner in EINEM schwebenden Fenster
     `<button type="button" class="mini-boss-btn${barOn() ? " is-on" : ""}" data-bossbar title="${uEsc(t("mini.bossBar"))}" aria-label="${uEsc(t("mini.bossBar"))}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></button>`; };
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></button>` +
+    // zur kleinen Mini-Leiste einklappen
+    `<button type="button" class="mini-boss-btn" data-collapse title="${uEsc(t("dock.collapse"))}" aria-label="${uEsc(t("dock.collapse"))}">${COLLAPSE_SVG}</button>`; };
   draw(); window.addEventListener("langchange", draw);
-  nav.addEventListener("click", e => { if (e.target.closest("[data-bossbar]") && typeof setMiniBossBar === "function") setMiniBossBar(!barOn()); });
+  nav.addEventListener("click", e => {
+    if (e.target.closest("[data-collapse]")) return miniGo("dock");
+    if (e.target.closest("[data-bossbar]") && typeof setMiniBossBar === "function") setMiniBossBar(!barOn());
+  });
   document.body.prepend(nav);
   document.documentElement.classList.add("is-mini");
 }
@@ -739,14 +798,23 @@ async function openMiniWindow(mode, hash, title, size) {
   const url = miniUrl(mode, hash), W = size ? size[0] : MINI_W, H = size ? size[1] : MINI_H;
   if ("documentPictureInPicture" in window) {
     try {
-      const pip = await documentPictureInPicture.requestWindow({ width: W, height: H });
+      // preferInitialWindowPlacement: sonst nimmt Chrome die gemerkte Größe vom letzten Mal
+      const pip = await documentPictureInPicture.requestWindow({ width: W, height: H, preferInitialWindowPlacement: true });
+      // Manche Chrome-Versionen merken sich die letzte Größe – auf die gewünschte Größe ziehen
+      try { if (Math.abs(pip.innerWidth - W) > 20 || Math.abs(pip.innerHeight - H) > 20) pip.resizeTo(W + (pip.outerWidth - pip.innerWidth), H + (pip.outerHeight - pip.innerHeight)); } catch {}
       const d = pip.document;
+      // Größenwünsche aus dem Inhalt (Auf-/Zuklappen) umsetzen
+      pip.addEventListener("message", e => {
+        const r = e.data && e.data.o2hResize; if (!Array.isArray(r)) return;
+        try { pip.resizeTo(r[0] + (pip.outerWidth - pip.innerWidth), r[1] + (pip.outerHeight - pip.innerHeight)); } catch {}
+      });
       d.title = "Origins2 Helper";
       d.body.style.cssText = "margin:0;background:#110d09;overflow:hidden";
       const f = d.createElement("iframe");
       f.src = new URL(url, location.href).href;
       f.title = title;
       f.style.cssText = "border:0;display:block;width:100vw;height:100vh";
+      f.allow = "clipboard-write";   // Referral-Code kopieren im Mini-Fenster
       d.body.appendChild(f);
       return;
     } catch (err) { /* abgelehnt → Popup */ }
@@ -755,3 +823,4 @@ async function openMiniWindow(mode, hash, title, size) {
   if (!w && typeof toast === "function") toast(t("fp.popupBlocked"));
 }
 function uppOpenMini() { return openMiniWindow("upp", "upp-rechner", t("upp.title")); }
+document.addEventListener("click", e => { if (e.target.closest("#dock-popout")) openMiniWindow("dock", "uebersicht", "Origins2 Helper", MINI_DOCK_SIZE); });

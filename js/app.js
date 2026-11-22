@@ -200,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof initSkilltree === "function") initSkilltree();
   if (typeof initFishPuzzle === "function") initFishPuzzle();
   if (typeof initTeam === "function") initTeam();
+  if (typeof initRefInfo === "function") initRefInfo();
   if (typeof initRunner === "function") initRunner();
   layoutHeroCrew();
   window.addEventListener("resize", () => { clearTimeout(window.__hcT); window.__hcT = setTimeout(layoutHeroCrew, 80); });
