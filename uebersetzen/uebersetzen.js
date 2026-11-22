@@ -14,8 +14,11 @@ const TR_TEXT = {
     intro: "Viele Namen im Helper sind nur vorläufig übersetzt. Schau im Spiel nach, wie das Item wirklich heißt, und trag es hier ein – am Ende erzeugst du eine Datei und schickst sie uns.",
     step1: "Item im Spiel suchen (Tooltip beim Drüberfahren) – Sprache im Client passend umstellen.",
     step2: "Richtigen Namen eintragen oder mit „stimmt“ bestätigen. Felder leer lassen, wenn du es nicht weißt.",
-    step3: "Deinen Namen eintragen, „Datei erzeugen“ und die Datei auf Discord an xZcRiTiCaLZz schicken.",
-    who: "Dein Name (Ingame oder Discord)", done: "Einträge", reset: "Alles leeren", download: "Datei erzeugen",
+    step3: "Deinen Namen eintragen und „Direkt senden“ – fertig. Klappt das nicht: Datei herunterladen und auf Discord an xZcRiTiCaLZz schicken.",
+    who: "Dein Name (Ingame oder Discord)", done: "Einträge", reset: "Alles leeren", download: "Datei herunterladen", send: "Direkt senden",
+    sendOk: "Gesendet – vielen Dank! Deine Einträge bleiben hier gespeichert, du kannst später weitermachen.",
+    sendFail: "Senden hat nicht geklappt – lade die Datei herunter und schick sie auf Discord an xZcRiTiCaLZz.",
+    sendOff: "Direkt senden ist gerade nicht möglich – bitte die Datei herunterladen.", wait: "Bitte warte noch {a} Sekunden.",
     showTodo: "Zu erledigen", showAll: "Alle", showMine: "Meine Einträge", search: "Suchen …",
     saved: "Deine Eingaben werden automatisch in diesem Browser gespeichert.",
     g_mat: "Materialien", g_wpn: "Waffen", g_arm: "Rüstungen", g_all: "Alles",
@@ -35,8 +38,11 @@ const TR_TEXT = {
     intro: "Many names in the Helper are only provisional translations. Check in the game what the item is really called and enter it here – at the end you create a file and send it to us.",
     step1: "Find the item in the game (tooltip on hover) – switch the client to the matching language.",
     step2: "Enter the correct name or confirm it with “correct”. Leave fields empty if you don't know.",
-    step3: "Enter your name, click “Create file” and send the file to xZcRiTiCaLZz on Discord.",
-    who: "Your name (in-game or Discord)", done: "entries", reset: "Clear all", download: "Create file",
+    step3: "Enter your name and click “Send directly” – done. If that fails: download the file and send it to xZcRiTiCaLZz on Discord.",
+    who: "Your name (in-game or Discord)", done: "entries", reset: "Clear all", download: "Download file", send: "Send directly",
+    sendOk: "Sent – thank you! Your entries stay saved here so you can continue later.",
+    sendFail: "Sending failed – download the file and send it to xZcRiTiCaLZz on Discord.",
+    sendOff: "Sending directly isn't possible right now – please download the file.", wait: "Please wait {a} more seconds.",
     showTodo: "To do", showAll: "All", showMine: "My entries", search: "Search …",
     saved: "Your entries are saved automatically in this browser.",
     g_mat: "Materials", g_wpn: "Weapons", g_arm: "Armour", g_all: "Everything",
@@ -149,10 +155,11 @@ function setEntry(id, patch) {
 
 function msg(text, bad) { const m = $("tr-msg"); m.textContent = text; m.classList.toggle("is-bad", !!bad); }
 
-/* ---------- Datei erzeugen ---------- */
-function download() {
+/* ---------- Datei erzeugen / senden ---------- */
+const TR_SEND_KEY = "o2h.translateSent", TR_COOLDOWN_SEC = 60;
+function buildFile() {
   const who = $("tr-who").value.trim();
-  if (!who) { msg(tt("needWho"), true); $("tr-who").focus(); return; }
+  if (!who) { msg(tt("needWho"), true); $("tr-who").focus(); return null; }
   const items = ITEMS.filter(it => entryDone(state.entries[it.id])).map(it => {
     const e = state.entries[it.id], out = { id: it.id };
     ["de", "en"].forEach(l => {
@@ -162,7 +169,7 @@ function download() {
     });
     return out;
   });
-  if (!items.length) { msg(tt("nothing"), true); return; }
+  if (!items.length) { msg(tt("nothing"), true); return null; }
   const day = new Date().toISOString().slice(0, 10);
   const data = {
     tool: "Origins2 Helper – Item-Namen", version: 1,
@@ -170,10 +177,54 @@ function download() {
   };
   const safe = who.replace(/[^\wäöüÄÖÜß-]+/g, "_").slice(0, 30) || "helfer";
   const name = `item-namen_${safe}_${day}.json`;
-  const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+  return { who, name, data, blob: new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }) };
+}
+function download() {
+  const f = buildFile(); if (!f) return;
+  const { name } = f;
+  const url = URL.createObjectURL(f.blob);
   const a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 4000);
   msg(tt("fileOk", name));
+}
+/* Direkt in den Discord-Kanal für Bugs & Ideen schicken (Webhook aus ../js/feedback.js) */
+async function sendDirect() {
+  const hook = typeof FEEDBACK_WEBHOOK !== "undefined" ? FEEDBACK_WEBHOOK : "";
+  if (!hook) { msg(tt("sendOff"), true); return; }
+  let last = 0; try { last = +localStorage.getItem(TR_SEND_KEY) || 0; } catch {}
+  const wait = Math.ceil((last + TR_COOLDOWN_SEC * 1000 - Date.now()) / 1000);
+  if (wait > 0) { msg(tt("wait", wait), true); return; }
+  const f = buildFile(); if (!f) return;
+  const its = f.data.items, cnt = (l, k) => its.filter(x => x[l] && x[l][k]).length;
+  const cut = (x, n) => (x.length > n ? x.slice(0, n - 1) + "…" : x);
+  const preview = its.filter(x => (x.de && x.de.neu) || (x.en && x.en.neu)).slice(0, 12).map(x =>
+    ["de", "en"].filter(l => x[l] && x[l].neu).map(l => `\`${x.id}\` ${l.toUpperCase()}: ${x[l].alt || "–"} → **${x[l].neu}**`).join("\n")).join("\n");
+  const payload = {
+    username: "Origins2 Helper", allowed_mentions: { parse: [] },
+    embeds: [{
+      title: "🌐 Item-Namen-Übersetzung", color: 0x4f9dde,
+      description: cut(preview || "Nur Bestätigungen (siehe Datei).", 3800),
+      fields: [
+        { name: "Von", value: cut(f.who, 100), inline: true },
+        { name: "Einträge", value: String(its.length), inline: true },
+        { name: "Neu DE / EN", value: `${cnt("de", "neu")} / ${cnt("en", "neu")}`, inline: true },
+        { name: "Bestätigt DE / EN", value: `${cnt("de", "bestaetigt")} / ${cnt("en", "bestaetigt")}`, inline: true }
+      ],
+      footer: { text: "Datei im Anhang – zum Übernehmen an Claude geben" },
+      timestamp: new Date().toISOString()
+    }]
+  };
+  const body = new FormData();
+  body.append("payload_json", JSON.stringify(payload));
+  body.append("files[0]", f.blob, f.name);
+  const btn = $("tr-send"); btn.disabled = true; btn.classList.add("is-busy");
+  try {
+    const res = await fetch(hook, { method: "POST", body });
+    if (!res.ok) throw new Error(res.status);
+    try { localStorage.setItem(TR_SEND_KEY, String(Date.now())); } catch {}
+    msg(tt("sendOk"));
+  } catch { msg(tt("sendFail"), true); }
+  finally { btn.disabled = false; btn.classList.remove("is-busy"); }
 }
 
 /* ---------- Start ---------- */
@@ -199,6 +250,7 @@ function init() {
   document.querySelectorAll('input[name="tr-show"]').forEach(r => r.addEventListener("change", () => { show = r.value; render(); }));
   $("tr-search").addEventListener("input", e => { query = e.target.value; render(); });
   $("tr-download").addEventListener("click", download);
+  $("tr-send").addEventListener("click", sendDirect);
   $("tr-reset").addEventListener("click", () => {
     if (!doneCount() || !confirm(tt("resetAsk"))) return;
     state.entries = {}; save(); render(); msg(tt("resetDone"));

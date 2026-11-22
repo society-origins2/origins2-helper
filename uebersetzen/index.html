@@ -11,9 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/tailwind.css?v=20261122-11">
-  <link rel="stylesheet" href="../css/theme.css?v=20261122-11">
-  <link rel="stylesheet" href="uebersetzen.css?v=20261122-11">
+  <link rel="stylesheet" href="../css/tailwind.css?v=20261122-12">
+  <link rel="stylesheet" href="../css/theme.css?v=20261122-12">
+  <link rel="stylesheet" href="uebersetzen.css?v=20261122-12">
 </head>
 <body class="min-h-screen bg-ink-950 text-parch-100 font-sans antialiased">
 
@@ -50,9 +50,12 @@
         </div>
         <div class="tr-actions">
           <button type="button" class="btn-ghost-sq" id="tr-reset" data-t="reset">Alles leeren</button>
-          <button type="button" class="btn-gold py-2.5" id="tr-download">
+          <button type="button" class="btn-ghost-sq" id="tr-download">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
-            <span data-t="download">Datei erzeugen</span></button>
+            <span data-t="download">Datei herunterladen</span></button>
+          <button type="button" class="btn-gold py-2.5" id="tr-send">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            <span data-t="send">Direkt senden</span></button>
         </div>
       </div>
       <div class="tr-bar-row tr-filters">
@@ -71,7 +74,8 @@
     <p class="tr-saved" data-t="saved">Deine Eingaben werden automatisch in diesem Browser gespeichert.</p>
   </main>
 
-  <script src="../js/data.js?v=20261122-11"></script>
-  <script src="uebersetzen.js?v=20261122-11"></script>
+  <script src="../js/data.js?v=20261122-12"></script>
+  <script src="../js/feedback.js?v=20261122-12"></script>   <!-- nur für FEEDBACK_WEBHOOK -->
+  <script src="uebersetzen.js?v=20261122-12"></script>
 </body>
 </html>
