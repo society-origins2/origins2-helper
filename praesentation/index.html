@@ -129,6 +129,16 @@ h3 { font-family: var(--font-display); font-size: 25px; font-weight: 600; color:
 .foot-brand em { font-style: normal; color: var(--gold-500); }
 .foot-num { position: absolute; right: 90px; bottom: 30px; font-size: 14px; color: var(--parch-500); font-variant-numeric: tabular-nums; }
 
+/* Link-Knöpfe in den Folien */
+.cta { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 999px; font: 700 19px var(--font-body); letter-spacing: .01em; text-decoration: none; cursor: pointer;
+  color: #1a1209; background: linear-gradient(180deg, var(--gold-200), var(--gold-400)); box-shadow: 0 10px 30px rgb(212 162 76 / .3), inset 0 1px 0 rgb(255 255 255 / .5); transition: filter .15s, transform .15s; }
+.cta:hover { filter: brightness(1.07); transform: translateY(-1px); }
+.cta svg { width: 18px; height: 18px; }
+.cta.ghost { color: var(--gold-200); background: rgb(17 13 9 / .6); border: 1px solid var(--line-strong); box-shadow: none; }
+.cta:focus-visible { outline: 2px solid var(--gold-300); outline-offset: 3px; }
+.cta-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 30px; }
+a.btn { text-decoration: none; }
+
 /* ---------- Steuerung ---------- */
 .ui { position: fixed; z-index: 10; display: flex; align-items: center; gap: 8px; }
 .ui-top { top: 14px; right: 16px; }
@@ -163,6 +173,9 @@ h3 { font-family: var(--font-display); font-size: 25px; font-weight: 600; color:
     <span class="pill"><span lang="de">Kostenlos &amp; ohne Werbung</span><span lang="en">Free &amp; ad-free</span></span>
     <span class="pill"><span lang="de">Deutsch &amp; Englisch</span><span lang="en">German &amp; English</span></span>
     <span class="pill"><span lang="de">PC &amp; Handy</span><span lang="en">PC &amp; mobile</span></span>
+  </div>
+  <div class="cta-row">
+    <a class="cta" href="https://society-origins2.github.io/origins2-helper/" target="_blank" rel="noopener"><span lang="de">Zur Website</span><span lang="en">Open the website</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11 3h6v6h-2V6.4l-6.3 6.3-1.4-1.4L13.6 5H11V3zM5 5h3v2H5v8h8v-3h2v5H3V5h2z"/></svg></a>
   </div>
   <p class="url">society-origins2.github.io/origins2-helper</p>
 </section>
@@ -368,7 +381,10 @@ h3 { font-family: var(--font-display); font-size: 25px; font-weight: 600; color:
         <li><span lang="de">Testen und Fehler melden</span><span lang="en">Test and report bugs</span></li>
         <li><span lang="de">Guides schreiben, Design, Promotion</span><span lang="en">Write guides, design, promotion</span></li>
       </ul>
-      <p class="foot"><span lang="de">Bewerben direkt auf der Seite im Reiter „Team“.</span><span lang="en">Apply right on the site in the “Team” tab.</span></p>
+      <div class="foot" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+        <span><span lang="de">Formular öffnet sich direkt auf der Seite.</span><span lang="en">The form opens right on the site.</span></span>
+        <a class="cta" style="padding:11px 20px;font-size:17px" href="https://society-origins2.github.io/origins2-helper/#helfer-werden" target="_blank" rel="noopener"><span lang="de">Jetzt bewerben</span><span lang="en">Apply now</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11 3h6v6h-2V6.4l-6.3 6.3-1.4-1.4L13.6 5H11V3zM5 5h3v2H5v8h8v-3h2v5H3V5h2z"/></svg></a>
+      </div>
     </div>
   </div>
   <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
@@ -379,6 +395,10 @@ h3 { font-family: var(--font-display); font-size: 25px; font-weight: 600; color:
   <img class="logo" src="img/origins2-logo.png" alt="Origins2 Rebirth">
   <h2 style="font-size:56px;margin-top:18px"><span lang="de">Danke fürs Anschauen!</span><span lang="en">Thanks for watching!</span></h2>
   <p class="lead" style="text-align:center;max-width:860px"><span lang="de">Ehrenamtlich gebaut von der Gilde Society – für alle Spieler auf Origins2.</span><span lang="en">Built by volunteers from the guild Society – for every player on Origins2.</span></p>
+  <div class="cta-row">
+    <a class="cta" href="https://society-origins2.github.io/origins2-helper/" target="_blank" rel="noopener"><span lang="de">Zur Website</span><span lang="en">Open the website</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11 3h6v6h-2V6.4l-6.3 6.3-1.4-1.4L13.6 5H11V3zM5 5h3v2H5v8h8v-3h2v5H3V5h2z"/></svg></a>
+    <a class="cta ghost" href="https://society-origins2.github.io/origins2-helper/#helfer-werden" target="_blank" rel="noopener"><span lang="de">Helfer werden</span><span lang="en">Become a helper</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11 3h6v6h-2V6.4l-6.3 6.3-1.4-1.4L13.6 5H11V3zM5 5h3v2H5v8h8v-3h2v5H3V5h2z"/></svg></a>
+  </div>
   <div class="contact">
     <span class="pill">society-origins2.github.io/origins2-helper</span>
     <span class="pill">Ingame: xZcRiTiCaLZz</span>
@@ -391,6 +411,7 @@ h3 { font-family: var(--font-display); font-size: 25px; font-weight: 600; color:
 
 <!-- Steuerung -->
 <div class="ui ui-top">
+  <a class="btn" href="https://society-origins2.github.io/origins2-helper/" target="_blank" rel="noopener"><span lang="de">Zur Website</span><span lang="en">Website</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="width:13px;height:13px"><path d="M11 3h6v6h-2V6.4l-6.3 6.3-1.4-1.4L13.6 5H11V3zM5 5h3v2H5v8h8v-3h2v5H3V5h2z"/></svg></a>
   <div class="lang" role="group" aria-label="Sprache / Language">
     <button type="button" data-lang="de" aria-pressed="true">DE</button>
     <button type="button" data-lang="en" aria-pressed="false">EN</button>

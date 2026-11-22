@@ -167,6 +167,10 @@ async function submitHelper(e) {
 
 function initTeam() {
   renderTeam(); fillHelperChoices();
+  // Direktlink …/#helfer-werden öffnet gleich das Bewerbungsformular (z. B. aus der Präsentation)
+  const openFromHash = () => { if (location.hash === "#helfer-werden") setTimeout(openHelper, 150); };
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
   const d = document.getElementById("helper-dialog");
   document.addEventListener("click", e => { if (e.target.closest("[data-open-helper]")) openHelper(); });
   if (d) {
