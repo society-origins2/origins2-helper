@@ -12,120 +12,120 @@
    ===================================================================== */
 
 const MATERIALS = {
-  "mat-01": { name: "Rubinmesser", nameEn: "Ruby Knife", icon: "assets/items/mat-01.png" },
-  "mat-02": { name: "Goldschelle", nameEn: "Gold Bell", icon: "assets/items/mat-02.png" },
-  "mat-03": { name: "Rubinverzierung", nameEn: "Ruby Ornament", icon: "assets/items/mat-03.png" },
-  "mat-04": { name: "Schmuckelement", nameEn: "Jewel Element", icon: "assets/items/mat-04.png" },
-  "mat-05": { name: "Elementar Sand", nameEn: "Elemental Sand", icon: "assets/items/mat-05.png" },
-  "mat-06": { name: "Elementar Kristall", nameEn: "Elemental Crystal", icon: "assets/items/mat-06.png" },
-  "mat-07": { name: "Elementar Fragment", nameEn: "Elemental Fragment", icon: "assets/items/mat-07.png" },
-  "mat-08": { name: "Upgrade Schriftrolle", nameEn: "Upgrade Scroll", icon: "assets/items/mat-08.png" },
+  "mat-01": { name: "Rubin-Gravurmesser", nameEn: "Ruby Engraving Knife", icon: "assets/items/mat-01.png" },
+  "mat-02": { name: "Goldschelle", nameEn: "Gold Clasp", icon: "assets/items/mat-02.png" },
+  "mat-03": { name: "Rubinverzierung", nameEn: "Ruby Decoration", icon: "assets/items/mat-03.png" },
+  "mat-04": { name: "Schmuckelement", nameEn: "Jewellery Element", icon: "assets/items/mat-04.png" },
+  "mat-05": { name: "Sand der Elemente", nameEn: "Sands of the Elements", icon: "assets/items/mat-05.png" },
+  "mat-06": { name: "Kristall der Elemente", nameEn: "Crystal of the Elements", icon: "assets/items/mat-06.png" },
+  "mat-07": { name: "Elementares Fragment", nameEn: "Elemental Fragment", icon: "assets/items/mat-07.png" },
+  "mat-08": { name: "Upgrade-Schriftrolle", nameEn: "Scroll of Upgrade", icon: "assets/items/mat-08.png" },
   "mat-09": { name: "Schlangenstein", nameEn: "Serpent Stone", icon: "assets/items/mat-09.png" },
-  "mat-10": { name: "Energiefragment", nameEn: "Energy Fragment", icon: "assets/items/mat-10.png" },
+  "mat-10": { name: "Energiesplitter", nameEn: "Energy Fragment", icon: "assets/items/mat-10.png" },
   "mat-11": { name: "Eisrune der Aura", nameEn: "Aura Ice Rune", icon: "assets/items/mat-11.png" },
   "mat-12": { name: "Rotes Drachenhorn", nameEn: "Red Dragon Horn", icon: "assets/items/mat-12.png" },
   "mat-13": { name: "Weißer Drachenkopf", nameEn: "White Dragon Head", icon: "assets/items/mat-13.png" },
-  "mat-14": { name: "Schlangenmuster", nameEn: "Snake Pattern", icon: "assets/items/mat-14.png" },
+  "mat-14": { name: "Schlangenmuster", nameEn: "Serpent Design", icon: "assets/items/mat-14.png" },
   "mat-15": { name: "Balathors Flügel", nameEn: "Balathor's Wing", icon: "assets/items/mat-15.png" },
   "mat-16": { name: "Balathors Auge", nameEn: "Balathor's Eye", icon: "assets/items/mat-16.png" },
   "mat-17": { name: "Spitzige Dornen", nameEn: "Sharp Thorns", icon: "assets/items/mat-17.png" },
   "mat-18": { name: "Hydrakopf", nameEn: "Hydra Head", icon: "assets/items/mat-18.png" },
   "mat-19": { name: "Hydra-Symbol", nameEn: "Hydra Symbol", icon: "assets/items/mat-19.png" },
   "mat-20": { name: "Jia-Insigne", nameEn: "Jia Insignia", icon: "assets/items/mat-20.png" },
-  "mat-21": { name: "Insigne des Chen", nameEn: "Chen's Insignia", icon: "assets/items/mat-21.png" },
+  "mat-21": { name: "Insigne des Chen", nameEn: "Chen Insignia", icon: "assets/items/mat-21.png" },
   "mat-22": { name: "Drachenschwingen", nameEn: "Dragon Wings", icon: "assets/items/mat-22.png" },
   "mat-23": { name: "Titandioxid", nameEn: "Titanium Dioxide", icon: "assets/items/mat-23.png" },
   "mat-24": { name: "Weiße Drachenschuppe", nameEn: "White Dragon Scale", icon: "assets/items/mat-24.png" },
-  "mat-25": { name: "Schlangenseide", nameEn: "Snake Silk", icon: "assets/items/mat-25.png" },
+  "mat-25": { name: "Schlangenseide", nameEn: "Serpent Silk", icon: "assets/items/mat-25.png" },
   "mat-26": { name: "Schwarzer Farbstoff", nameEn: "Black Dye", icon: "assets/items/mat-26.png" },
   "mat-27": { name: "Geist der Erde", nameEn: "Spirit of the Earth", icon: "assets/items/mat-27.png" },
   "mat-28": { name: "Horn des Razador", nameEn: "Razador's Horn", icon: "assets/items/mat-28.png" },
   "mat-29": { name: "Horn des Nemere", nameEn: "Nemere's Horn", icon: "assets/items/mat-29.png" },
   "mat-30": { name: "Seuchensymbol", nameEn: "Plague Symbol", icon: "assets/items/mat-30.png" },
-  "mat-31": { name: "Versteinerte Träne", nameEn: "Petrified Tear", icon: "assets/items/mat-31.png" },
+  "mat-31": { name: "Versteinerte Träne", nameEn: "Fossilised Tear", icon: "assets/items/mat-31.png" },
   "mat-32": { name: "Flammenstein", nameEn: "Flame Stone", icon: "assets/items/mat-32.png" },
   "mat-33": { name: "Eisflammenstein", nameEn: "Ice Flame Stone", icon: "assets/items/mat-33.png" },
   "mat-34": { name: "Schwarze Materie", nameEn: "Black Matter", icon: "assets/items/mat-34.png" },
   "mat-35": { name: "Drachenklaue & Schuppen", nameEn: "Dragon Claw & Scales", icon: "assets/items/mat-35.png" },
   "mat-37": { name: "Drachenschädel", nameEn: "Dragon Skull", icon: "assets/items/mat-37.png" },
-  "mat-38": { name: "Prächtiger Chaosstein", nameEn: "Magnificent Chaos Stone", icon: "assets/items/mat-38.png" },
+  "mat-38": { name: "Prächtiger Chaosstein", nameEn: "Epic Chaos Stone", icon: "assets/items/mat-38.png" },
   "mat-39": { name: "Yohara-Energiefragment", nameEn: "Yohara Energy Fragment", icon: "assets/items/mat-39.png" },
-  "mat-40": { name: "Lila SungMa-Rune", nameEn: "Purple SungMa Rune", icon: "assets/items/mat-40.png" },
-  "mat-41": { name: "Gelbe SungMa-Rune", nameEn: "Yellow SungMa Rune", icon: "assets/items/mat-41.png" },
+  "mat-40": { name: "Lila SungMa-Rune", nameEn: "Darkness Sung Ma Rune", icon: "assets/items/mat-40.png" },
+  "mat-41": { name: "Gelbe SungMa-Rune", nameEn: "Earth Sung Ma Rune", icon: "assets/items/mat-41.png" },
   "mat-42": { name: "Mysteriöser Stein", nameEn: "Mysterious Stone", icon: "assets/items/mat-42.png" },
-  "mat-43": { name: "Token des Abgrundkaisers", nameEn: "Abyss Emperor Token", icon: "assets/items/mat-43.png" },
+  "mat-43": { name: "Token des Abgrundkaisers", nameEn: "Emperor Abyss Token", icon: "assets/items/mat-43.png" },
   "mat-44": { name: "Token des uralten Erdwächters", nameEn: "Ancient Earth Guardian Token", icon: "assets/items/mat-44.png" },
   "mat-45": { name: "Splitter des Abgrundkaisers", nameEn: "Abyss Emperor Shard", icon: "assets/items/mat-45.png" },
   "mat-46": { name: "Token des Sturmhautkolosses", nameEn: "Stormhide Colossus Token", icon: "assets/items/mat-46.png" },
-  "mat-47": { name: "Auge des Abgrundkaisers", nameEn: "Abyss Emperor's Eye", icon: "assets/items/mat-47.png" },
-  "mat-48": { name: "Reißzahn des Sturmlords", nameEn: "Storm Lord's Fang", icon: "assets/items/mat-48.png" },
-  "mat-49": { name: "Token des Flammenkönigs", nameEn: "Flame King Token", icon: "assets/items/mat-49.png" },
-  "mat-50": { name: "Feuerkristall", nameEn: "Fire Crystal", icon: "assets/items/mat-50.png" },
-  "mat-51": { name: "Feuersand", nameEn: "Fire Sand", icon: "assets/items/mat-51.png" },
-  "mat-52": { name: "Seele des Sturmlords", nameEn: "Storm Lord's Soul", icon: "assets/items/mat-52.png" },
+  "mat-47": { name: "Auge des Abgrundkaisers", nameEn: "Abyss Emperor Eye", icon: "assets/items/mat-47.png" },
+  "mat-48": { name: "Reißzahn des Sturmlords", nameEn: "Storm Lord Fang", icon: "assets/items/mat-48.png" },
+  "mat-49": { name: "Token des Flammenkönigs", nameEn: "Blazing King Token", icon: "assets/items/mat-49.png" },
+  "mat-50": { name: "Feuerkristall", nameEn: "Crystal of Fire", icon: "assets/items/mat-50.png" },
+  "mat-51": { name: "Feuersand", nameEn: "Sands of Fire", icon: "assets/items/mat-51.png" },
+  "mat-52": { name: "Seele des Sturmlords", nameEn: "Storm Lord Soul", icon: "assets/items/mat-52.png" },
   "mat-53": { name: "Naga Schlangen Token", nameEn: "Naga Serpent Token", icon: "assets/items/mat-53.png" },
   "mat-54": { name: "Himmelsdonner-Token", nameEn: "Sky Thunder Token", icon: "assets/items/mat-54.png" },
-  "mat-55": { name: "Blitzkristall", nameEn: "Lightning Crystal", icon: "assets/items/mat-55.png" },
-  "mat-56": { name: "Blitzsand", nameEn: "Lightning Sand", icon: "assets/items/mat-56.png" },
+  "mat-55": { name: "Blitzkristall", nameEn: "Crystal of Lightning", icon: "assets/items/mat-55.png" },
+  "mat-56": { name: "Blitzsand", nameEn: "Sand of Lightning", icon: "assets/items/mat-56.png" },
   "mat-57": { name: "Token des Chen-Generals", nameEn: "Chen General Token", icon: "assets/items/mat-57.png" },
   "mat-58": { name: "Alastor-Token", nameEn: "Alastor Token", icon: "assets/items/mat-58.png" },
   "mat-59": { name: "Balathor-Token", nameEn: "Balathor Token", icon: "assets/items/mat-59.png" },
-  "mat-60": { name: "Windkristall", nameEn: "Wind Crystal", icon: "assets/items/mat-60.png" },
-  "mat-61": { name: "Windsand", nameEn: "Wind Sand", icon: "assets/items/mat-61.png" },
-  "mat-62": { name: "Meisterschriftrolle", nameEn: "Master Scroll", icon: "assets/items/mat-62.png" },
-  "mat-63": { name: "Blaue SungMa-Rune", nameEn: "Blue SungMa Rune", icon: "assets/items/mat-63.png" },
+  "mat-60": { name: "Windkristall", nameEn: "Crystal of Wind", icon: "assets/items/mat-60.png" },
+  "mat-61": { name: "Windsand", nameEn: "Sand of Wind", icon: "assets/items/mat-61.png" },
+  "mat-62": { name: "Meisterschriftrolle", nameEn: "Master´s Scroll", icon: "assets/items/mat-62.png" },
+  "mat-63": { name: "Blaue SungMa-Rune", nameEn: "Ice Sung Ma Rune", icon: "assets/items/mat-63.png" },
   "mat-64": { name: "Emblem des Frostwächters", nameEn: "Frost Guardian Emblem", icon: "assets/items/mat-64.png" },
   "mat-65": { name: "Token des Frostwächters", nameEn: "Frost Guardian Token", icon: "assets/items/mat-65.png" },
-  "mat-66": { name: "Yohara-Elementartoken", nameEn: "Yohara Elemental Token", icon: "assets/items/mat-66.png" },
-  "mat-67": { name: "Herz des Erdwächters", nameEn: "Earth Guardian's Heart", icon: "assets/items/mat-67.png" },
+  "mat-66": { name: "Yohara-Elementartoken", nameEn: "Elemental Yohara Token", icon: "assets/items/mat-66.png" },
+  "mat-67": { name: "Herz des Erdwächters", nameEn: "Earth Guardian Heart", icon: "assets/items/mat-67.png" },
   "mat-68": { name: "Schimm. blaue Perle", nameEn: "Shimmering Blue Pearl", icon: "assets/items/mat-68.png" },
   "mat-69": { name: "Schimm. weiße Perle", nameEn: "Shimmering White Pearl", icon: "assets/items/mat-69.png" },
   "mat-70": { name: "Schimmernde rote Perle", nameEn: "Shimmering Red Pearl", icon: "assets/items/mat-70.png" },
-  "mat-71": { name: "Elementarblüte", nameEn: "Elemental Blossom", icon: "assets/items/mat-71.png" },
+  "mat-71": { name: "Elementarblüte", nameEn: "Elemental Bloom", icon: "assets/items/mat-71.png" },
   "mat-72": { name: "Weiße Perle", nameEn: "White Pearl", icon: "assets/items/mat-72.png" },
   "mat-73": { name: "Blaue Perle", nameEn: "Blue Pearl", icon: "assets/items/mat-73.png" },
-  "mat-74": { name: "Blutrote Perle", nameEn: "Blood Pearl", icon: "assets/items/mat-74.png" },
+  "mat-74": { name: "Blutrote Perle", nameEn: "Blood-Red Pearl", icon: "assets/items/mat-74.png" },
   "mat-75": { name: "Achat", nameEn: "Agate", icon: "assets/items/mat-75.png" },
   "mat-76": { name: "Mithril", nameEn: "Mithril", icon: "assets/items/mat-76.png" },
-  "mat-77": { name: "Eissand", icon: "assets/items/mat-77.png" }, // Skilltree
-  "mat-78": { name: "Eiskristall", icon: "assets/items/mat-78.png" }, // Skilltree
-  "mat-79": { name: "Eis-Elementarfragment", icon: "assets/items/mat-79.png" }, // Skilltree
-  "mat-80": { name: "Dunkelsand", icon: "assets/items/mat-80.png" }, // Skilltree
-  "mat-81": { name: "Dunkelkristall", icon: "assets/items/mat-81.png" }, // Skilltree
-  "mat-82": { name: "Dunkelheits-Elementarfragment", icon: "assets/items/mat-82.png" }, // Skilltree
-  "mat-83": { name: "Erdsand", icon: "assets/items/mat-83.png" }, // Skilltree
-  "mat-84": { name: "Erdkristall", icon: "assets/items/mat-84.png" }, // Skilltree
-  "mat-85": { name: "Erd-Elementarfragment", icon: "assets/items/mat-85.png" }, // Skilltree
-  "mat-86": { name: "Wind-Elementarfragment", icon: "assets/items/mat-86.png" }, // Skilltree
-  "mat-87": { name: "Blitz-Elementarfragment", icon: "assets/items/mat-87.png" }, // Skilltree
-  "mat-88": { name: "Feuer-Elementarfragment", icon: "assets/items/mat-88.png" }, // Skilltree
-  "mat-89": { name: "Handschuh- und Ringfragment", icon: "assets/items/mat-89.png" }, // Skilltree
+  "mat-77": { name: "Eissand", nameEn: "Sands of Ice", icon: "assets/items/mat-77.png" }, // Skilltree
+  "mat-78": { name: "Eiskristall", nameEn: "Crystal of Ice", icon: "assets/items/mat-78.png" }, // Skilltree
+  "mat-79": { name: "Eis-Elementarfragment", nameEn: "Ice Elemental Fragment", icon: "assets/items/mat-79.png" }, // Skilltree
+  "mat-80": { name: "Dunkelsand", nameEn: "Sands of Darkness", icon: "assets/items/mat-80.png" }, // Skilltree
+  "mat-81": { name: "Dunkelkristall", nameEn: "Crystal of Darkness", icon: "assets/items/mat-81.png" }, // Skilltree
+  "mat-82": { name: "Dunkelheits-Elementarfragment", nameEn: "Dark Elemental Fragment", icon: "assets/items/mat-82.png" }, // Skilltree
+  "mat-83": { name: "Erdsand", nameEn: "Sands of Earth", icon: "assets/items/mat-83.png" }, // Skilltree
+  "mat-84": { name: "Erdkristall", nameEn: "Crystal of Earth", icon: "assets/items/mat-84.png" }, // Skilltree
+  "mat-85": { name: "Erd-Elementarfragment", nameEn: "Earth Elemental Fragment", icon: "assets/items/mat-85.png" }, // Skilltree
+  "mat-86": { name: "Wind-Elementarfragment", nameEn: "Wind Elemental Fragment", icon: "assets/items/mat-86.png" }, // Skilltree
+  "mat-87": { name: "Blitz-Elementarfragment", nameEn: "Lightning Elemental Fragment", icon: "assets/items/mat-87.png" }, // Skilltree
+  "mat-88": { name: "Feuer-Elementarfragment", nameEn: "Fire Elemental Fragment", icon: "assets/items/mat-88.png" }, // Skilltree
+  "mat-89": { name: "Handschuh- und Ringfragment", nameEn: "Glove & Ring Fragment", icon: "assets/items/mat-89.png" }, // Skilltree
   "mat-90": { name: "Feuerrune der Aura", nameEn: "Aura Fire Rune", icon: "assets/items/mat-90.png" }, // Skilltree
-  "mat-91": { name: "Aura-Kostüm verzaubern", icon: "assets/items/mat-91.png" }, // Skilltree
-  "mat-92": { name: "Flammenblatt", icon: "assets/items/mat-92.png" }, // Skilltree
-  "mat-93": { name: "Flasche mit Elementaressenz", icon: "assets/items/mat-93.png" }, // Skilltree
-  "mat-94": { name: "Stein der Elemente", icon: "assets/items/mat-94.png" }, // Skilltree
-  "mat-95": { name: "Cor Draconis (Roh)", icon: "assets/items/mat-95.png" }, // Skilltree
-  "mat-96": { name: "Geist von Naga", icon: "assets/items/mat-96.png" }, // Skilltree
-  "mat-97": { name: "Stein von Naga", icon: "assets/items/mat-97.png" }, // Skilltree
-  "mat-98": { name: "Kyanit-Kern", icon: "assets/items/mat-98.png" }, // Skilltree
-  "mat-99": { name: "Versiegelter Kyanit-Kern", icon: "assets/items/mat-99.png" }, // Skilltree
+  "mat-91": { name: "Aura-Kostüm verzaubern", nameEn: "Enchant Aura Outfit", icon: "assets/items/mat-91.png" }, // Skilltree
+  "mat-92": { name: "Flammenblatt", nameEn: "Flaming Leaf", icon: "assets/items/mat-92.png" }, // Skilltree
+  "mat-93": { name: "Flasche mit Elementaressenz", nameEn: "Elemental Essense Bottle", icon: "assets/items/mat-93.png" }, // Skilltree
+  "mat-94": { name: "Stein der Elemente", nameEn: "Stone of the Elements", icon: "assets/items/mat-94.png" }, // Skilltree
+  "mat-95": { name: "Cor Draconis (Roh)", nameEn: "Cor Draconis (Rough)", icon: "assets/items/mat-95.png" }, // Skilltree
+  "mat-96": { name: "Geist von Naga", nameEn: "Spirit of Naga", icon: "assets/items/mat-96.png" }, // Skilltree
+  "mat-97": { name: "Stein von Naga", nameEn: "Stone of Naga", icon: "assets/items/mat-97.png" }, // Skilltree
+  "mat-98": { name: "Kyanit-Kern", nameEn: "Kyanite Core", icon: "assets/items/mat-98.png" }, // Skilltree
+  "mat-99": { name: "Versiegelter Kyanit-Kern", nameEn: "Sealed Kyanite Core", icon: "assets/items/mat-99.png" }, // Skilltree
   "mat-100": { name: "Kyanit-Halbmond", nameEn: "Kyanite Crescent", icon: "assets/items/mat-100.png" }, // Skilltree + Enigma-Material
-  "mat-101": { name: "Energiekristall verzaubern", icon: "assets/items/mat-101.png" }, // Skilltree
-  "mat-102": { name: "Cor Daemonis (Roh)", icon: "assets/items/mat-102.png" }, // Skilltree
-  "mat-103": { name: "Yohara-Essenzflasche", icon: "assets/items/mat-103.png" }, // Skilltree
-  "mat-104": { name: "Stück Elementarerz", icon: "assets/items/mat-104.png" }, // Skilltree
-  "mat-105": { name: "Kristall der Elemente", icon: "assets/items/mat-105.png" }, // Skilltree
-  "mat-106": { name: "Sand der Elemente", icon: "assets/items/mat-106.png" }, // Skilltree
-  "mat-107": { name: "Rote SungMa-Rune", icon: "assets/items/mat-107.png" }, // Skilltree
+  "mat-101": { name: "Energiekristall verzaubern", nameEn: "Enchant Energy Crystal", icon: "assets/items/mat-101.png" }, // Skilltree
+  "mat-102": { name: "Cor Daemonis (Roh)", nameEn: "Cor Daemonis (Rough)", icon: "assets/items/mat-102.png" }, // Skilltree
+  "mat-103": { name: "Yohara-Essenzflasche", nameEn: "Yohara Essence Bottle", icon: "assets/items/mat-103.png" }, // Skilltree
+  "mat-104": { name: "Stück Elementarerz", nameEn: "Piece of Elemental Ore", icon: "assets/items/mat-104.png" }, // Skilltree
+  "mat-105": { name: "Kristall der Elemente", nameEn: "Crystal of the Elements", icon: "assets/items/mat-105.png" }, // Skilltree
+  "mat-106": { name: "Sand der Elemente", nameEn: "Sands of the Elements", icon: "assets/items/mat-106.png" }, // Skilltree
+  "mat-107": { name: "Rote SungMa-Rune", nameEn: "Fire Sung Ma Rune", icon: "assets/items/mat-107.png" }, // Skilltree
   // Skilltree-Schlüssel – deutsche Namen vorläufig übersetzt, Nutzer reicht nach
-  "mat-108": { name: "Cor-Draconis-Truhe", nameEn: "Cor Draconis Chest", icon: "assets/items/mat-108.png" },
-  "mat-109": { name: "Eisrune-der-Aura-Truhe", nameEn: "Aura Ice Rune Chest", icon: "assets/items/mat-109.png" },
-  "mat-110": { name: "Energiefragment-Truhe", nameEn: "Energy Fragment Chest", icon: "assets/items/mat-110.png" },
-  "mat-111": { name: "Flammenblatt-Truhe", nameEn: "Flaming Leaf Chest", icon: "assets/items/mat-111.png" },
+  "mat-108": { name: "Cor Draconis Truhe", nameEn: "Cor Draconis Chest", icon: "assets/items/mat-108.png" },
+  "mat-109": { name: "Aura-Eisrune Truhe", nameEn: "Aura Ice Rune Chest", icon: "assets/items/mat-109.png" },
+  "mat-110": { name: "Energiefragment Truhe", nameEn: "Energy Fragment Chest", icon: "assets/items/mat-110.png" },
+  "mat-111": { name: "Brennendes Blatt Truhe", nameEn: "Flaming Leaf Chest", icon: "assets/items/mat-111.png" },
   // Enigma-Dungeon (alternatives Upp-Material) – Namen vorläufig, Nutzer reicht die echten nach
-  "mat-112": { name: "Enigma-Kristall", nameEn: "Enigma Crystal", icon: "assets/items/mat-112.png" },
-  "mat-113": { name: "Enigma-Foliant", nameEn: "Enigma Tome", icon: "assets/items/mat-113.png" },
+  "mat-112": { name: "Kyanit-Seelenstein", nameEn: "Kyanite Soul Stone", icon: "assets/items/mat-112.png" },
+  "mat-113": { name: "Kyanit-Tomus", nameEn: "Kyanite Tome", icon: "assets/items/mat-113.png" },
 };
 
 const WEAPONS = {
@@ -144,26 +144,26 @@ const WEAPONS = {
   "wpn-12": { name: "Seelenloses Messer", nameEn: "Soulless Knife", icon: "assets/items/wpn-12.png" },
   "wpn-13": { name: "Fünf-Elemente-Klinge", nameEn: "Five Element Blade", icon: "assets/items/wpn-13.png" },
   "wpn-14": { name: "Kyanitdolch", nameEn: "Kyanite Dagger", icon: "assets/items/wpn-14.png" },
-  "wpn-15": { name: "Gelbdrachenbogen", nameEn: "Yellow Dragon Bow", icon: "assets/items/wpn-15.png" },
-  "wpn-16": { name: "Riesenteufelsbogen", nameEn: "Giant Devil Bow", icon: "assets/items/wpn-16.png" },
+  "wpn-15": { name: "Großgelbdrachenbogen", nameEn: "Yellow Dragon Bow", icon: "assets/items/wpn-15.png" },
+  "wpn-16": { name: "Großteufelbogen", nameEn: "Giant Devil Bow", icon: "assets/items/wpn-16.png" },
   "wpn-17": { name: "Phönixbogen", nameEn: "Phoenix Bow", icon: "assets/items/wpn-17.png" },
   "wpn-18": { name: "Kyanitbogen", nameEn: "Kyanite Bow", icon: "assets/items/wpn-18.png" },
   "wpn-19": { name: "Himmel-und-Erde-Glocke", nameEn: "Heaven and Earth Bell", icon: "assets/items/wpn-19.png" },
-  "wpn-20": { name: "Drachenkieferglocke", nameEn: "Dragon Jaw Bell", icon: "assets/items/wpn-20.png" },
-  "wpn-21": { name: "Drachengeistglocke", nameEn: "Dragon Ghost Bell", icon: "assets/items/wpn-21.png" },
+  "wpn-20": { name: "Drachenmaulglocke", nameEn: "Dragon Jaw Bell", icon: "assets/items/wpn-20.png" },
+  "wpn-21": { name: "Drachengeist-Glocke", nameEn: "Dragon Ghost Bell", icon: "assets/items/wpn-21.png" },
   "wpn-22": { name: "Kyanitglocke", nameEn: "Kyanite Bell", icon: "assets/items/wpn-22.png" },
   "wpn-23": { name: "Erlösungsfächer", nameEn: "Salvation Fan", icon: "assets/items/wpn-23.png" },
   "wpn-24": { name: "Dämonenfächer", nameEn: "Demon Fan", icon: "assets/items/wpn-24.png" },
-  "wpn-25": { name: "Ruhender-Drache-Fächer", nameEn: "Lying Dragon Fan", icon: "assets/items/wpn-25.png" },
+  "wpn-25": { name: "Drachenfächer", nameEn: "Lying Dragon Fan", icon: "assets/items/wpn-25.png" },
   "wpn-26": { name: "Kyanitfächer", nameEn: "Kyanite Fan", icon: "assets/items/wpn-26.png" },
   "wpn-27": { name: "Greifenklaue", nameEn: "Griffon Claw", icon: "assets/items/wpn-27.png" },
-  "wpn-28": { name: "Grünwolfzahn", nameEn: "Green Wolf Fang", icon: "assets/items/wpn-28.png" },
-  "wpn-29": { name: "Drachenfürst", nameEn: "Dragon Lord", icon: "assets/items/wpn-29.png" },
+  "wpn-28": { name: "Grüner Wolfsfang", nameEn: "Green Wolf Fang", icon: "assets/items/wpn-28.png" },
+  "wpn-29": { name: "Drachenherrscher", nameEn: "Dragon Lord", icon: "assets/items/wpn-29.png" },
   "wpn-30": { name: "Kyanitkralle", nameEn: "Kyanite Claw", icon: "assets/items/wpn-30.png" },
   "wpn-31": { name: "Geisterzahnklinge", nameEn: "Ghost Fang Blade", icon: "assets/items/wpn-31.png" },
   "wpn-32": { name: "Heiliges Schwert", nameEn: "Holy Sword", icon: "assets/items/wpn-32.png" },
   "wpn-33": { name: "Drachenzahnklinge", nameEn: "Dragon Tooth Blade", icon: "assets/items/wpn-33.png" },
-  "wpn-34": { name: "Kyanitschneide", nameEn: "Kyanite Edge", icon: "assets/items/wpn-34.png" },
+  "wpn-34": { name: "Kyanit-Klinge", nameEn: "Kyanite Edge", icon: "assets/items/wpn-34.png" },
 };
 
 const ARMORS = {
@@ -173,22 +173,22 @@ const ARMORS = {
   "arm-04": { name: "Blaustahl-Panzer", nameEn: "Blue Steel Plate", icon: "assets/items/arm-04.png" },
   "arm-05": { name: "Schlangenmantel", nameEn: "Serpent Mantle", icon: "assets/items/arm-05.png" },
   // Deutsche Namen arm-06 … arm-08 vorläufig übersetzt – Nutzer reicht die echten nach
-  "arm-06": { name: "Schwarzstahlpanzer", nameEn: "Black Steel Armour", icon: "assets/items/arm-06.png" },
+  "arm-06": { name: "Schwarzstahl-Panzer", nameEn: "Black Steel Armour", icon: "assets/items/arm-06.png" },
   "arm-07": { name: "Magmaglutpanzer", nameEn: "Magma Glow Armour", icon: "assets/items/arm-07.png" },
-  "arm-08": { name: "Kyanitpanzer", nameEn: "Kyanite Armour", icon: "assets/items/arm-08.png" },
+  "arm-08": { name: "Kyanitrüstung", nameEn: "Kyanite Armour", icon: "assets/items/arm-08.png" },
   // arm-09 … arm-20: englische Namen aus dem Wiki, deutsche vorläufig übersetzt – Nutzer reicht die echten nach
   "arm-09": { name: "Schwarzwindanzug", nameEn: "Black Wind Suit", icon: "assets/items/arm-09.png" },
   "arm-10": { name: "Blutmondanzug", nameEn: "Blood Moon Suit", icon: "assets/items/arm-10.png" },
   "arm-11": { name: "Kyanitanzug", nameEn: "Kyanite Suit", icon: "assets/items/arm-11.png" },
-  "arm-12": { name: "Schwarzes Gewand", nameEn: "Black Clothing", icon: "assets/items/arm-12.png" },
-  "arm-13": { name: "Feuergewand", nameEn: "Fire Clothing", icon: "assets/items/arm-13.png" },
-  "arm-14": { name: "Kyanitgewand", nameEn: "Kyanite Clothing", icon: "assets/items/arm-14.png" },
-  "arm-15": { name: "Magischer Plattenpanzer", nameEn: "Magic Plate Armour", icon: "assets/items/arm-15.png" },
-  "arm-16": { name: "Höllenreiter-Rüstung", nameEn: "Hellrider Armour", icon: "assets/items/arm-16.png" },
-  "arm-17": { name: "Kyanit-Plattenpanzer", nameEn: "Kyanite Plate Armour", icon: "assets/items/arm-17.png" },
-  "arm-18": { name: "Nachtschattenrüstung", nameEn: "Nightshade Armour", icon: "assets/items/arm-18.png" },
-  "arm-19": { name: "Achat-Plattenpanzer", nameEn: "Agate Plate Armour", icon: "assets/items/arm-19.png" },
-  "arm-20": { name: "Kyanit-Harnisch", nameEn: "Kyanite Harness", icon: "assets/items/arm-20.png" },
+  "arm-12": { name: "Schwarze Kleidung", nameEn: "Black Clothing", icon: "assets/items/arm-12.png" },
+  "arm-13": { name: "Kleidung des Feuers", nameEn: "Fire Clothing", icon: "assets/items/arm-13.png" },
+  "arm-14": { name: "Kyanitkleidung", nameEn: "Kyanite Clothing", icon: "assets/items/arm-14.png" },
+  "arm-15": { name: "Magie-Plattenpanzer", nameEn: "Magic Plate Armour", icon: "assets/items/arm-15.png" },
+  "arm-16": { name: "Höllenrittpanzer", nameEn: "Hellrider Armour", icon: "assets/items/arm-16.png" },
+  "arm-17": { name: "Kyanitplattenpanzer", nameEn: "Kyanite Plate Armour", icon: "assets/items/arm-17.png" },
+  "arm-18": { name: "Nachtschattenpanzer", nameEn: "Nightshade Armour", icon: "assets/items/arm-18.png" },
+  "arm-19": { name: "Achatplattenpanzer", nameEn: "Agate Plate Armour", icon: "assets/items/arm-19.png" },
+  "arm-20": { name: "Kyanitharnisch", nameEn: "Kyanite Harness", icon: "assets/items/arm-20.png" },
 };
 
 
@@ -412,19 +412,35 @@ const UPGRADE_LINES = {
 /* =====================================================================
    NAMENS-STATUS  –  für das Übersetzer-Tool (uebersetzen/)
    ---------------------------------------------------------------------
-   Welche Namen schon mit dem Spiel abgeglichen sind. Alles andere zeigt
-   das Tool als „vorläufig“ (oder „fehlt“, wenn kein Name da ist).
-   Nach einem Abgleich: Kürzel einfach in die passende Liste schreiben.
+   Welche DE/EN-Namen schon mit dem Spiel abgeglichen sind. Alles andere
+   zeigt das Tool als „vorläufig“ (oder „fehlt“, wenn kein Name da ist).
+   Stand 22.11.: Akrios hat alle vorläufigen DE-Namen geprüft (keine mehr
+   offen) und EN für fast alle Items bestätigt/korrigiert.
+   Nach weiteren Abgleichen: Kürzel in die passende Liste schreiben.
    ===================================================================== */
-const _ids = (p, a, b) => Array.from({ length: b - a + 1 }, (_, i) => `${p}-${String(a + i).padStart(2, "0")}`);
-
-/* Englische Namen, die aus dem englischen Client/Wiki stammen */
+/* Englische Namen, die mit dem Client abgeglichen sind */
 const NAMES_CHECKED_EN = [
-  "wpn-02", "wpn-05", "wpn-06", "wpn-07", "wpn-08", "wpn-09", "wpn-10", "mat-23",
-  ..._ids("wpn", 11, 34).filter(id => id !== "wpn-12"),   // „Soulles Knife“ → Schreibweise prüfen
-  ..._ids("arm", 9, 20)
+  "arm-01", "arm-02", "arm-03", "arm-04", "arm-05", "arm-06", "arm-07", "arm-08",
+  "arm-09", "arm-10", "arm-11", "arm-12", "arm-13", "arm-14", "arm-15", "arm-16",
+  "arm-17", "arm-18", "arm-19", "arm-20", "mat-01", "mat-02", "mat-03", "mat-04",
+  "mat-05", "mat-06", "mat-07", "mat-08", "mat-09", "mat-10", "mat-100", "mat-101",
+  "mat-102", "mat-103", "mat-104", "mat-105", "mat-106", "mat-107", "mat-108", "mat-109",
+  "mat-11", "mat-110", "mat-111", "mat-112", "mat-113", "mat-12", "mat-13", "mat-14",
+  "mat-15", "mat-16", "mat-17", "mat-18", "mat-19", "mat-20", "mat-21", "mat-22",
+  "mat-23", "mat-24", "mat-25", "mat-26", "mat-27", "mat-28", "mat-29", "mat-30",
+  "mat-31", "mat-32", "mat-33", "mat-34", "mat-35", "mat-37", "mat-38", "mat-39",
+  "mat-40", "mat-41", "mat-42", "mat-43", "mat-44", "mat-45", "mat-46", "mat-47",
+  "mat-48", "mat-49", "mat-50", "mat-51", "mat-52", "mat-53", "mat-54", "mat-55",
+  "mat-56", "mat-57", "mat-58", "mat-59", "mat-60", "mat-61", "mat-62", "mat-63",
+  "mat-64", "mat-65", "mat-66", "mat-67", "mat-68", "mat-69", "mat-70", "mat-71",
+  "mat-72", "mat-73", "mat-74", "mat-75", "mat-76", "mat-77", "mat-78", "mat-79",
+  "mat-80", "mat-81", "mat-82", "mat-83", "mat-84", "mat-85", "mat-86", "mat-87",
+  "mat-88", "mat-89", "mat-90", "mat-91", "mat-92", "mat-93", "mat-94", "mat-95",
+  "mat-96", "mat-97", "mat-98", "mat-99", "wpn-01", "wpn-02", "wpn-03", "wpn-04",
+  "wpn-05", "wpn-06", "wpn-07", "wpn-08", "wpn-09", "wpn-10", "wpn-11", "wpn-12",
+  "wpn-13", "wpn-14", "wpn-15", "wpn-16", "wpn-17", "wpn-18", "wpn-19", "wpn-20",
+  "wpn-21", "wpn-22", "wpn-23", "wpn-24", "wpn-25", "wpn-26", "wpn-27", "wpn-28",
+  "wpn-29", "wpn-30", "wpn-31", "wpn-32", "wpn-33", "wpn-34"
 ];
-/* Deutsche Namen, die nur vorläufig übersetzt sind */
-const NAMES_PROVISIONAL_DE = [
-  ..._ids("arm", 6, 20), ..._ids("wpn", 11, 34), ..._ids("mat", 108, 113)
-];
+/* Deutsche Namen, die nur vorläufig übersetzt sind (aktuell keine) */
+const NAMES_PROVISIONAL_DE = [];

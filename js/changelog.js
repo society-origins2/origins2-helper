@@ -12,6 +12,10 @@ const CHANGELOG = [
     date: "2026-11-22",
     title: "Skilltree-Update", titleEn: "Skill tree update",
     items: [
+      { type: "improved", de: "Item-Namen mit dem Spiel abgeglichen (Deutsch & Englisch) – echte Namen übernommen, u. a. die beiden Enigma-Materialien (Kyanit-Seelenstein, Kyanit-Tomus). Danke an Akrios!",
+                     en: "Item names checked against the game (German & English) – real names applied, including the two Enigma materials (Kyanite Soul Stone, Kyanite Tome). Thanks to Akrios!" },
+      { type: "improved", de: "Upp-Kalkulator: Item-Bilder in der Reihe größer und gleichmäßiger dargestellt (Waffen wirkten vorher zu klein)",
+                     en: "Upgrade Calculator: item images in the chain shown larger and more consistent (weapons looked too small before)" },
       { type: "new", de: "Übersetzer für Helfer (Deutsch, Englisch, Rumänisch, Türkisch): Item-Namen im Spiel nachschauen, eintragen oder bestätigen und mit einem Klick direkt an uns senden (oder als Datei herunterladen) – vorläufige und fehlende Namen sind markiert (Team-Reiter oder „Hilf mit!“)",
                      en: "Translator for helpers (German, English, Romanian, Turkish): look up item names in the game, enter or confirm them and send them to us with one click (or download them as a file) – provisional and missing names are marked (Team tab or “Help out!”)" },
       { type: "improved", de: "Auf breiten Bildschirmen steht rechts eine feste Karte „Hilf mit!“ zum Bug-Melden und Ideen-Vorschlagen – sie überdeckt nie den Kopfbereich, mit Abkürzung zu „Helfer werden“ (auch nach dem Absenden einer Meldung); Promoter-Filter „Server“ entfernt",
