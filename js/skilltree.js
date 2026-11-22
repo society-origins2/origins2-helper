@@ -12,6 +12,38 @@ const stItemName = id => L(itemInfo(id)) || t("st.unknown", id.replace("mat-", "
 let stSel = { pvm: 0, pvp: 0, yohara: 0 };
 /* Skilltree schon mit dem Schlüssel freigeschaltet? (sonst Schlüssel mitrechnen) */
 let stKeyOwned = true;
+/* Mini-Fenster (?mini=skill): nur Baum + Einkaufsliste */
+const ST_MINI = new URLSearchParams(location.search).get("mini") === "skill";
+if (ST_MINI) document.documentElement.classList.add("is-mini-skill");
+/* Abgehakte (gekaufte) Items pro Auswahl: { "pvm-9,pvp-3|k": ["mat-01", …] } */
+const ST_BOUGHT_KEY = "o2h.skillBought";
+let stJustBought = null;
+/* Marktpreise: dieselben wie im Upp-Kalkulator (localStorage o2h.marketPrices) */
+const ST_PRICE_EDIT_KEY = "o2h.skillPriceEdit";
+/* Baum ausgeblendet? (nur die Einkaufsliste in voller Breite) */
+const ST_TREE_KEY = "o2h.skillTreeHidden";
+let stTreeHidden = false;
+function stApplyTree() {
+  const wrap = document.querySelector(".st-wrap");
+  if (!wrap) return;
+  wrap.classList.toggle("tree-hidden", stTreeHidden);
+  const bar = document.getElementById("st-treebar");
+  if (bar) {
+    const need = stNeeded(stSel);
+    bar.innerHTML = `<span class="st-treebar-dots">${ST_ORDER.map(b => `<span style="--c:${SKILL_TREE[b].color}"><i></i>${SKILL_TREE[b].roman} ${need[b] || 0}/9</span>`).join("")}</span><b>${t("st.showTree")} ▾</b>`;
+  }
+}
+function stSetTree(hidden) {
+  stTreeHidden = hidden;
+  try { localStorage.setItem(ST_TREE_KEY, hidden ? "1" : "0"); } catch {}
+  stApplyTree(); stRenderResult();
+}
+const stBoughtKey = () => stSelString() + (stKeyOwned ? "" : "|key");
+function stLoadBought() { try { return JSON.parse(localStorage.getItem(ST_BOUGHT_KEY) || "{}"); } catch { return {}; } }
+function stSaveBought(b) {
+  const keys = Object.keys(b); if (keys.length > 30) keys.slice(0, keys.length - 30).forEach(k => delete b[k]);
+  try { localStorage.setItem(ST_BOUGHT_KEY, JSON.stringify(b)); } catch {}
+}
 
 const stAny = () => ST_ORDER.some(b => stSel[b] > 0);
 
@@ -111,12 +143,25 @@ function stRenderResult() {
     return;
   }
   const need = stNeeded(stSel), tot = stTotals(need);
-  const rows = tot.order.map(id => {
-    const info = itemInfo(id), unknown = !L(info);
-    return `<li class="st-item${unknown ? " is-unknown" : ""}">
-      <span class="st-ico"><img src="${info.icon}" alt="" loading="lazy"></span>
-      <span class="st-name">${uEsc(stItemName(id))}</span>
-      <span class="st-qty">${fmtNum(tot.mats[id])}×</span></li>`;
+  const bKey = stBoughtKey();
+  const bought = new Set((stLoadBought()[bKey] || []).filter(id => id in tot.mats));
+  const nAll = tot.order.length, nBought = bought.size;
+  const checkMark = `<span class="mg-check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 10.5 3.5 3.5 7.5-8"/></svg></span>`;
+  const prices = loadPrices();
+  const editPrices = (() => { try { return localStorage.getItem(ST_PRICE_EDIT_KEY) === "1"; } catch { return false; } })();
+  const costOf = id => (prices[id] || 0) * tot.mats[id];
+  const anyPrice = tot.order.some(id => prices[id] > 0);
+  const matValue = tot.order.reduce((a, id) => a + costOf(id), 0);
+  const openValue = tot.order.reduce((a, id) => a + (bought.has(id) ? 0 : costOf(id)), 0);
+  const viewOrder = anyPrice ? tot.order.map((id, n) => ({ id, n })).sort((a, b) => (costOf(b.id) - costOf(a.id)) || (a.n - b.n)).map(o => o.id) : tot.order;
+  const rows = viewOrder.map(id => {
+    const info = itemInfo(id), unknown = !L(info), b = bought.has(id), p = prices[id] || 0;
+    return `<li class="mg-tile st-tile${b ? " is-bought" : ""}${id === stJustBought ? " just-bought" : ""}" data-buy="${uEsc(id)}" role="checkbox" tabindex="0" aria-checked="${b}" title="${uEsc(t("upp.buyToggle"))}">
+      <span class="mt-ico">${checkMark}<img src="${info.icon}" alt="" loading="lazy"></span>
+      <span class="mg-name${unknown ? " is-unknown" : ""}" title="${uEsc(stItemName(id))}">${uEsc(stItemName(id))}</span>
+      <span class="mg-avg tabular-nums">${fmtNum(tot.mats[id])}×</span>
+      ${editPrices ? `<div class="mg-price mt-price">${priceField(id, prices)}<span class="mg-cost tabular-nums">${p ? "= " + fmtYang(costOf(id)) : ""}</span></div>`
+        : (p ? `<div class="mg-costline tabular-nums">${fmtYang(p)} / ${t("upp.pcs")} · <b>${fmtYang(costOf(id))}</b></div>` : "")}</li>`;
   }).join("");
   const keyLi = stKeyNeeded() ? `<li><span class="st-dot" style="--c:var(--color-gold-300)"></span><b>${uEsc(L(SKILL_KEY))}</b> ${fmtYang(SKILL_KEY.yang)} Yang <em>${Object.keys(SKILL_KEY.mats).length} ${t("st.items")}</em></li>` : "";
   const stages = keyLi + ST_ORDER.filter(b => need[b]).map(b => {
@@ -131,7 +176,10 @@ function stRenderResult() {
         <p class="st-sel">${stSelLine(need)}</p>
         <p class="mt-1 text-xs text-parch-400">${t("st.stagesTotal", tot.stages)}</p>
       </div>
-      <button type="button" class="btn-ghost-sq" id="st-reset">${t("st.reset")}</button>
+      <div class="st-res-btns">
+        <button type="button" class="btn-ghost-sq" id="st-tree-toggle">${stTreeHidden ? t("st.showTree") : t("st.hideTree")}</button>
+        <button type="button" class="btn-ghost-sq" id="st-reset">${t("st.reset")}</button>
+      </div>
     </div>
     <div class="st-keyrow">
       <span><img src="${SKILL_KEY.icon}" alt="">${t("st.keyQ")}</span>
@@ -144,8 +192,19 @@ function stRenderResult() {
     <div class="st-extra">
       <span><img src="${SKILL_KEY.icon}" alt=""> ${t("st.key")} <em>${stKeyOwned ? t("st.keyDone") : t("st.keyNeed", fmtYang(SKILL_KEY.yang))}</em></span>
       <span>${t("st.yangStages")} <em>${tot.yang != null ? fmtYang(tot.yang) : t("st.tbd")}</em></span>
+      ${anyPrice ? `<span>${t("st.matValue")} <em>${fmtYang(matValue)}</em></span>` : ""}
     </div>
-    <ul class="st-list">${rows}</ul>
+    ${nAll ? `<div class="st-listhead">
+      <p class="mt-progress st-progress">
+        <span class="mt-bar" style="--p:${Math.round(nBought / nAll * 100)}%"></span>
+        <span>${nBought === nAll ? t("st.allBought") : t("upp.boughtOf", nBought, nAll)}${anyPrice && nBought < nAll ? ` · ${t("upp.openCost", fmtYang(openValue))}` : ""}</span>
+        ${nBought ? `<button type="button" class="mt-reset" id="st-bought-reset">${t("upp.boughtReset")}</button>` : ""}</p>
+      <button type="button" class="btn-ghost-sq mt-edit${editPrices ? " is-on" : ""}" id="st-edit-prices" aria-pressed="${editPrices}">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        ${editPrices ? t("upp.editDone") : `<span class="hide-xs">${t("upp.editPrices")}</span><span class="show-xs">${t("upp.editPricesShort")}</span>`}</button>
+    </div>
+    ${editPrices ? `<p class="st-pricehint">${t("upp.priceHint")}</p>` : anyPrice ? `<p class="mt-sorted">${t("upp.sortedByCost")}</p>` : ""}` : ""}
+    <ul class="mat-grid st-grid${editPrices ? " is-edit" : ""}">${rows}</ul>
     <details class="st-stages"><summary>${t("st.perStage")}</summary><ol>${stages}</ol></details>
     <div class="st-actions">
       <button type="button" class="btn-gold" id="st-dl-png">${t("st.dlPng")}</button>
@@ -154,11 +213,31 @@ function stRenderResult() {
       <button type="button" class="btn-ghost-sq" id="st-share">${t("st.share")}</button>
     </div>`;
   document.getElementById("st-reset").addEventListener("click", () => stSelect({ pvm: 0, pvp: 0, yohara: 0 }));
+  document.getElementById("st-tree-toggle").addEventListener("click", () => stSetTree(!stTreeHidden));
   out.querySelectorAll('input[name="st-key"]').forEach(r => r.addEventListener("change", () => {
     stKeyOwned = r.value === "1";
     try { localStorage.setItem("o2h.skillKey", stKeyOwned ? "1" : "0"); } catch {}
     stRenderResult();
   }));
+  const toggleBought = id => {
+    const all = stLoadBought(), set = new Set(all[bKey] || []);
+    set.has(id) ? set.delete(id) : set.add(id);
+    stJustBought = set.has(id) ? id : null;
+    delete all[bKey]; if (set.size) all[bKey] = [...set];
+    stSaveBought(all); stRenderResult(); stJustBought = null;
+  };
+  out.querySelectorAll("[data-buy]").forEach(el => {
+    el.addEventListener("click", e => { if (e.target.closest("input, button, a")) return; toggleBought(el.dataset.buy); });
+    el.addEventListener("keydown", e => { if ((e.key === " " || e.key === "Enter") && e.target === el) { e.preventDefault(); toggleBought(el.dataset.buy); } });
+  });
+  wirePriceFields(out, stRenderResult);
+  document.getElementById("st-edit-prices")?.addEventListener("click", () => {
+    let on = false; try { on = localStorage.getItem(ST_PRICE_EDIT_KEY) !== "1"; localStorage.setItem(ST_PRICE_EDIT_KEY, on ? "1" : "0"); } catch {}
+    stRenderResult();
+    if (on) { const f = out.querySelector(".st-grid [data-price]"); if (f) f.focus({ preventScroll: true }); }
+  });
+  const rb = document.getElementById("st-bought-reset");
+  if (rb) rb.addEventListener("click", () => { const all = stLoadBought(); delete all[bKey]; stSaveBought(all); stRenderResult(); });
   document.getElementById("st-dl-png").addEventListener("click", stDownloadPng);
   document.getElementById("st-dl-txt").addEventListener("click", stDownloadTxt);
   document.getElementById("st-copy").addEventListener("click", stCopy);
@@ -174,8 +253,9 @@ function stSelString() { return ST_ORDER.filter(b => stSel[b] > 0).map(b => `${b
 function stSelect(sel, scroll) {
   stSel = sel;
   try { localStorage.setItem("o2h.skillSel", stSelString()); } catch {}
-  stRenderTree(); stRenderResult();
-  if (scroll && stAny() && window.innerWidth < 900) document.getElementById("st-result").scrollIntoView({ behavior: "smooth", block: "start" });
+  if (!stAny() && stTreeHidden) { stTreeHidden = false; try { localStorage.setItem(ST_TREE_KEY, "0"); } catch {} } // ohne Auswahl immer den Baum zeigen
+  stRenderTree(); stRenderResult(); stApplyTree();
+  if (scroll && !ST_MINI && stAny() && window.innerWidth < 900) document.getElementById("st-result").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 /* ---------------- Export ---------------- */
@@ -290,6 +370,19 @@ function initSkilltree() {
   let start = stParse(new URLSearchParams(location.search).get("skill"));
   if (!start) { try { start = stParse(localStorage.getItem("o2h.skillSel")); } catch {} }
   try { stKeyOwned = localStorage.getItem("o2h.skillKey") !== "0"; } catch {}
+  try { stTreeHidden = localStorage.getItem(ST_TREE_KEY) === "1"; } catch {}
+  const bar = document.getElementById("st-treebar");
+  if (bar) bar.addEventListener("click", () => stSetTree(false));
   stSelect(start || { pvm: 0, pvp: 0, yohara: 0 });
-  window.addEventListener("langchange", () => { stRenderTree(); stRenderResult(); });
+  window.addEventListener("langchange", () => { stRenderTree(); stRenderResult(); stApplyTree(); });
+  // Mini-Fenster
+  const pop = document.getElementById("st-popout");
+  if (pop) pop.addEventListener("click", () => openMiniWindow("skill", "skilltree", t("skill.title")));
+  if (ST_MINI) document.title = t("skill.title") + " · Origins2 Helper";
+  // Seite und Mini-Fenster abgleichen (Auswahl, Schlüssel, Haken)
+  window.addEventListener("storage", e => {
+    if (e.key === "o2h.skillSel") { const s = stParse(e.newValue); stSel = s || { pvm: 0, pvp: 0, yohara: 0 }; stRenderTree(); stRenderResult(); }
+    else if (e.key === "o2h.skillKey") { stKeyOwned = e.newValue !== "0"; stRenderResult(); }
+    else if (e.key === ST_BOUGHT_KEY || e.key === "o2h.marketPrices") stRenderResult();
+  });
 }

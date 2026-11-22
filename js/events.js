@@ -54,6 +54,7 @@ const BOSS_SCHEDULES = [
   {
     id: "map-low",
     type: "map",
+    short: "Low-Level", shortEn: "Low level",   // Kurzname fürs Mini-Fenster
     title: "Low-Level-Mapbosse",
     img: "assets/bosses/map-low.png", imgH: 119,
     titleEn: "Low-level map bosses",
@@ -65,6 +66,7 @@ const BOSS_SCHEDULES = [
   {
     id: "map-beta",
     type: "map",
+    short: "Beta-Maps", shortEn: "Beta maps",   // Kurzname fürs Mini-Fenster
     title: "Beta-Map-Bosse",
     img: "assets/bosses/map-beta.png", imgH: 118,
     titleEn: "Beta map bosses",
@@ -76,6 +78,7 @@ const BOSS_SCHEDULES = [
   {
     id: "map-elementar",
     type: "map",
+    short: "Elementar-Maps", shortEn: "Elemental maps",   // Kurzname fürs Mini-Fenster
     title: "Elementar-Map-Bosse",
     img: "assets/bosses/map-elementar.png", imgH: 110,
     titleEn: "Elemental map bosses",
@@ -87,6 +90,7 @@ const BOSS_SCHEDULES = [
   {
     id: "map-yohara",
     type: "map",
+    short: "Yohara-Maps", shortEn: "Yohara maps",   // Kurzname fürs Mini-Fenster
     title: "Yohara-Map-Bosse",
     img: "assets/bosses/map-yohara.png", imgH: 83,
     titleEn: "Yohara map bosses",
@@ -251,6 +255,64 @@ function renderTicker() {
     </div>`).join("");
 }
 
+/* ---------------- Mini-Fenster (waagerecht): alle Bosse in einer Leiste ----------------
+   ?mini=boss – wird über openMiniWindow("boss", …) aus upp.js geöffnet */
+const BOSS_MINI = new URLSearchParams(location.search).get("mini") === "boss";
+const BOSS_MINI_SIZE = [1180, 84];
+const BOSS_HIDDEN_KEY = "o2h.bossHidden";   // im Mini-Fenster ausgeblendete Bosse (ids)
+let bossPickMode = false;                  // „Bosse wählen“ aktiv?
+function bossHidden() { try { return new Set(JSON.parse(localStorage.getItem(BOSS_HIDDEN_KEY) || "[]")); } catch { return new Set(); } }
+function renderBossMini() {
+  const list = document.getElementById("boss-mini-list");
+  if (!list) return;
+  const hidden = bossHidden();
+  const shown = BOSS_SCHEDULES.filter(s => bossPickMode || !hidden.has(s.id));
+  list.classList.toggle("is-picking", bossPickMode);
+  list.innerHTML = shown.map(s => `
+    <div class="bm-item${s.type === "world" ? " is-world" : ""}${hidden.has(s.id) ? " is-off" : ""}" data-id="${esc(s.id)}"${bossPickMode ? ` data-pick="${esc(s.id)}" role="checkbox" tabindex="0" aria-checked="${!hidden.has(s.id)}"` : ""}>
+      ${bossPickMode ? `<span class="bm-eye" aria-hidden="true">${hidden.has(s.id) ? EYE_OFF_SVG : EYE_SVG}</span>` : ""}
+      ${bossArt(s) ? `<span class="tick-ava"><img src="${esc(bossArt(s))}" alt=""></span>` : ""}
+      <div class="min-w-0">
+        <p class="tick-name" title="${esc(bossLabel(s))}">${esc(bossShort(s))}</p>
+        <p class="tick-meta"><span data-at>--:--</span> · ${fmtEvery(s.every)}</p>
+      </div>
+      <p class="tick-count tabular-nums" data-count>--:--</p>
+      ${bossPickMode ? "" : bellButton(s, true)}
+    </div>`).join("") || `<p class="bm-empty">${t("boss.allHidden")}</p>`;
+  const pick = document.getElementById("bm-pick");
+  if (pick) {
+    const n = hidden.size;
+    pick.classList.toggle("is-on", bossPickMode);
+    pick.innerHTML = bossPickMode ? t("boss.pickDone") : `${EYE_SVG}<span>${t("boss.pick")}${n ? ` · ${t("boss.hiddenN", n)}` : ""}</span>`;
+  }
+  paintBells(); tick();
+}
+const EYE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-2.6 3.5M6.6 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7a10 10 0 0 0 5.4-1.6"/><path d="m3 3 18 18M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+function toggleBossHidden(id) {
+  const h = bossHidden(); h.has(id) ? h.delete(id) : h.add(id);
+  try { localStorage.setItem(BOSS_HIDDEN_KEY, JSON.stringify([...h])); } catch {}
+  renderBossMini();
+}
+function setupBossMini() {
+  document.documentElement.classList.add("is-mini", "is-mini-boss");
+  const box = document.createElement("div");
+  box.id = "boss-mini";
+  box.innerHTML = `<div class="bm-head">
+      <span class="bm-label">${t("boss.serverTime")}</span>
+      <span class="ticker-clock tabular-nums" id="server-clock">--:--:--</span>
+      <button type="button" class="bm-pick" id="bm-pick"></button>
+    </div><div class="bm-list" id="boss-mini-list"></div>`;
+  const old = document.getElementById("server-clock"); if (old) old.removeAttribute("id"); // Uhr nur einmal
+  document.body.prepend(box);
+  document.title = t("boss.title") + " · Origins2 Helper";
+  box.querySelector("#bm-pick").addEventListener("click", () => { bossPickMode = !bossPickMode; renderBossMini(); });
+  box.addEventListener("click", e => { const it = e.target.closest("[data-pick]"); if (it) toggleBossHidden(it.dataset.pick); });
+  box.addEventListener("keydown", e => { const it = e.target.closest("[data-pick]"); if (it && (e.key === " " || e.key === "Enter")) { e.preventDefault(); toggleBossHidden(it.dataset.pick); } });
+  window.addEventListener("storage", e => { if (e.key === BOSS_HIDDEN_KEY) renderBossMini(); });
+  renderBossMini();
+}
+
 /* ---------------- Bereich „Boss-Timer“ ---------------- */
 function bossCard(s) {
   const names = s.type === "world"
@@ -326,14 +388,15 @@ function tick() {
     _lastIn[s.id] = n.inSec;
   });
 
-  // Live-Leiste nach Restzeit sortieren
-  if (ticker) {
+  // Live-Leiste (und Mini-Fenster) nach Restzeit sortieren
+  [ticker, document.getElementById("boss-mini-list")].forEach(ticker => {
+    if (!ticker) return;
     const items = [...ticker.children];
     items.sort((a, b) =>
       nextSpawn(BOSS_SCHEDULES.find(s => s.id === a.dataset.id), now).inSec -
       nextSpawn(BOSS_SCHEDULES.find(s => s.id === b.dataset.id), now).inSec);
     items.forEach((el, i) => { if (ticker.children[i] !== el) ticker.appendChild(el); });
-  }
+  });
 }
 
 function initBells() {
@@ -352,10 +415,15 @@ function initBells() {
 }
 
 function initEvents() {
+  if (BOSS_MINI) setupBossMini();
   renderTicker();
   renderBossBoard();
   initBells();
-  window.addEventListener("langchange", () => { renderTicker(); renderBossBoard(); paintBells(); tick(); });
+  window.addEventListener("langchange", () => { renderTicker(); renderBossBoard(); renderBossMini(); paintBells(); tick(); });
+  const pop = document.getElementById("boss-popout");
+  if (pop) pop.addEventListener("click", () => openMiniWindow("boss", "bosse", t("boss.title"), BOSS_MINI_SIZE));
+  // Glocken zwischen Seite und Mini-Fenster abgleichen
+  window.addEventListener("storage", e => { if (e.key === SOUND_KEY) paintBells(); });
   tick();
   // genau auf die Sekundengrenze ausrichten
   setTimeout(() => { tick(); setInterval(tick, 1000); }, 1000 - (Date.now() % 1000));

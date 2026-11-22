@@ -7,6 +7,42 @@
 const UPP_RUNS = 10000;
 const PRICE_KEY = "o2h.marketPrices";
 const UPP_STATE_KEY = "o2h.uppState";
+/* ---------------- Mini-Fenster: Umschalt-Leiste ----------------
+   Alle Mini-Fenster (?mini=upp|skill|fish) bekommen oben eine Leiste, um direkt zu wechseln. */
+const MINI_TOOLS = [
+  { mode: "upp",   hash: "upp-rechner",  key: "mini.upp" },
+  { mode: "skill", hash: "skilltree",    key: "mini.skill" },
+  { mode: "fish",  hash: "event-helper", key: "mini.fish" }
+];
+const MINI_W = 470, MINI_H = 800;   // gleiche Größe für alle, damit das Wechseln passt
+const MINI_MODE = new URLSearchParams(location.search).get("mini");
+function miniUrl(mode, hash) { return location.pathname + "?mini=" + mode + "&lang=" + (typeof LANG !== "undefined" ? LANG : "de") + "#" + hash; }
+function buildMiniNav() {
+  if (!MINI_TOOLS.some(x => x.mode === MINI_MODE)) return;
+  const nav = document.createElement("nav");
+  nav.className = "mini-nav";
+  const draw = () => { nav.innerHTML = MINI_TOOLS.map(x =>
+    `<a href="${miniUrl(x.mode, x.hash)}"${x.mode === MINI_MODE ? ' class="is-active" aria-current="page"' : ""}>${t(x.key)}</a>`).join(""); };
+  draw(); window.addEventListener("langchange", draw);
+  document.body.prepend(nav);
+  document.documentElement.classList.add("is-mini");
+}
+buildMiniNav();
+
+/* Kompakte Nur-Rechner-Ansicht für das Mini-Fenster (?mini=upp) */
+const UPP_MINI = new URLSearchParams(location.search).get("mini") === "upp";
+if (UPP_MINI) document.documentElement.classList.add("is-mini-upp");
+const LIST_VIEW_KEY = "o2h.listView";   // "grid" (Kacheln, Standard) oder "table"
+const PRICE_EDIT_KEY = "o2h.priceEdit"; // Preisfelder in den Kacheln sichtbar?
+const BOUGHT_KEY = "o2h.bought";        // abgehakte (gekaufte) Materialien pro Auswahl: { "reihe|start|ziel": ["mat-01", …] }
+let uppJustBought = null; // nur die gerade abgehakte Kachel bekommt den Stift-Strich animiert
+function loadBought() { try { return JSON.parse(localStorage.getItem(BOUGHT_KEY) || "{}"); } catch { return {}; } }
+function saveBought(b) {
+  const keys = Object.keys(b); if (keys.length > 30) keys.slice(0, keys.length - 30).forEach(k => delete b[k]); // nur die letzten 30 Auswahlen merken
+  lsSet(BOUGHT_KEY, JSON.stringify(b));
+}
+function lsGet(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : v; } catch { return d; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch {} }
 
 /* ---------------- Hilfsfunktionen ---------------- */
 function itemInfo(id) {
@@ -52,6 +88,30 @@ function parseYang(str) {
 
 function loadPrices() { try { return JSON.parse(localStorage.getItem(PRICE_KEY) || "{}"); } catch { return {}; } }
 function savePrices(p) { try { localStorage.setItem(PRICE_KEY, JSON.stringify(p)); } catch {} }
+/* Preisfeld mit ×-Knopf zum Löschen – benutzt von Upp-Kalkulator und Skilltree */
+function priceField(id, prices) {
+  const p = prices[id] || 0;
+  return `<span class="price-wrap"><input type="text" inputmode="decimal" value="${p ? uEsc(fmtYang(p)) : ""}" placeholder="${uEsc(t("upp.price"))}" data-price="${uEsc(id)}" aria-label="${uEsc(t("upp.priceAria", itemName(id)))}">${
+    p ? `<button type="button" class="price-clear" data-clear="${uEsc(id)}" aria-label="${uEsc(t("upp.priceClear"))}" title="${uEsc(t("upp.priceClear"))}"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg></button>` : ""}</span>`;
+}
+/* Preisfelder in einem Bereich verdrahten; danach rerender() (+ den jeweils anderen Rechner auffrischen) */
+function wirePriceFields(root, rerender) {
+  const after = () => { rerender(); refreshOtherCalc(rerender); };
+  root.querySelectorAll("[data-price]").forEach(inp => inp.addEventListener("change", () => {
+    const pr = loadPrices(), v = parseYang(inp.value);
+    if (v > 0) pr[inp.dataset.price] = v; else delete pr[inp.dataset.price];
+    savePrices(pr); after();
+  }));
+  root.querySelectorAll("[data-clear]").forEach(btn => btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const pr = loadPrices(); delete pr[btn.dataset.clear]; savePrices(pr); after();
+    const f = root.querySelector(`[data-price="${CSS.escape(btn.dataset.clear)}"]`); if (f) f.focus({ preventScroll: true });
+  }));
+}
+function refreshOtherCalc(from) {
+  if (from !== renderResult && document.getElementById("upp-result") && uppLast) renderResult();
+  if (typeof stRenderResult === "function" && from !== stRenderResult) stRenderResult();
+}
 
 /* ---------------- Simulation ---------------- */
 /* Position = Stufe * 10 + Level (+0 … +9) */
@@ -237,19 +297,58 @@ function renderResult() {
   const ids = orderedMatIds(line, from, to, res.ids);
   uppLast = { line, from, to, downgrade, res, ids };
 
-  const rows = ids.map(id => {
+  /* Anzeige-Reihenfolge: sind Preise eingetragen, stehen die teuersten Materialien (Kosten der Mindestmenge) oben */
+  const avgQty = id => Math.ceil(res.avg.mats[id] || 0);
+  const minQty = id => res.min.mats[id] || 0;   // Kacheln zeigen die Mindestmenge (nicht zu viel kaufen)
+  const costOf = id => (prices[id] || 0) * (res.min.mats[id] || 0);
+  const anyPrice = ids.some(id => prices[id] > 0);
+  const viewIds = anyPrice ? ids.map((id, n) => ({ id, n })).sort((a, b) => (costOf(b.id) - costOf(a.id)) || (a.n - b.n)).map(o => o.id) : ids;
+  const view = lsGet(LIST_VIEW_KEY, "grid") === "table" ? "table" : "grid";
+  const boughtKey = `${lineId}|${from}|${to}`;
+  const bought = new Set((loadBought()[boughtKey] || []).filter(id => ids.includes(id)));
+  const nBought = bought.size;
+  const openCost = ids.reduce((a, id) => a + (bought.has(id) ? 0 : (prices[id] || 0) * (res.min.mats[id] || 0)), 0);
+  const checkMark = `<span class="mg-check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4.5 10.5 3.5 3.5 7.5-8"/></svg></span>`;
+  const editPrices = lsGet(PRICE_EDIT_KEY, "0") === "1";
+  const priceInput = id => priceField(id, prices);
+
+  const rows = viewIds.map(id => {
     const info = itemInfo(id);
     const p = prices[id] || 0;
     return `
-      <tr data-mat="${uEsc(id)}">
-        <td class="mt-item"><span class="mt-ico"><img src="${uEsc(info.icon)}" alt=""></span><span class="mt-name${info.name ? "" : " is-unknown"}">${uEsc(itemName(id))}</span></td>
+      <tr data-mat="${uEsc(id)}" class="${bought.has(id) ? "is-bought" : ""}${id === uppJustBought ? " just-bought" : ""}" data-buy="${uEsc(id)}" title="${uEsc(t("upp.buyToggle"))}">
+        <td class="mt-item"><span class="mt-ico">${checkMark}<img src="${uEsc(info.icon)}" alt=""></span><span class="mt-name${info.name ? "" : " is-unknown"}">${uEsc(itemName(id))}</span></td>
         <td class="tabular-nums">${fmtNum(res.min.mats[id] || 0)}</td>
-        <td class="tabular-nums is-main">${fmtNum(Math.ceil(res.avg.mats[id] || 0))}</td>
+        <td class="tabular-nums is-main">${fmtNum(avgQty(id))}</td>
         <td class="tabular-nums">${fmtNum(res.p90.mats[id] || 0)}</td>
-        <td class="mt-price"><input type="text" inputmode="decimal" value="${p ? uEsc(fmtYang(p)) : ""}" placeholder="${uEsc(t("upp.price"))}" data-price="${uEsc(id)}" aria-label="${uEsc(t("upp.priceAria", itemName(id)))}"></td>
-        <td class="tabular-nums mt-sum" data-sum>${p ? fmtYang(p * Math.ceil(res.avg.mats[id] || 0)) : "–"}</td>
+        <td class="mt-price">${priceInput(id)}</td>
+        <td class="tabular-nums mt-sum" data-sum>${p ? fmtYang(p * avgQty(id)) : "–"}</td>
       </tr>`;
   }).join("");
+
+  const tiles = viewIds.map(id => {
+    const info = itemInfo(id);
+    const p = prices[id] || 0;
+    return `
+      <li class="mg-tile${bought.has(id) ? " is-bought" : ""}${id === uppJustBought ? " just-bought" : ""}" data-mat="${uEsc(id)}" data-buy="${uEsc(id)}" role="checkbox" tabindex="0" aria-checked="${bought.has(id)}" title="${uEsc(t("upp.buyToggle"))}">
+        <span class="mt-ico">${checkMark}<img src="${uEsc(info.icon)}" alt=""></span>
+        <span class="mg-name${info.name ? "" : " is-unknown"}" title="${uEsc(itemName(id))}">${uEsc(itemName(id))}</span>
+        <span class="mg-side tabular-nums">${t("upp.colAvg")} ${fmtNum(avgQty(id))} · ${t("upp.colP90")} ${fmtNum(res.p90.mats[id] || 0)}</span>
+        <span class="mg-avg tabular-nums"><small>${t("upp.colMin")}</small>${fmtNum(minQty(id))}×</span>
+        ${editPrices ? `<div class="mg-price mt-price">${priceInput(id)}<span class="mg-cost tabular-nums">${p ? "= " + fmtYang(p * minQty(id)) : ""}</span></div>`
+          : (p ? `<div class="mg-costline tabular-nums">${fmtYang(p)} / ${t("upp.pcs")} · <b>${fmtYang(p * minQty(id))}</b></div>` : "")}
+      </li>`;
+  }).join("");
+
+  const listBody = !ids.length ? `<p class="upp-empty">${t("upp.noMats")}</p>`
+    : view === "table" ? `
+      <div class="mt-scroll">
+        <table class="mat-table">
+          <thead><tr><th>${t("upp.colMat")}</th><th>${t("upp.colMin")}</th><th class="is-main">${t("upp.colAvg")}</th><th>${t("upp.colP90")}</th><th>${t("upp.colPrice")}</th><th>${t("upp.colCost")}</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`
+    : `<ul class="mat-grid${editPrices ? " is-edit" : ""}">${tiles}</ul>`;
 
   const vMin = matValueOf(res.min.mats, prices), vAvg = matValueOf(res.avg.mats, prices), vP90 = matValueOf(res.p90.mats, prices);
 
@@ -262,15 +361,26 @@ function renderResult() {
 
     <div class="panel mt-4 overflow-hidden">
       <div class="mt-head">
-        <h3 class="sub-title">${t("upp.list")}</h3>
-        <p class="text-xs text-parch-500">${t("upp.priceHint")}</p>
+        <div>
+          <h3 class="sub-title">${t("upp.list")} <span class="mt-count">${fmtNum(ids.length)}</span></h3>
+          ${ids.length ? `<p class="mt-progress">
+            <span class="mt-bar" style="--p:${Math.round(nBought / ids.length * 100)}%"></span>
+            <span>${nBought === ids.length ? t("upp.allBought") : t("upp.boughtOf", nBought, ids.length)}${anyPrice && nBought < ids.length ? ` · ${t("upp.openCost", fmtYang(openCost))}` : ""}</span>
+            ${nBought ? `<button type="button" class="mt-reset" id="upp-bought-reset">${t("upp.boughtReset")}</button>` : ""}</p>` : ""}
+          ${anyPrice ? `<p class="mt-sorted">${t("upp.sortedByCost")}</p>` : ""}
+        </div>
+        <div class="mt-tools">
+          ${view === "grid" ? `<button type="button" class="btn-ghost-sq mt-edit${editPrices ? " is-on" : ""}" id="upp-edit-prices" aria-pressed="${editPrices}">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            ${editPrices ? t("upp.editDone") : `<span class="hide-xs">${t("upp.editPrices")}</span><span class="show-xs">${t("upp.editPricesShort")}</span>`}</button>` : ""}
+          <div class="seg seg-sm" role="radiogroup" aria-label="${uEsc(t("upp.view"))}">
+            <label><input type="radio" name="list-view" value="grid"${view === "grid" ? " checked" : ""}><span>${t("upp.viewGrid")}</span></label>
+            <label><input type="radio" name="list-view" value="table"${view === "table" ? " checked" : ""}><span>${t("upp.viewTable")}</span></label>
+          </div>
+        </div>
       </div>
-      <div class="mt-scroll">
-        <table class="mat-table">
-          <thead><tr><th>${t("upp.colMat")}</th><th>${t("upp.colMin")}</th><th class="is-main">${t("upp.colAvg")}</th><th>${t("upp.colP90")}</th><th>${t("upp.colPrice")}</th><th>${t("upp.colCost")}</th></tr></thead>
-          <tbody>${rows || `<tr><td colspan="6" class="upp-empty">${t("upp.noMats")}</td></tr>`}</tbody>
-        </table>
-      </div>
+      ${view === "table" || editPrices ? `<p class="mt-hint">${t("upp.priceHint")}</p>` : ""}
+      ${listBody}
     </div>
 
     <div class="dl-bar panel mt-4">
@@ -302,14 +412,28 @@ function renderResult() {
     </div>
     <p class="mt-2 text-xs text-parch-500">${t("upp.footnote")}</p>`;
 
-  out.querySelectorAll("[data-price]").forEach(inp => {
-    inp.addEventListener("change", () => {
-      const pr = loadPrices();
-      const v = parseYang(inp.value);
-      if (v > 0) pr[inp.dataset.price] = v; else delete pr[inp.dataset.price];
-      savePrices(pr);
-      renderResult();
-    });
+  wirePriceFields(out, renderResult);
+  // Abhaken: Klick auf Kachel/Zeile (nicht auf ein Preisfeld) = gekauft / nicht gekauft
+  const toggleBought = id => {
+    const all = loadBought(), set = new Set(all[boughtKey] || []);
+    set.has(id) ? set.delete(id) : set.add(id);
+    uppJustBought = set.has(id) ? id : null;
+    delete all[boughtKey]; if (set.size) all[boughtKey] = [...set];
+    saveBought(all); renderResult(); uppJustBought = null;
+  };
+  out.querySelectorAll("[data-buy]").forEach(el => {
+    el.addEventListener("click", e => { if (e.target.closest("input, button, a")) return; toggleBought(el.dataset.buy); });
+    el.addEventListener("keydown", e => { if ((e.key === " " || e.key === "Enter") && e.target === el) { e.preventDefault(); toggleBought(el.dataset.buy); } });
+  });
+  const resetB = document.getElementById("upp-bought-reset");
+  if (resetB) resetB.addEventListener("click", () => { const all = loadBought(); delete all[boughtKey]; saveBought(all); renderResult(); });
+  out.querySelectorAll('input[name="list-view"]').forEach(r => r.addEventListener("change", () => { lsSet(LIST_VIEW_KEY, r.value); renderResult(); }));
+  const editBtn = document.getElementById("upp-edit-prices");
+  if (editBtn) editBtn.addEventListener("click", () => {
+    const on = lsGet(PRICE_EDIT_KEY, "0") !== "1";
+    lsSet(PRICE_EDIT_KEY, on ? "1" : "0");
+    renderResult();
+    if (on) { const f = out.querySelector(".mat-grid [data-price]"); if (f) f.focus({ preventScroll: true }); }
   });
   document.getElementById("upp-copy").addEventListener("click", copyDiscord);
   document.getElementById("upp-dl-png").addEventListener("click", downloadPng);
@@ -498,6 +622,23 @@ async function downloadPng() {
 }
 
 function initUpp() {
+  const pop = document.getElementById("upp-popout");
+  if (pop) pop.addEventListener("click", uppOpenMini);
+  if (UPP_MINI) {
+    document.title = t("upp.title") + " · Origins2 Helper";
+    // Filter im Mini-Fenster einklappbar, damit die Einkaufsliste sofort sichtbar ist
+    const filters = document.querySelector(".upp-filters");
+    if (filters) {
+      const tg = document.createElement("button");
+      tg.type = "button"; tg.className = "upp-mini-toggle";
+      const label = () => { tg.innerHTML = `<span>${t("upp.miniFilters")}</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5.3 7.3 10 12l4.7-4.7 1.4 1.4L10 14.8 3.9 8.7z"/></svg>`; tg.setAttribute("aria-expanded", filters.classList.contains("is-open")); };
+      tg.addEventListener("click", () => { filters.classList.toggle("is-open"); label(); });
+      window.addEventListener("langchange", label);
+      label(); filters.before(tg);
+    }
+  }
+  // Mini-Fenster und Hauptseite teilen Marktpreise & Auswahl → bei Änderung im anderen Fenster neu rechnen
+  window.addEventListener("storage", e => { if ((e.key === PRICE_KEY || e.key === BOUGHT_KEY) && document.getElementById("upp-result")) renderResult(); });
   const lineSel = document.getElementById("upp-line");
   if (!lineSel || typeof UPGRADE_LINES === "undefined") return;
   const st = uppState();
@@ -584,3 +725,28 @@ function initUpp() {
   });
   renderResult();
 }
+
+/* ---------------- Mini-Fenster ----------------
+   Chrome/Edge: schwebendes Fenster (Document Picture-in-Picture), das immer über dem Spiel bleibt –
+   darin läuft diese Seite in der Nur-Rechner-Ansicht (?mini=upp). Andere Browser: kleines Popup. */
+/* Öffnet eine Seite (?mini=…) als Mini-Fenster – auch vom Skilltree benutzt */
+async function openMiniWindow(mode, hash, title, size) {
+  const url = miniUrl(mode, hash), W = size ? size[0] : MINI_W, H = size ? size[1] : MINI_H;
+  if ("documentPictureInPicture" in window) {
+    try {
+      const pip = await documentPictureInPicture.requestWindow({ width: W, height: H });
+      const d = pip.document;
+      d.title = "Origins2 Helper";
+      d.body.style.cssText = "margin:0;background:#110d09;overflow:hidden";
+      const f = d.createElement("iframe");
+      f.src = new URL(url, location.href).href;
+      f.title = title;
+      f.style.cssText = "border:0;display:block;width:100vw;height:100vh";
+      d.body.appendChild(f);
+      return;
+    } catch (err) { /* abgelehnt → Popup */ }
+  }
+  const w = window.open(url, size ? "o2h-mini-" + mode : "o2h-mini", `popup=yes,width=${W},height=${H}`);
+  if (!w && typeof toast === "function") toast(t("fp.popupBlocked"));
+}
+function uppOpenMini() { return openMiniWindow("upp", "upp-rechner", t("upp.title")); }

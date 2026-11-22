@@ -208,7 +208,14 @@
           <p class="eyebrow" data-i18n="boss.eyebrow">Live-Countdown</p>
           <h2 id="boss-title" class="section-title" data-i18n="boss.title">Boss-Timer</h2>
         </div>
-        <p class="text-xs text-parch-500" data-i18n-html="boss.note">Alle Zeiten in Serverzeit · <span class="text-parch-300">Glocke</span> = Ton 5 Min vorher und beim Spawn</p>
+        <div class="upp-title-side">
+          <p class="text-xs text-parch-500" data-i18n-html="boss.note">Alle Zeiten in Serverzeit · <span class="text-parch-300">Glocke</span> = Ton 5 Min vorher und beim Spawn</p>
+          <!-- nur am PC: alle Bosse als schmale Leiste über dem Spiel -->
+          <button type="button" id="boss-popout" class="btn-ghost-sq fp-popout" data-i18n-attr="title:boss.popoutTitle" title="Alle Bosse als schmale Leiste über dem Spiel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><rect x="5.5" y="12.5" width="13" height="3.5" rx="1" fill="currentColor" fill-opacity=".25"/></svg>
+            <span data-i18n="fp.popout">Mini-Fenster</span>
+          </button>
+        </div>
       </div>
 
       <h3 class="sub-title mt-6" data-i18n="boss.world">Weltbosse</h3>
@@ -228,7 +235,14 @@
             <p class="eyebrow" data-i18n="upp.eyebrow">Materialrechner</p>
             <h2 id="upp-title" class="section-title" data-i18n="upp.title">Upp-Kalkulator</h2>
           </div>
-          <p class="text-xs text-parch-500" data-i18n="upp.note">Simulation mit 10.000 Durchläufen · Werte aus dem Ingame-Wiki</p>
+          <div class="upp-title-side">
+            <p class="text-xs text-parch-500" data-i18n="upp.note">Simulation mit 10.000 Durchläufen · Werte aus dem Ingame-Wiki</p>
+            <!-- nur am PC: Rechner als kleines Fenster über dem Spiel -->
+            <button type="button" id="upp-popout" class="btn-ghost-sq fp-popout" data-i18n-attr="title:upp.popoutTitle" title="Als kleines Fenster öffnen, das über dem Spiel schwebt">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><rect x="11.5" y="10" width="7" height="5.5" rx="1" fill="currentColor" fill-opacity=".25"/></svg>
+              <span data-i18n="fp.popout">Mini-Fenster</span>
+            </button>
+          </div>
         </div>
 
         <!-- Eingaben -->
@@ -313,11 +327,21 @@
     <!-- ========== VIEW: Skilltree ========== -->
     <div class="view" data-view="skilltree" hidden>
       <section aria-labelledby="st-title">
-        <p class="eyebrow" data-i18n="st.eyebrow">Fertigkeitsbaumsystem</p>
-        <h2 id="st-title" class="section-title" data-i18n="skill.title">Skilltree-Kalkulator</h2>
+        <div class="flex flex-wrap items-end justify-between gap-3 st-titlerow">
+          <div>
+            <p class="eyebrow" data-i18n="st.eyebrow">Fertigkeitsbaumsystem</p>
+            <h2 id="st-title" class="section-title" data-i18n="skill.title">Skilltree-Kalkulator</h2>
+          </div>
+          <!-- nur am PC: Skilltree als kleines Fenster über dem Spiel -->
+          <button type="button" id="st-popout" class="btn-ghost-sq fp-popout st-popout" data-i18n-attr="title:upp.popoutTitle" title="Als kleines Fenster öffnen, das über dem Spiel schwebt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><rect x="11.5" y="10" width="7" height="5.5" rx="1" fill="currentColor" fill-opacity=".25"/></svg>
+            <span data-i18n="fp.popout">Mini-Fenster</span>
+          </button>
+        </div>
         <div class="wip-note mt-3"><span class="wip-badge" data-i18n="beta">Beta</span><p data-i18n="st.wip">Noch in Arbeit: Einige Werte, Voraussetzungen und Namen fehlen noch oder können falsch sein. Bitte die Liste im Spiel gegenchecken – Fehler gerne an uns auf Discord melden.</p></div>
         <p class="mt-3 max-w-2xl text-sm text-parch-400" data-i18n="st.intro">Tippe in jedem Zweig auf dein Ziel – die Zweige lassen sich kombinieren. Der Baum füllt sich bis dorthin und du siehst alle Items, die du brauchst.</p>
         <div class="st-wrap mt-5">
+          <button type="button" class="st-treebar" id="st-treebar" aria-controls="st-svg"></button>
           <div class="st-tree panel">
             <svg id="st-svg" viewBox="15 20 415 300" role="group" aria-labelledby="st-title"></svg>
             <div id="st-legend" class="st-legend"></div>
@@ -352,6 +376,10 @@
                 <p class="mt-0.5 text-xs text-parch-400" data-i18n="fp.sub">6×4 Felder · jedes Teil zählt als Versuch – auch wenn du es wegwirfst</p>
               </div>
               <div class="fp-head-btns">
+                <button type="button" id="fp-popout" class="btn-ghost-sq fp-popout" data-i18n-attr="title:fp.popoutTitle" title="Als kleines Fenster öffnen, das über dem Spiel schwebt">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><rect x="11.5" y="10" width="7" height="5.5" rx="1" fill="currentColor" fill-opacity=".25"/></svg>
+                  <span data-i18n="fp.popout">Mini-Fenster</span>
+                </button>
                 <button type="button" id="fp-undo" class="btn-ghost-sq" data-i18n="fp.undo">Rückgängig</button>
                 <button type="button" id="fp-reset" class="btn-ghost-sq" data-i18n="fp.reset">Neues Puzzle</button>
               </div>

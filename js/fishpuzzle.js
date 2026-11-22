@@ -6,6 +6,10 @@
    ===================================================================== */
 
 /* ---------------- Zustand ---------------- */
+let fpRootEl = null;          // #fp-root – kann ins Mini-Fenster umziehen
+let fpPip = null;             // offenes schwebendes Mini-Fenster (Document Picture-in-Picture)
+const fpMini = new URLSearchParams(location.search).get("mini") === "fish"; // als Popup geöffnet
+const fpEl = id => (fpRootEl ? fpRootEl.ownerDocument : document).getElementById(id);
 const FP_KEY = "o2h.fishPuzzle";
 let fp = { mask: 0, used: 0, lux: 0, pieces: [], hist: [], pick: null, sug: null };
 function fpSave() { try { localStorage.setItem(FP_KEY, JSON.stringify({ mask: fp.mask, used: fp.used, lux: fp.lux, pieces: fp.pieces, hist: fp.hist, lastP: fp.lastP, lastT: fp.lastT })); } catch {} }
@@ -62,7 +66,7 @@ function fpShapeSvg(s, size = 9) {
 }
 
 function fpRender() {
-  const board = document.getElementById("fp-board");
+  const board = fpEl("fp-board");
   if (!board) return;
   const owner = new Array(24).fill(0);
   fp.pieces.forEach(pc => { for (let i = 0; i < 24; i++) if (pc.mask >> i & 1) owner[i] = pc.s; });
@@ -75,19 +79,19 @@ function fpRender() {
   // Status
   const free = popcount(FULL & ~fp.mask), done = fp.mask === FULL;
   const tier = fpTier(fp.used);
-  document.getElementById("fp-used").textContent = fp.used;
-  document.getElementById("fp-free").textContent = free;
-  document.getElementById("fp-tier").textContent = done ? fpTier(fp.used).key : (fp.used + Math.ceil(free / 6) <= FISH_TIERS[0].max ? "L" : tier.key === "L" ? "M" : tier.key);
-  document.getElementById("fp-tier").dataset.tier = document.getElementById("fp-tier").textContent;
-  document.getElementById("fp-lux").textContent = fp.lux;
+  fpEl("fp-used").textContent = fp.used;
+  fpEl("fp-free").textContent = free;
+  fpEl("fp-tier").textContent = done ? fpTier(fp.used).key : (fp.used + Math.ceil(free / 6) <= FISH_TIERS[0].max ? "L" : tier.key === "L" ? "M" : tier.key);
+  fpEl("fp-tier").dataset.tier = fpEl("fp-tier").textContent;
+  fpEl("fp-lux").textContent = fp.lux;
 
   // Teile-Auswahl
-  const pieces = document.getElementById("fp-pieces");
+  const pieces = fpEl("fp-pieces");
   pieces.innerHTML = FISH_NORMAL.concat(fp.lux > 0 ? [7] : []).map(s =>
     `<button type="button" class="fp-piece${fp.pick === s ? " is-active" : ""}${s === 7 ? " is-lux" : ""}" data-s="${s}" ${done ? "disabled" : ""} aria-label="${t("fp.piece", s === 7 ? t("fp.luxPiece") : s)}">${fpShapeSvg(s)}${s === 7 ? `<span>${t("fp.lux")}</span>` : ""}</button>`).join("");
 
   // Hinweis / Vorschlag
-  const out = document.getElementById("fp-advice");
+  const out = fpEl("fp-advice");
   if (done) {
     const tk = fpTier(fp.used).key;
     out.innerHTML = `<div class="fp-done"><p class="font-display text-lg text-parch-100">${t("fp.doneTitle")}</p><p class="mt-1 text-sm text-parch-300">${t("fp.doneText", fp.used, tk)}</p></div>`;
@@ -113,7 +117,7 @@ function fpRender() {
     const pl = fp.lastP != null ? `<p class="fp-advice-sub">${t("fp.chance", fp.lastT || "L", Math.round(fp.lastP * 100))}</p>` : "";
     out.innerHTML = `<p class="fp-advice-title">${fp.used ? t("fp.next") : t("fp.start")}</p><p class="fp-advice-sub">${t("fp.pickHint")}</p>${pl}${tip}`;
   }
-  document.getElementById("fp-undo").disabled = !fp.hist.length;
+  fpEl("fp-undo").disabled = !fp.hist.length;
 }
 
 function fpPick(s) {
@@ -135,7 +139,7 @@ function fpAfterChange() {
   }
   if (fpVisible()) setTimeout(fpPrefetch, 30);
 }
-function fpVisible() { const v = document.querySelector('[data-view="event-helper"]'); return v && !v.hidden; }
+function fpVisible() { if (fpPip || fpMini) return true; const v = document.querySelector('[data-view="event-helper"]'); return v && !v.hidden; }
 
 function fpApply(mask) {
   const s = fp.pick;
@@ -162,6 +166,7 @@ function fpManual(i) {
 function initFishPuzzle() {
   const root = document.getElementById("fp-root");
   if (!root) return;
+  fpRootEl = root;
   fpLoad();
   root.addEventListener("click", e => {
     const pc = e.target.closest(".fp-piece"); if (pc) { fpPick(+pc.dataset.s); return; }
@@ -172,22 +177,55 @@ function initFishPuzzle() {
     else if (act === "discard") fpApply(0);
     else if (act === "cancel") { fp.pick = null; fp.sug = null; fpRender(); }
   });
-  document.getElementById("fp-undo").addEventListener("click", () => {
+  fpEl("fp-undo").addEventListener("click", () => {
     const h = fp.hist.pop(); if (!h) return;
     Object.assign(fp, h); fp.pick = null; fp.sug = null; fpSave(); fpAfterChange();
   });
-  document.getElementById("fp-reset").addEventListener("click", () => {
+  fpEl("fp-reset").addEventListener("click", () => {
     const lux = fp.lux;
     fp = { mask: 0, used: 0, lux, pieces: [], hist: [], pick: null, sug: null, lastP: null }; fpSave(); fpAfterChange();
   });
-  document.getElementById("fp-lux-minus").addEventListener("click", () => { fp.lux = Math.max(0, fp.lux - 1); fp.sug = null; fp.pick = null; fpSave(); fpAfterChange(); });
-  document.getElementById("fp-lux-plus").addEventListener("click", () => { fp.lux = Math.min(3, fp.lux + 1); fp.sug = null; fp.pick = null; fpSave(); fpAfterChange(); });
+  fpEl("fp-lux-minus").addEventListener("click", () => { fp.lux = Math.max(0, fp.lux - 1); fp.sug = null; fp.pick = null; fpSave(); fpAfterChange(); });
+  fpEl("fp-lux-plus").addEventListener("click", () => { fp.lux = Math.min(3, fp.lux + 1); fp.sug = null; fp.pick = null; fpSave(); fpAfterChange(); });
   // Handy: Vorschlag direkt unter dem Brett zeigen, PC: in der Seitenleiste
-  const adv = document.getElementById("fp-advice"), side = root.querySelector(".fp-side"), board = document.getElementById("fp-board");
+  const adv = fpEl("fp-advice"), side = root.querySelector(".fp-side"), board = fpEl("fp-board");
   const mq = window.matchMedia("(min-width: 900px)");
-  const place = () => { if (mq.matches) side.prepend(adv); else board.after(adv); adv.classList.toggle("is-inline", !mq.matches); };
+  const place = () => {
+    const small = fpPip || fpMini || !mq.matches;
+    if (small) board.after(adv); else side.prepend(adv);
+    adv.classList.toggle("is-inline", small);
+  };
+  fpPlace = place;
   (mq.addEventListener ? mq.addEventListener("change", place) : mq.addListener(place)); place();
   window.addEventListener("langchange", fpRender);
+  // Mini-Fenster
+  const pop = fpEl("fp-popout");
+  if (pop) pop.addEventListener("click", fpOpenMini);
+  if (fpMini) fpSetupPopup();
+  // Popup und Hauptseite teilen sich den Spielstand (localStorage) → gegenseitig aktuell halten
+  window.addEventListener("storage", e => {
+    if (e.key !== FP_KEY) return;
+    fpLoad(); fp.pick = null; fp.sug = null; fp.busy = false; fpAfterChange();
+  });
   window.addEventListener("hashchange", () => setTimeout(() => { if (fpVisible()) fpPrefetch(); }, 60));
   fpAfterChange();
+}
+
+/* ---------------- Mini-Fenster (für Spieler mit nur einem Bildschirm) ----------------
+   openMiniWindow() aus upp.js: Chrome/Edge schwebendes Fenster über dem Spiel, sonst Popup.
+   Darin läuft diese Seite mit ?mini=fish – Spielstand wird über localStorage geteilt. */
+let fpPlace = () => {};
+
+function fpOpenMini() { return openMiniWindow("fish", "event-helper", t("fp.title")); }
+
+function fpSetupPopup() {
+  const root = fpRootEl;
+  root.classList.add("is-mini");
+  const shell = document.createElement("div"); shell.className = "fp-mini-shell";
+  Array.from(document.body.children).forEach(n => { if (n.id !== "toast" && n.tagName !== "SCRIPT" && !n.classList.contains("mini-nav")) n.style.display = "none"; });
+  shell.appendChild(root); document.body.prepend(shell);
+  const nav = document.querySelector(".mini-nav"); if (nav) document.body.prepend(nav);
+  document.body.classList.add("fp-mini-body");
+  document.title = t("fp.title") + " · Origins2 Helper";
+  fpPlace();
 }
