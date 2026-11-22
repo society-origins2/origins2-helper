@@ -110,7 +110,7 @@ const MATERIALS = {
   "mat-97": { name: "Stein von Naga", icon: "assets/items/mat-97.png" }, // Skilltree
   "mat-98": { name: "Kyanit-Kern", icon: "assets/items/mat-98.png" }, // Skilltree
   "mat-99": { name: "Versiegelter Kyanit-Kern", icon: "assets/items/mat-99.png" }, // Skilltree
-  "mat-100": { name: "Kyanit-Halbmond", icon: "assets/items/mat-100.png" }, // Skilltree
+  "mat-100": { name: "Kyanit-Halbmond", nameEn: "Kyanite Crescent", icon: "assets/items/mat-100.png" }, // Skilltree + Enigma-Material
   "mat-101": { name: "Energiekristall verzaubern", icon: "assets/items/mat-101.png" }, // Skilltree
   "mat-102": { name: "Cor Daemonis (Roh)", icon: "assets/items/mat-102.png" }, // Skilltree
   "mat-103": { name: "Yohara-Essenzflasche", icon: "assets/items/mat-103.png" }, // Skilltree
@@ -123,6 +123,9 @@ const MATERIALS = {
   "mat-109": { name: "Eisrune-der-Aura-Truhe", nameEn: "Aura Ice Rune Chest", icon: "assets/items/mat-109.png" },
   "mat-110": { name: "Energiefragment-Truhe", nameEn: "Energy Fragment Chest", icon: "assets/items/mat-110.png" },
   "mat-111": { name: "Flammenblatt-Truhe", nameEn: "Flaming Leaf Chest", icon: "assets/items/mat-111.png" },
+  // Enigma-Dungeon (alternatives Upp-Material) – Namen vorläufig, Nutzer reicht die echten nach
+  "mat-112": { name: "Enigma-Kristall", nameEn: "Enigma Crystal", icon: "assets/items/mat-112.png" },
+  "mat-113": { name: "Enigma-Foliant", nameEn: "Enigma Tome", icon: "assets/items/mat-113.png" },
 };
 
 const WEAPONS = {
@@ -136,6 +139,31 @@ const WEAPONS = {
   "wpn-08": { name: "Partisane", nameEn: "Partisan", icon: "assets/items/wpn-08.png" },
   "wpn-09": { name: "Sonnenschwert", nameEn: "Solar Blade", icon: "assets/items/wpn-09.png" },
   "wpn-10": { name: "Kyanitklinge", nameEn: "Kyanite Blade", icon: "assets/items/wpn-10.png" },
+  // wpn-11 … wpn-34: englische Namen aus dem Wiki, deutsche vorläufig übersetzt – Nutzer reicht die echten nach
+  "wpn-11": { name: "Drachenmesser", nameEn: "Dragon Knife", icon: "assets/items/wpn-11.png" },
+  "wpn-12": { name: "Seelenloses Messer", nameEn: "Soulless Knife", icon: "assets/items/wpn-12.png" },
+  "wpn-13": { name: "Fünf-Elemente-Klinge", nameEn: "Five Element Blade", icon: "assets/items/wpn-13.png" },
+  "wpn-14": { name: "Kyanitdolch", nameEn: "Kyanite Dagger", icon: "assets/items/wpn-14.png" },
+  "wpn-15": { name: "Gelbdrachenbogen", nameEn: "Yellow Dragon Bow", icon: "assets/items/wpn-15.png" },
+  "wpn-16": { name: "Riesenteufelsbogen", nameEn: "Giant Devil Bow", icon: "assets/items/wpn-16.png" },
+  "wpn-17": { name: "Phönixbogen", nameEn: "Phoenix Bow", icon: "assets/items/wpn-17.png" },
+  "wpn-18": { name: "Kyanitbogen", nameEn: "Kyanite Bow", icon: "assets/items/wpn-18.png" },
+  "wpn-19": { name: "Himmel-und-Erde-Glocke", nameEn: "Heaven and Earth Bell", icon: "assets/items/wpn-19.png" },
+  "wpn-20": { name: "Drachenkieferglocke", nameEn: "Dragon Jaw Bell", icon: "assets/items/wpn-20.png" },
+  "wpn-21": { name: "Drachengeistglocke", nameEn: "Dragon Ghost Bell", icon: "assets/items/wpn-21.png" },
+  "wpn-22": { name: "Kyanitglocke", nameEn: "Kyanite Bell", icon: "assets/items/wpn-22.png" },
+  "wpn-23": { name: "Erlösungsfächer", nameEn: "Salvation Fan", icon: "assets/items/wpn-23.png" },
+  "wpn-24": { name: "Dämonenfächer", nameEn: "Demon Fan", icon: "assets/items/wpn-24.png" },
+  "wpn-25": { name: "Ruhender-Drache-Fächer", nameEn: "Lying Dragon Fan", icon: "assets/items/wpn-25.png" },
+  "wpn-26": { name: "Kyanitfächer", nameEn: "Kyanite Fan", icon: "assets/items/wpn-26.png" },
+  "wpn-27": { name: "Greifenklaue", nameEn: "Griffon Claw", icon: "assets/items/wpn-27.png" },
+  "wpn-28": { name: "Grünwolfzahn", nameEn: "Green Wolf Fang", icon: "assets/items/wpn-28.png" },
+  "wpn-29": { name: "Drachenfürst", nameEn: "Dragon Lord", icon: "assets/items/wpn-29.png" },
+  "wpn-30": { name: "Kyanitkralle", nameEn: "Kyanite Claw", icon: "assets/items/wpn-30.png" },
+  "wpn-31": { name: "Geisterzahnklinge", nameEn: "Ghost Fang Blade", icon: "assets/items/wpn-31.png" },
+  "wpn-32": { name: "Heiliges Schwert", nameEn: "Holy Sword", icon: "assets/items/wpn-32.png" },
+  "wpn-33": { name: "Drachenzahnklinge", nameEn: "Dragon Tooth Blade", icon: "assets/items/wpn-33.png" },
+  "wpn-34": { name: "Kyanitschneide", nameEn: "Kyanite Edge", icon: "assets/items/wpn-34.png" },
 };
 
 const ARMORS = {
@@ -148,6 +176,19 @@ const ARMORS = {
   "arm-06": { name: "Schwarzstahlpanzer", nameEn: "Black Steel Armour", icon: "assets/items/arm-06.png" },
   "arm-07": { name: "Magmaglutpanzer", nameEn: "Magma Glow Armour", icon: "assets/items/arm-07.png" },
   "arm-08": { name: "Kyanitpanzer", nameEn: "Kyanite Armour", icon: "assets/items/arm-08.png" },
+  // arm-09 … arm-20: englische Namen aus dem Wiki, deutsche vorläufig übersetzt – Nutzer reicht die echten nach
+  "arm-09": { name: "Schwarzwindanzug", nameEn: "Black Wind Suit", icon: "assets/items/arm-09.png" },
+  "arm-10": { name: "Blutmondanzug", nameEn: "Blood Moon Suit", icon: "assets/items/arm-10.png" },
+  "arm-11": { name: "Kyanitanzug", nameEn: "Kyanite Suit", icon: "assets/items/arm-11.png" },
+  "arm-12": { name: "Schwarzes Gewand", nameEn: "Black Clothing", icon: "assets/items/arm-12.png" },
+  "arm-13": { name: "Feuergewand", nameEn: "Fire Clothing", icon: "assets/items/arm-13.png" },
+  "arm-14": { name: "Kyanitgewand", nameEn: "Kyanite Clothing", icon: "assets/items/arm-14.png" },
+  "arm-15": { name: "Magischer Plattenpanzer", nameEn: "Magic Plate Armour", icon: "assets/items/arm-15.png" },
+  "arm-16": { name: "Höllenreiter-Rüstung", nameEn: "Hellrider Armour", icon: "assets/items/arm-16.png" },
+  "arm-17": { name: "Kyanit-Plattenpanzer", nameEn: "Kyanite Plate Armour", icon: "assets/items/arm-17.png" },
+  "arm-18": { name: "Nachtschattenrüstung", nameEn: "Nightshade Armour", icon: "assets/items/arm-18.png" },
+  "arm-19": { name: "Achat-Plattenpanzer", nameEn: "Agate Plate Armour", icon: "assets/items/arm-19.png" },
+  "arm-20": { name: "Kyanit-Harnisch", nameEn: "Kyanite Harness", icon: "assets/items/arm-20.png" },
 };
 
 
@@ -169,6 +210,8 @@ const ARMORS = {
                     pity   = Pity: nach so vielen Fails gelingt der
                              nächste Versuch sicher (null = kein Pity)
                     mats   = Materialien pro Versuch
+   stage.alt      : alternative Materialien, z. B. { enigma: [9 × mats] }
+                    (wird automatisch über withAlt() gesetzt, siehe unten)
 
    Regeln (Society): Bei einem Fail sind Material und Yang weg, die Stufe
    bleibt, weil immer ein Magischer Stein benutzt wird. Die Steine selbst
@@ -274,18 +317,56 @@ const PVP_WEAPON_COSTS = [
   }
 ];
 
+/* ---------- Alternatives Material (Enigma-Dungeon) ----------
+   Im Wiki Schalter „2“. Yang, Chance und Pity bleiben gleich – nur die Materialien
+   pro Versuch sind andere. Gilt für ALLE PvP-Waffen und -Rüstungen gleich.
+   Im Rechner pro Stufe wählbar (Standard / Enigma).
+   mats = Materialien pro Versuch für +0→+1 … +8→+9 */
+const ALT_MATS = {
+  enigma: { name: "Enigma", nameEn: "Enigma" }
+};
+const PVP_ENIGMA_MATS = {
+  105: [
+    { "mat-10": 100 },
+    { "mat-10": 100 },
+    { "mat-10": 50,  "mat-72": 5 },
+    { "mat-10": 75,  "mat-73": 5 },
+    { "mat-10": 100, "mat-74": 5 },
+    { "mat-10": 125, "mat-112": 6 },
+    { "mat-10": 150, "mat-112": 6 },
+    { "mat-10": 175, "mat-112": 10 },
+    { "mat-10": 200, "mat-112": 10, "mat-76": 2 }
+  ],
+  120: [
+    { "mat-112": 12 },
+    { "mat-113": 2 },
+    { "mat-113": 2 },
+    { "mat-113": 2 },
+    { "mat-113": 2 },
+    { "mat-100": 4 },
+    { "mat-100": 4 },
+    { "mat-100": 4 },
+    { "mat-09": 1, "mat-100": 4 }
+  ]
+};
+/* hängt an eine Stufe die Enigma-Variante an (falls es eine gibt) */
+function withAlt(stage) {
+  const m = PVP_ENIGMA_MATS[stage.minLevel];
+  return m ? { ...stage, alt: { enigma: m } } : stage;
+}
+
 /* Baut eine PvP-Waffen-Reihe: 4 Waffen (Lv 65, 80, 105, 120) + Kosten von oben */
 function pvpWeaponLine(name, nameEn, classes, items) {
   return {
     name, nameEn, category: "pvp", slot: "weapon", classes,
-    stages: items.map((item, i) => ({ item, ...PVP_WEAPON_COSTS[i] }))
+    stages: items.map((item, i) => withAlt({ item, ...PVP_WEAPON_COSTS[i] }))
   };
 }
 
 /* Baut eine PvP-Rüstungs-Reihe: 3 Rüstungen (Lv 66, 105, 120).
    Kosten wie bei den Waffen, nur ohne die Lv-80-Stufe; die erste Stufe gilt ab Lv 66. */
 function pvpArmorLine(name, nameEn, classes, items) {
-  const costs = [{ ...PVP_WEAPON_COSTS[0], minLevel: 66 }, PVP_WEAPON_COSTS[2], PVP_WEAPON_COSTS[3]];
+  const costs = [{ ...PVP_WEAPON_COSTS[0], minLevel: 66 }, withAlt(PVP_WEAPON_COSTS[2]), withAlt(PVP_WEAPON_COSTS[3])];
   return {
     name, nameEn, category: "pvp", slot: "armor", classes,
     stages: items.map((item, i) => ({ item, ...costs[i] }))
@@ -303,6 +384,26 @@ const UPGRADE_LINES = {
                       ["wpn-05", "wpn-01", "wpn-06", "wpn-07"]),   // Schlachtschwert, Tritonschwert, Runenschwert, Kyanitschwert
   "klinge-2h-pvp":  pvpWeaponLine("2-Hand-Waffe", "Two-handed weapon", ["warrior"],
                       ["wpn-08", "wpn-02", "wpn-09", "wpn-10"]),   // Partisane, Halbmenschenklinge, Sonnenschwert, Kyanitklinge
+  "schwert-sura-pvp": pvpWeaponLine("Sura-Klinge", "Sura blade", ["sura"],
+                      ["wpn-31", "wpn-32", "wpn-33", "wpn-34"]),   // Ghost Fang Blade, Holy Sword, Dragon Tooth Blade, Kyanite Edge
+  "dolch-pvp":      pvpWeaponLine("Dolch", "Dagger", ["ninja"],
+                      ["wpn-11", "wpn-12", "wpn-13", "wpn-14"]),   // Dragon Knife, Soulless Knife, Five Element Blade, Kyanite Dagger
+  "bogen-pvp":      pvpWeaponLine("Bogen", "Bow", ["ninja"],
+                      ["wpn-15", "wpn-16", "wpn-17", "wpn-18"]),   // Yellow Dragon Bow, Giant Devil Bow, Phoenix Bow, Kyanite Bow
+  "glocke-pvp":     pvpWeaponLine("Glocke", "Bell", ["shaman"],
+                      ["wpn-19", "wpn-20", "wpn-21", "wpn-22"]),   // Heaven and Earth Bell, Dragon Jaw Bell, Dragon Ghost Bell, Kyanite Bell
+  "faecher-pvp":    pvpWeaponLine("Fächer", "Fan", ["shaman"],
+                      ["wpn-23", "wpn-24", "wpn-25", "wpn-26"]),   // Salvation Fan, Demon Fan, Lying Dragon Fan, Kyanite Fan
+  "kralle-pvp":     pvpWeaponLine("Kralle", "Claw", ["lycan"],
+                      ["wpn-27", "wpn-28", "wpn-29", "wpn-30"]),   // Griffon Claw, Green Wolf Fang, Dragon Lord, Kyanite Claw
   "ruestung-krieger-pvp": pvpArmorLine("Krieger-Rüstung", "Warrior armour", ["warrior"],
                       ["arm-06", "arm-07", "arm-08"]),             // Schwarzstahlpanzer, Magmaglutpanzer, Kyanitpanzer
+  "ruestung-ninja-pvp":   pvpArmorLine("Ninja-Rüstung", "Ninja armour", ["ninja"],
+                      ["arm-09", "arm-10", "arm-11"]),             // Black Wind Suit, Blood Moon Suit, Kyanite Suit
+  "ruestung-sura-pvp":    pvpArmorLine("Sura-Rüstung", "Sura armour", ["sura"],
+                      ["arm-15", "arm-16", "arm-17"]),             // Magic Plate Armour, Hellrider Armour, Kyanite Plate Armour
+  "ruestung-schamane-pvp": pvpArmorLine("Schamanen-Rüstung", "Shaman armour", ["shaman"],
+                      ["arm-12", "arm-13", "arm-14"]),             // Black Clothing, Fire Clothing, Kyanite Clothing
+  "ruestung-lykaner-pvp": pvpArmorLine("Lykaner-Rüstung", "Lycan armour", ["lycan"],
+                      ["arm-18", "arm-19", "arm-20"]),             // Nightshade Armour, Agate Plate Armour, Kyanite Harness
 };

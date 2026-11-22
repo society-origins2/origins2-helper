@@ -105,6 +105,27 @@ function saveBought(b) {
   const keys = Object.keys(b); if (keys.length > 30) keys.slice(0, keys.length - 30).forEach(k => delete b[k]); // nur die letzten 30 Auswahlen merken
   lsSet(BOUGHT_KEY, JSON.stringify(b));
 }
+/* Alternatives Material (z. B. Enigma) pro Stufe: { "reihe": { "2": "enigma", … } } */
+const ALT_KEY = "o2h.uppAlt";
+function loadAlt() { try { return JSON.parse(localStorage.getItem(ALT_KEY) || "{}"); } catch { return {}; } }
+function lineAlt(lineId) { return loadAlt()[lineId] || {}; }
+function setLineAlt(lineId, sel) {
+  const all = loadAlt(); delete all[lineId];
+  if (Object.keys(sel).length) all[lineId] = sel;
+  lsSet(ALT_KEY, JSON.stringify(all));
+}
+/* Reihe mit den gewählten alternativen Materialien (Yang/Chance/Pity bleiben) */
+function effectiveLine(line, sel) {
+  if (!sel || !Object.keys(sel).length) return line;
+  return { ...line, stages: line.stages.map((s, i) => {
+    const m = sel[i] && s.alt && s.alt[sel[i]];
+    return m ? { ...s, ups: s.ups.map((u, j) => ({ ...u, mats: m[j] || {} })) } : s;
+  }) };
+}
+/* Stufen mit Alternative, die im Weg von → bis wirklich geuppt werden */
+function altStagesInRange(line, from, to) {
+  return line.stages.map((s, i) => i).filter(i => line.stages[i].alt && i * 10 < to && i * 10 + 8 >= from);
+}
 function lsGet(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : v; } catch { return d; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch {} }
 
@@ -299,6 +320,32 @@ function renderChain(line, from, to) {
   }).join("");
 }
 
+/* Material-Auswahl pro Stufe (Standard / Enigma) – nur Stufen mit Alternative im gewählten Weg */
+function renderAltRow(lineId, line, from, to, sel) {
+  const el = document.getElementById("upp-alt");
+  if (!el) return;
+  const stages = to > from ? altStagesInRange(line, from, to) : [];
+  el.hidden = !stages.length;
+  if (!stages.length) { el.innerHTML = ""; return; }
+  el.innerHTML = `
+    <span class="field-label" title="${uEsc(t("upp.altHint"))}">${t("upp.altLabel")}</span>
+    <div class="alt-list">${stages.map(i => {
+      const s = line.stages[i], info = itemInfo(s.item), cur = sel[i] || "";
+      const opts = [["", t("upp.altStd")], ...Object.keys(s.alt).map(k => [k, L(ALT_MATS[k]) || k])];
+      return `<div class="alt-item">
+        <span class="alt-name"><span class="alt-ico"><img src="${uEsc(info.icon)}" alt=""></span>${uEsc(itemName(s.item))}</span>
+        <div class="seg seg-sm" role="radiogroup" aria-label="${uEsc(t("upp.altLabel") + ": " + itemName(s.item))}">${opts.map(([v, l]) =>
+          `<label><input type="radio" name="upp-alt-${i}" value="${v}" data-stage="${i}"${v === cur ? " checked" : ""}><span>${uEsc(l)}</span></label>`).join("")}</div>
+      </div>`;
+    }).join("")}</div>
+    <p class="alt-hint">${t("upp.altHint")}</p>`;
+  el.querySelectorAll("input[data-stage]").forEach(r => r.addEventListener("change", () => {
+    const s2 = { ...lineAlt(lineId) };
+    if (r.value) s2[r.dataset.stage] = r.value; else delete s2[r.dataset.stage];
+    setLineAlt(lineId, s2); renderResult();
+  }));
+}
+
 function scenarioCard(title, sub, data, matValue, cls) {
   const total = data.yang + matValue;
   return `
@@ -341,15 +388,19 @@ function renderResult() {
   if (!lineId || !UPGRADE_LINES[lineId]) {
     out0.innerHTML = `<p class="upp-empty panel">${t("upp.noLines", filterLabel())}</p>`;
     const ch = document.getElementById("upp-chain"); if (ch) ch.innerHTML = "";
+    const al = document.getElementById("upp-alt"); if (al) al.hidden = true;
     uppLast = null;
     return;
   }
-  const line = UPGRADE_LINES[lineId];
+  const baseLine = UPGRADE_LINES[lineId];
   const from = +document.getElementById("upp-from").value;
   const to = +document.getElementById("upp-to").value;
+  const altSel = lineAlt(lineId);
+  const line = effectiveLine(baseLine, altSel);
   const downgrade = false; // Society-Regel: immer Magischer Stein → Stufe bleibt
   const out = document.getElementById("upp-result");
   renderChain(line, from, to);
+  renderAltRow(lineId, baseLine, from, to, altSel);
   saveUppState({ line: lineId, cat: currentCat(), slot: uppSlot, cls: uppClass, from, to, downgrade });
 
   if (to <= from) {
@@ -359,7 +410,7 @@ function renderResult() {
   const res = runSimulation(line, from, to, downgrade);
   const prices = loadPrices();
   const ids = orderedMatIds(line, from, to, res.ids);
-  uppLast = { line, from, to, downgrade, res, ids };
+  uppLast = { line, from, to, downgrade, res, ids, altNames: altStagesInRange(baseLine, from, to).filter(i => altSel[i]).map(i => itemName(baseLine.stages[i].item)) };
 
   /* Anzeige-Reihenfolge: sind Preise eingetragen, stehen die teuersten Materialien (Kosten der Mindestmenge) oben */
   const avgQty = id => Math.ceil(res.avg.mats[id] || 0);
@@ -513,6 +564,7 @@ function discordText() {
   const L = [];
   L.push(`**${lineName(line)}: ${posLabel(line, from)} → ${posLabel(line, to)}**`);
   L.push(t("upp.discordRule"));
+  if (uppLast.altNames && uppLast.altNames.length) L.push(t("upp.discordAlt", uppLast.altNames.join(", ")));
   L.push("");
   L.push(t("upp.discordYang", fmtYang(res.min.yang), fmtYang(res.avg.yang), fmtYang(res.p90.yang)));
   L.push("");
@@ -556,7 +608,11 @@ async function shareLinkOrCopy(url, text) {
 function shareUpp() {
   if (!uppLast) return;
   const { from, to } = uppLast;
-  const url = shareUrl({ line: document.getElementById("upp-line").value, from, to, lang: LANG }).replace(/#.*$/, "") + "#upp-rechner";
+  const lineId = document.getElementById("upp-line").value;
+  const params = { line: lineId, from, to, lang: LANG };
+  const alt = Object.keys(lineAlt(lineId)).filter(i => lineAlt(lineId)[i] === "enigma");
+  if (alt.length) params.alt = alt.join(",");   // Stufen mit Enigma-Material
+  const url = shareUrl(params).replace(/#.*$/, "") + "#upp-rechner";
   shareLinkOrCopy(url, t("upp.shareText", `${posLabel(uppLast.line, from)} → ${posLabel(uppLast.line, to)}`));
 }
 
@@ -575,7 +631,8 @@ function listData() {
     .filter(x => x.qty > 0);
   return {
     title: `${posLabel(line, from)} → ${posLabel(line, to)}`,
-    line: lineName(line), mode, downgrade, items, yang: src.yang
+    line: lineName(line), mode, downgrade, items, yang: src.yang,
+    sub: `${t("upp.quantity", dlLabel(mode))} · ${t("upp.withStone")}` + (uppLast.altNames && uppLast.altNames.length ? ` · ${t("upp.discordAlt", uppLast.altNames.join(", "))}` : "")
   };
 }
 
@@ -599,7 +656,7 @@ function downloadTxt() {
   const L = [
     `${t("upp.listTitle").toUpperCase()} – ${d.line}`,
     d.title,
-    `${t("upp.quantity", dlLabel(d.mode))} · ${t("upp.withStone")}`,
+    d.sub,
     "".padEnd(w + 12, "-"),
     ...d.items.map(i => `${i.name.padEnd(w)}  ${fmtNum(i.qty).padStart(8)}x`),
     "".padEnd(w + 12, "-"),
@@ -644,7 +701,7 @@ async function downloadPng() {
   g.fillStyle = "#f1e9da"; g.font = "600 18px Cinzel, Georgia, serif";
   g.fillText(d.title, PAD, 54, W - PAD * 2);
   g.fillStyle = "#9b8e78"; g.font = "400 11.5px Inter, Arial, sans-serif";
-  g.fillText(`${t("upp.quantity", dlLabel(d.mode))} · ${t("upp.withStone")}`, PAD, 74);
+  g.fillText(d.sub, PAD, 74, W - PAD * 2);
   g.fillStyle = "rgba(212,162,76,0.18)"; g.fillRect(PAD, HEAD - 6, W - PAD * 2, 1);
 
   // Zeilen
@@ -702,7 +759,7 @@ function initUpp() {
     }
   }
   // Mini-Fenster und Hauptseite teilen Marktpreise & Auswahl → bei Änderung im anderen Fenster neu rechnen
-  window.addEventListener("storage", e => { if ((e.key === PRICE_KEY || e.key === BOUGHT_KEY) && document.getElementById("upp-result")) renderResult(); });
+  window.addEventListener("storage", e => { if ((e.key === PRICE_KEY || e.key === BOUGHT_KEY || e.key === ALT_KEY) && document.getElementById("upp-result")) renderResult(); });
   const lineSel = document.getElementById("upp-line");
   if (!lineSel || typeof UPGRADE_LINES === "undefined") return;
   const st = uppState();
@@ -735,6 +792,10 @@ function initUpp() {
     const q = new URLSearchParams(location.search);
     if (q.get("line") && UPGRADE_LINES[q.get("line")]) st.line = q.get("line");
     if (q.get("from") != null && q.get("to") != null) { st.from = +q.get("from"); st.to = +q.get("to"); }
+    if (q.get("line") && UPGRADE_LINES[q.get("line")] && q.has("alt")) {
+      const sel = {}; (q.get("alt") || "").split(",").filter(x => /^\d+$/.test(x)).forEach(i => { if (UPGRADE_LINES[q.get("line")].stages[+i]?.alt?.enigma) sel[i] = "enigma"; });
+      setLineAlt(q.get("line"), sel);
+    }
   } catch {}
   if (st.line && UPGRADE_LINES[st.line]) {
     const ln = UPGRADE_LINES[st.line];

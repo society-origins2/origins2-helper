@@ -12,6 +12,10 @@ const CHANGELOG = [
     date: "2026-11-22",
     title: "Skilltree-Update", titleEn: "Skill tree update",
     items: [
+      { type: "new", de: "Upp-Kalkulator: alle PvP-Waffen und -Rüstungen für jede Klasse – Dolch, Bogen, Glocke, Fächer, Kralle, Sura-Klinge sowie Rüstungen für Ninja, Sura, Schamane und Lykaner",
+                     en: "Upgrade Calculator: all PvP weapons and armour for every class – dagger, bow, bell, fan, claw, Sura blade plus armour for Ninja, Sura, Shaman and Lycan" },
+      { type: "new", de: "Upp-Kalkulator: Enigma-Material aus dem Enigma-Dungeon pro Stufe wählbar (Standard oder Enigma) – auch im Mini-Fenster, im geteilten Link und in der Einkaufsliste",
+                     en: "Upgrade Calculator: choose Enigma Dungeon materials per stage (standard or Enigma) – also in the mini window, the shared link and the shopping list" },
       { type: "improved", de: "Skilltree: Zweige lassen sich jetzt kombinieren – ein Klick im PvP-Zweig wählt PvM und Yohara nicht mehr ab",
                      en: "Skill tree: branches can now be combined – a click in the PvP branch no longer deselects PvM and Yohara" },
       { type: "fixed", de: "Skilltree: Der PvP-Zweig braucht aus dem PvM-Zweig nur Stufe 1 (TP-Spot)",
@@ -121,7 +125,7 @@ const CHANGELOG = [
 const ROADMAP = [
   { status: "progress", de: "Skilltree: Item-Namen, Bonus-Werte, Schlüssel & Yang ergänzen", en: "Skill tree: add item names, bonus values, key & Yang" },
   { status: "progress", de: "Guides der Gilde Society",                                  en: "Guides from the guild Society" },
-  { status: "progress", de: "Upp-Reihen für alle Klassen, Rüstungen, Schmuck & PvM",     en: "Upgrade lines for all classes, armour, jewellery & PvM" },
+  { status: "progress", de: "Upp-Reihen für Helme, Schmuck & PvM",                        en: "Upgrade lines for helmets, jewellery & PvM" },
   { status: "progress", de: "Englische Item-Namen mit dem Client abgleichen",           en: "Check English item names against the client" },
   { status: "planned",  de: "Event-Helper: Black Jack und Catch the King",             en: "Event Helper: Black Jack and Catch the King" },
   { status: "planned",  de: "Englische Übersetzung der ganzen Seite verbessern",        en: "Improve the English translation of the whole site" },

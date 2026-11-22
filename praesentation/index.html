@@ -33,13 +33,13 @@ body { background: var(--ink-950); color: var(--parch-100); font-family: var(--f
 html[data-lang="de"] [lang="en"], html[data-lang="en"] [lang="de"] { display: none !important; }
 
 /* ---------- Bühne ---------- */
-.viewport { position: fixed; inset: 0; display: grid; place-items: center; background:
+.viewport { position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; background:
   radial-gradient(120% 80% at 50% 0%, rgb(120 64 22 / .28), transparent 60%), var(--ink-950); }
-.stage { position: relative; width: 1600px; height: 900px; flex: none; transform-origin: center center; }
+.stage { position: absolute; left: 50%; top: 50%; width: 1600px; height: 900px; margin: -450px 0 0 -800px; transform-origin: 50% 50%; -webkit-transform-origin: 50% 50%; }
 .slide { position: absolute; inset: 0; padding: 70px 90px 84px; display: none; overflow: hidden; border-radius: 18px;
   background: linear-gradient(180deg, rgb(30 25 18 / .55), rgb(17 13 9 / .9)), url("img/bg-texture.jpg") center / 512px repeat, var(--ink-900);
   border: 1px solid var(--line); box-shadow: 0 30px 80px rgb(0 0 0 / .6), inset 0 1px 0 rgb(243 215 154 / .08); }
-.slide.is-active { display: flex; flex-direction: column; animation: in .45s ease both; }
+.slide.is-active { display: -webkit-box; display: flex; flex-direction: column; animation: in .45s ease; }
 .slide::before { content: ""; position: absolute; left: 90px; right: 90px; top: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-400), transparent); opacity: .6; }
 @keyframes in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .slide.is-active { animation: none; } }
@@ -167,7 +167,7 @@ a.btn { text-decoration: none; }
 <div class="stage" id="stage">
 
 <!-- 1 · Titel -->
-<section class="slide s-title" data-name="start">
+<section class="slide s-title is-active" data-name="start">
   <img class="logo" src="img/origins2-logo.png" alt="Origins2 Rebirth">
   <p class="kick">HELPER BY SOCIETY</p>
   <p class="lead">
@@ -445,10 +445,11 @@ a.btn { text-decoration: none; }
 
   // Bühne aufs Fenster skalieren (16:9, Platz für die Leisten)
   function fit() {
-    const s = Math.min((innerWidth - 24) / 1600, (innerHeight - 90) / 900);
-    stage.style.transform = `scale(${Math.max(s, 0.2)})`;
+    const W = document.documentElement.clientWidth || innerWidth, H = document.documentElement.clientHeight || innerHeight;
+    const s = Math.min((W - 24) / 1600, (H - 90) / 900);
+    const v = `scale(${Math.max(s, 0.2)})`; stage.style.webkitTransform = v; stage.style.transform = v;
   }
-  addEventListener("resize", fit); fit();
+  addEventListener("resize", fit); addEventListener("orientationchange", () => setTimeout(fit, 200)); fit();
 
   slides.forEach((s, i) => {
     const n = s.querySelector(".foot-num"); if (n) n.textContent = `${i + 1} / ${slides.length}`;
