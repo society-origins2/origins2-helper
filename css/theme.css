@@ -1675,3 +1675,15 @@ html.fb-side-off .fb-side { opacity: 0; pointer-events: none; }
 .fb-side-helper-btn:focus-visible { outline: 2px solid var(--color-gold-300); outline-offset: 3px; border-radius: 4px; }
 .fb-done-helper { margin: 1.2rem auto 0; max-width: 24rem; padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: rgb(23 19 14 / .5); }
 .fb-done-helper p { font-size: 0.82rem; color: var(--color-parch-300); margin-bottom: 0.6rem; }
+
+/* Hinweis aufs Übersetzer-Tool (Team-Reiter) */
+.tr-teaser { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; transition: border-color .15s; }
+.tr-teaser:hover { border-color: var(--line-strong); }
+.tr-teaser .icon-tile { flex: none; }
+.tr-teaser .icon-tile svg { width: 1.3rem; height: 1.3rem; }
+.tr-teaser-text { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.85rem; color: var(--color-parch-400); }
+.tr-teaser-text b { font-size: 0.98rem; color: var(--color-parch-100); font-weight: 600; }
+.tr-teaser-go { margin-left: auto; flex: none; font-size: 0.82rem; font-weight: 600; color: var(--color-gold-300); white-space: nowrap; }
+.tr-teaser:hover .tr-teaser-go { color: var(--color-gold-200); }
+@media (max-width: 639px) { .tr-teaser { flex-wrap: wrap; } .tr-teaser-go { margin-left: 0; } }
+.fb-side-tr { display: flex; margin-top: 0.45rem; }

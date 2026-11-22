@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Item-Namen übersetzen · Origins2 Helper by Society</title>
+  <meta name="description" content="Hilf mit: Item-Namen für den Origins2 Helper prüfen und übersetzen – fertige Datei erzeugen und schicken.">
+  <meta name="theme-color" content="#110d09">
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../css/tailwind.css?v=20261122-11">
+  <link rel="stylesheet" href="../css/theme.css?v=20261122-11">
+  <link rel="stylesheet" href="uebersetzen.css?v=20261122-11">
+</head>
+<body class="min-h-screen bg-ink-950 text-parch-100 font-sans antialiased">
+
+  <header class="tr-top">
+    <a href="../index.html#team" class="tr-back">
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M12.7 4.3 7 10l5.7 5.7 1.4-1.4L9.8 10l4.3-4.3z"/></svg>
+      <span data-t="back">Zur Website</span>
+    </a>
+    <div class="lang-switch" role="group" aria-label="Sprache / Language">
+      <button type="button" data-lang="de">DE</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </header>
+
+  <main class="tr-main">
+    <p class="eyebrow" data-t="eyebrow">Für Helfer</p>
+    <h1 class="section-title tr-title" data-t="title">Item-Namen übersetzen</h1>
+    <p class="tr-intro" data-t="intro">Viele Namen im Helper sind nur vorläufig übersetzt. Schau im Spiel nach, wie das Item wirklich heißt, und trag es hier ein – am Ende erzeugst du eine Datei und schickst sie uns.</p>
+
+    <ol class="tr-steps">
+      <li><b>1</b><span data-t="step1">Item im Spiel suchen (Tooltip beim Drüberfahren) – Sprache im Client passend umstellen.</span></li>
+      <li><b>2</b><span data-t="step2">Richtigen Namen eintragen oder mit „stimmt“ bestätigen. Felder leer lassen, wenn du es nicht weißt.</span></li>
+      <li><b>3</b><span data-t="step3">Deinen Namen eintragen, „Datei erzeugen“ und die Datei auf Discord an xZcRiTiCaLZz schicken.</span></li>
+    </ol>
+
+    <!-- Werkzeugleiste (bleibt beim Scrollen oben) -->
+    <div class="tr-bar panel">
+      <div class="tr-bar-row">
+        <label class="field tr-who"><span class="field-label" data-t="who">Dein Name (Ingame oder Discord)</span>
+          <input id="tr-who" class="field-input text" maxlength="40" autocomplete="off"></label>
+        <div class="tr-progress">
+          <span class="tr-prog-num tabular-nums" id="tr-count">0</span>
+          <span class="tr-prog-label" data-t="done">Einträge</span>
+        </div>
+        <div class="tr-actions">
+          <button type="button" class="btn-ghost-sq" id="tr-reset" data-t="reset">Alles leeren</button>
+          <button type="button" class="btn-gold py-2.5" id="tr-download">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
+            <span data-t="download">Datei erzeugen</span></button>
+        </div>
+      </div>
+      <div class="tr-bar-row tr-filters">
+        <div class="seg seg-sm" role="radiogroup" id="tr-show">
+          <label><input type="radio" name="tr-show" value="todo" checked><span data-t="showTodo">Zu erledigen</span></label>
+          <label><input type="radio" name="tr-show" value="all"><span data-t="showAll">Alle</span></label>
+          <label><input type="radio" name="tr-show" value="mine"><span data-t="showMine">Meine Einträge</span></label>
+        </div>
+        <div class="chips chips-sm" id="tr-groups"></div>
+        <input id="tr-search" class="field-input text tr-search" type="search" data-tp="search" placeholder="Suchen …">
+      </div>
+      <p class="tr-msg" id="tr-msg" role="status"></p>
+    </div>
+
+    <div id="tr-list" class="tr-list"></div>
+    <p class="tr-saved" data-t="saved">Deine Eingaben werden automatisch in diesem Browser gespeichert.</p>
+  </main>
+
+  <script src="../js/data.js?v=20261122-11"></script>
+  <script src="uebersetzen.js?v=20261122-11"></script>
+</body>
+</html>

@@ -12,6 +12,8 @@ const CHANGELOG = [
     date: "2026-11-22",
     title: "Skilltree-Update", titleEn: "Skill tree update",
     items: [
+      { type: "new", de: "Übersetzer für Helfer: Item-Namen im Spiel nachschauen, eintragen oder bestätigen und als fertige Datei schicken – vorläufige und fehlende Namen sind markiert (Team-Reiter oder „Hilf mit!“)",
+                     en: "Translator for helpers: look up item names in the game, enter or confirm them and send them as a finished file – provisional and missing names are marked (Team tab or “Help out!”)" },
       { type: "improved", de: "Auf breiten Bildschirmen steht rechts eine feste Karte „Hilf mit!“ zum Bug-Melden und Ideen-Vorschlagen – sie überdeckt nie den Kopfbereich, mit Abkürzung zu „Helfer werden“ (auch nach dem Absenden einer Meldung); Promoter-Filter „Server“ entfernt",
                      en: "On wide screens a fixed “Help out!” card on the right lets you report bugs and suggest ideas – it never covers the header, with a shortcut to “Become a helper” (also after sending a report); promoter filter “Server” removed" },
       { type: "improved", de: "Origins2-Logo oben führt jetzt zur Origins2-Webseite, „Jetzt registrieren“ springt direkt zum Registrierungsformular",

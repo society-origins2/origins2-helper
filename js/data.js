@@ -407,3 +407,24 @@ const UPGRADE_LINES = {
   "ruestung-lykaner-pvp": pvpArmorLine("Lykaner-Rüstung", "Lycan armour", ["lycan"],
                       ["arm-18", "arm-19", "arm-20"]),             // Nightshade Armour, Agate Plate Armour, Kyanite Harness
 };
+
+
+/* =====================================================================
+   NAMENS-STATUS  –  für das Übersetzer-Tool (uebersetzen/)
+   ---------------------------------------------------------------------
+   Welche Namen schon mit dem Spiel abgeglichen sind. Alles andere zeigt
+   das Tool als „vorläufig“ (oder „fehlt“, wenn kein Name da ist).
+   Nach einem Abgleich: Kürzel einfach in die passende Liste schreiben.
+   ===================================================================== */
+const _ids = (p, a, b) => Array.from({ length: b - a + 1 }, (_, i) => `${p}-${String(a + i).padStart(2, "0")}`);
+
+/* Englische Namen, die aus dem englischen Client/Wiki stammen */
+const NAMES_CHECKED_EN = [
+  "wpn-02", "wpn-05", "wpn-06", "wpn-07", "wpn-08", "wpn-09", "wpn-10", "mat-23",
+  ..._ids("wpn", 11, 34).filter(id => id !== "wpn-12"),   // „Soulles Knife“ → Schreibweise prüfen
+  ..._ids("arm", 9, 20)
+];
+/* Deutsche Namen, die nur vorläufig übersetzt sind */
+const NAMES_PROVISIONAL_DE = [
+  ..._ids("arm", 6, 20), ..._ids("wpn", 11, 34), ..._ids("mat", 108, 113)
+];
