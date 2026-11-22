@@ -527,8 +527,8 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .chain { display: flex; justify-content: center; align-items: stretch; gap: 0.35rem; overflow-x: auto; padding-top: 1rem; border-top: 1px solid var(--line); }
 .chain-item { flex: 1 1 7rem; max-width: 10rem; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.7rem 0.5rem; border-radius: 10px; border: 1px solid transparent; opacity: 0.38; transition: opacity .2s, border-color .2s, background .2s; }
 .chain-item.is-on { opacity: 1; border-color: var(--line-strong); background: rgb(212 162 76 / 0.06); }
-.chain-ico { width: 3.2rem; height: 5.4rem; display: grid; place-items: center; }
-.chain-ico img { max-width: 3.2rem; max-height: 5.4rem; width: auto; height: auto; object-fit: contain; image-rendering: auto; }
+.chain-ico { width: 3.4rem; height: 4.9rem; display: grid; place-items: center; }
+.chain-ico img { height: 4.9rem; width: auto; max-width: 3.4rem; object-fit: contain; image-rendering: auto; }
 .chain-name { font-size: 0.78rem; font-weight: 600; color: var(--color-parch-100); text-align: center; line-height: 1.2; }
 .chain-lv { font-size: 0.64rem; color: var(--color-parch-500); }
 .chain-arrow { align-self: center; color: var(--color-parch-500); font-size: 1.3rem; }
