@@ -364,6 +364,7 @@ const I18N = {
     "cal.title": "Eventkalender",
     "cal.text": "Wochen- und Monatsansicht mit Filter für Events, Weltbosse und Society-Termine – plus Erinnerungs-Glocke pro Termin.",
 
+    "footer.rights": "© 2026 Society · Alle Rechte vorbehalten",
     "footer.tool": "Community-Tool der Gilde Society",
     "cl.eyebrow": "Changelog", "cl.title": "Neuigkeiten",
     "cl.new": "Neu", "cl.improved": "Verbessert", "cl.fixed": "Behoben",
@@ -727,6 +728,7 @@ const I18N = {
     "cal.title": "Event Calendar",
     "cal.text": "Week and month view with filters for events, world bosses and Society dates – plus a reminder bell for every date.",
 
+    "footer.rights": "© 2026 Society · All rights reserved",
     "footer.tool": "Community tool of the guild Society",
     "cl.eyebrow": "Changelog", "cl.title": "What's new",
     "cl.new": "New", "cl.improved": "Improved", "cl.fixed": "Fixed",

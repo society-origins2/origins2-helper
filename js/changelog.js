@@ -18,6 +18,8 @@ const CHANGELOG = [
                      en: "Skill tree: the PvP branch only needs stage 1 (TP spot) from the PvM branch" },
       { type: "new", de: "Boss-Timer als schmales, waagerechtes Mini-Fenster – alle Bosse mit Countdown in einer Leiste über dem Spiel",
                      en: "Boss Timer as a slim horizontal mini window – all bosses with countdown in one bar over the game" },
+      { type: "improved", de: "Footer: Urheberrechtshinweis ergänzt",
+                     en: "Footer: copyright notice added" },
       { type: "improved", de: "Boss-Timer: Spawnzeiten, Countdowns und Balken stehen in jeder Reihe auf gleicher Höhe",
                      en: "Boss Timer: spawn times, countdowns and bars line up at the same height in every row" },
       { type: "new", de: "Boss-Mini-Fenster wahlweise hochkant oder waagerecht; in den anderen Mini-Fenstern blendet der Uhr-Knopf oben die nächsten Bosse ein",
