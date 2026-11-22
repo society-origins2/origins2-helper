@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="css/tailwind.css?v=20261122-17">
-  <link rel="stylesheet" href="css/theme.css?v=20261122-17">
+  <link rel="stylesheet" href="css/tailwind.css?v=20261122-18">
+  <link rel="stylesheet" href="css/theme.css?v=20261122-18">
 </head>
 <body class="min-h-screen bg-ink-950 text-parch-100 font-sans antialiased">
 
@@ -39,6 +39,11 @@
         <span class="wip-sign-text" data-i18n="wipSign.text">Es kommen laufend neue Funktionen dazu</span>
       </div>
       <div class="flex items-center gap-2">
+        <button type="button" class="xmas-toggle" role="switch" aria-checked="false" data-xmas-toggle data-i18n-attr="title:xmas.toggle;aria-label:xmas.toggle" title="Weihnachtsmodus">
+          <span class="xmas-track"><span class="xmas-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M12 2 9 5M12 2l3 3M12 22l-3-3M12 22l3-3M2 12h20M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l-3 3M4.9 4.9l14.2 14.2M4.9 4.9l4.1.3M4.9 4.9l.3 4.1M19.1 19.1l-4.1-.3M19.1 19.1l-.3-4.1M19.1 4.9L4.9 19.1M19.1 4.9l-4.1.3M19.1 4.9l-.3 4.1M4.9 19.1l4.1-.3M4.9 19.1l.3-4.1"/></svg>
+          </span></span>
+        </button>
         <div class="lang-switch" role="group" data-i18n-attr="aria-label:lang.label">
           <button type="button" data-lang="de">DE</button>
           <button type="button" data-lang="en">EN</button>
@@ -688,25 +693,26 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="js/i18n.js?v=20261122-17"></script>
-  <script src="js/data.js?v=20261122-17"></script>
-  <script src="js/icons-data.js?v=20261122-17"></script>
-  <script src="js/streamers.js?v=20261122-17"></script>
-  <script src="js/referral.js?v=20261122-17"></script>
-  <script src="js/events.js?v=20261122-17"></script>
-  <script src="js/upp.js?v=20261122-17"></script>
-  <script src="js/skill-data.js?v=20261122-17"></script>
-  <script src="js/skilltree.js?v=20261122-17"></script>
-  <script src="js/calendar-data.js?v=20261122-17"></script>
-  <script src="js/calendar.js?v=20261122-17"></script>
-  <script src="js/changelog.js?v=20261122-17"></script>
-  <script src="js/apply.js?v=20261122-17"></script>
-  <script src="js/team.js?v=20261122-17"></script>
-  <script src="js/feedback.js?v=20261122-17"></script>
-  <script src="js/fish-solver.js?v=20261122-17"></script>
-  <script src="js/fishpuzzle.js?v=20261122-17"></script>
-  <script src="js/runner.js?v=20261122-17"></script>
-  <script src="js/visitors.js?v=20261122-17"></script>
-  <script src="js/app.js?v=20261122-17"></script>
+  <script src="js/i18n.js?v=20261122-18"></script>
+  <script src="js/data.js?v=20261122-18"></script>
+  <script src="js/icons-data.js?v=20261122-18"></script>
+  <script src="js/streamers.js?v=20261122-18"></script>
+  <script src="js/referral.js?v=20261122-18"></script>
+  <script src="js/events.js?v=20261122-18"></script>
+  <script src="js/upp.js?v=20261122-18"></script>
+  <script src="js/skill-data.js?v=20261122-18"></script>
+  <script src="js/skilltree.js?v=20261122-18"></script>
+  <script src="js/calendar-data.js?v=20261122-18"></script>
+  <script src="js/calendar.js?v=20261122-18"></script>
+  <script src="js/changelog.js?v=20261122-18"></script>
+  <script src="js/apply.js?v=20261122-18"></script>
+  <script src="js/team.js?v=20261122-18"></script>
+  <script src="js/feedback.js?v=20261122-18"></script>
+  <script src="js/fish-solver.js?v=20261122-18"></script>
+  <script src="js/fishpuzzle.js?v=20261122-18"></script>
+  <script src="js/runner.js?v=20261122-18"></script>
+  <script src="js/visitors.js?v=20261122-18"></script>
+  <script src="js/season.js?v=20261122-18"></script>
+  <script src="js/app.js?v=20261122-18"></script>
 </body>
 </html>

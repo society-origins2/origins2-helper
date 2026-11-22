@@ -1687,3 +1687,34 @@ html.fb-side-off .fb-side { opacity: 0; pointer-events: none; }
 .tr-teaser:hover .tr-teaser-go { color: var(--color-gold-200); }
 @media (max-width: 639px) { .tr-teaser { flex-wrap: wrap; } .tr-teaser-go { margin-left: 0; } }
 .fb-side-tr { display: flex; margin-top: 0.45rem; }
+
+/* ---------------- Weihnachtsmodus (js/season.js) ---------------- */
+/* Schneefall – fixe Ebene über dem Inhalt, blockiert keine Klicks, unter Dialogen */
+.xmas-snow { position: fixed; inset: 0; z-index: 55; pointer-events: none; }
+
+/* Schieberegler in der Kopfleiste */
+.xmas-toggle { flex: none; display: inline-flex; align-items: center; padding: 0; background: none; border: 0; cursor: pointer; border-radius: 999px; }
+.xmas-toggle:focus-visible { outline: 2px solid var(--color-gold-300); outline-offset: 3px; }
+.xmas-track { position: relative; width: 2.9rem; height: 1.55rem; border-radius: 999px; border: 1px solid var(--line-strong);
+  background: var(--color-ink-900); transition: background .25s, border-color .25s; }
+.xmas-knob { position: absolute; top: 50%; left: 2px; transform: translateY(-50%); width: 1.2rem; height: 1.2rem; border-radius: 50%;
+  display: grid; place-items: center; background: #f3ede1; color: #7c8aa0; box-shadow: 0 1px 3px rgb(0 0 0 / .5); transition: left .25s, color .25s; }
+.xmas-knob svg { width: 0.8rem; height: 0.8rem; }
+.xmas-toggle[aria-checked="true"] .xmas-track { background: linear-gradient(90deg, #2f6b3a, #b23b36); border-color: #d9a441; }
+.xmas-toggle[aria-checked="true"] .xmas-knob { left: calc(100% - 1.2rem - 2px); color: #2f6b3a; box-shadow: 0 0 10px rgb(255 255 255 / .7); }
+@media (max-width: 400px) { .xmas-track { width: 2.6rem; } }
+
+/* Festlicher Akzent, nur wenn an */
+html.xmas .topbar { position: relative; }
+html.xmas .topbar::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; pointer-events: none;
+  background: repeating-linear-gradient(90deg,
+    #e5484d 0 6px, transparent 6px 20px),
+    repeating-linear-gradient(90deg, transparent 10px 13px, #d4a24c 13px 19px, transparent 19px 33px),
+    repeating-linear-gradient(90deg, transparent 23px 26px, #3ca05a 26px 32px, transparent 32px 46px);
+  opacity: .9;
+}
+html.xmas .hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(120% 60% at 50% -10%, rgb(120 170 255 / .10), transparent 60%);
+}
