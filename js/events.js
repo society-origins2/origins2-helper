@@ -258,7 +258,10 @@ function renderTicker() {
 /* ---------------- Mini-Fenster (waagerecht): alle Bosse in einer Leiste ----------------
    ?mini=boss – wird über openMiniWindow("boss", …) aus upp.js geöffnet */
 const BOSS_MINI = new URLSearchParams(location.search).get("mini") === "boss";
-const BOSS_MINI_SIZE = [1180, 84];
+const BOSS_ORIENT_KEY = "o2h.bossOrient";  // "h" = waagerecht (Standard), "v" = hochkant
+const BOSS_MINI_SIZES = { h: [1180, 84], v: [300, 430] };
+const MINI_BOSSBAR_KEY = "o2h.miniBossBar";  // Boss-Liste oben in den anderen Mini-Fenstern
+function bossOrient() { try { return localStorage.getItem(BOSS_ORIENT_KEY) === "v" ? "v" : "h"; } catch { return "h"; } }
 const BOSS_HIDDEN_KEY = "o2h.bossHidden";   // im Mini-Fenster ausgeblendete Bosse (ids)
 let bossPickMode = false;                  // „Bosse wählen“ aktiv?
 function bossHidden() { try { return new Set(JSON.parse(localStorage.getItem(BOSS_HIDDEN_KEY) || "[]")); } catch { return new Set(); } }
@@ -283,7 +286,7 @@ function renderBossMini() {
   if (pick) {
     const n = hidden.size;
     pick.classList.toggle("is-on", bossPickMode);
-    pick.innerHTML = bossPickMode ? t("boss.pickDone") : `${EYE_SVG}<span>${t("boss.pick")}${n ? ` · ${t("boss.hiddenN", n)}` : ""}</span>`;
+    pick.innerHTML = bossPickMode ? t("boss.pickDone") : `${EYE_SVG}<span class="bm-btxt">${t("boss.pick")}</span>${n ? `<em>${t("boss.hiddenN", n)}</em>` : ""}`;
   }
   paintBells(); tick();
 }
@@ -294,23 +297,52 @@ function toggleBossHidden(id) {
   try { localStorage.setItem(BOSS_HIDDEN_KEY, JSON.stringify([...h])); } catch {}
   renderBossMini();
 }
-function setupBossMini() {
-  document.documentElement.classList.add("is-mini", "is-mini-boss");
+const ORIENT_SVG = { h: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/></svg>',
+                     v: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/></svg>' };
+/* embedded = kompakte Boss-Liste oben in einem anderen Mini-Fenster (Upp, Skilltree, Fischpuzzle) */
+function setupBossMini(embedded) {
+  if (document.getElementById("boss-mini")) return;
   const box = document.createElement("div");
   box.id = "boss-mini";
+  const orient = embedded ? "v" : bossOrient();
+  box.className = (orient === "v" ? "bm-vertical" : "") + (embedded ? " bm-embedded" : "");
   box.innerHTML = `<div class="bm-head">
       <span class="bm-label">${t("boss.serverTime")}</span>
       <span class="ticker-clock tabular-nums" id="server-clock">--:--:--</span>
-      <button type="button" class="bm-pick" id="bm-pick"></button>
+      <div class="bm-btns">
+        <button type="button" class="bm-pick" id="bm-pick" title="${esc(t("boss.pick"))}"></button>
+        ${embedded ? "" : `<button type="button" class="bm-pick bm-orient" id="bm-orient" title="${esc(t(orient === "v" ? "boss.toH" : "boss.toV"))}">${ORIENT_SVG[orient]}<span class="bm-btxt">${t(orient === "v" ? "boss.toHShort" : "boss.toVShort")}</span></button>`}
+      </div>
     </div><div class="bm-list" id="boss-mini-list"></div>`;
   const old = document.getElementById("server-clock"); if (old) old.removeAttribute("id"); // Uhr nur einmal
-  document.body.prepend(box);
-  document.title = t("boss.title") + " · Origins2 Helper";
+  if (embedded) {
+    const nav = document.querySelector(".mini-nav");
+    nav ? nav.after(box) : document.body.prepend(box);
+  } else {
+    document.documentElement.classList.add("is-mini", "is-mini-boss");
+    document.body.prepend(box);
+    document.title = t("boss.title") + " · Origins2 Helper";
+  }
   box.querySelector("#bm-pick").addEventListener("click", () => { bossPickMode = !bossPickMode; renderBossMini(); });
+  const ob = box.querySelector("#bm-orient");
+  if (ob) ob.addEventListener("click", () => {
+    const next = bossOrient() === "v" ? "h" : "v";
+    try { localStorage.setItem(BOSS_ORIENT_KEY, next); } catch {}
+    // Fenstergröße mitziehen (klappt im Popup; im schwebenden Fenster je nach Browser)
+    const [w, h] = BOSS_MINI_SIZES[next];
+    try { (window.parent !== window ? window.parent : window).resizeTo(w, h); } catch {}
+    box.remove(); setupBossMini(false); tick();
+  });
   box.addEventListener("click", e => { const it = e.target.closest("[data-pick]"); if (it) toggleBossHidden(it.dataset.pick); });
   box.addEventListener("keydown", e => { const it = e.target.closest("[data-pick]"); if (it && (e.key === " " || e.key === "Enter")) { e.preventDefault(); toggleBossHidden(it.dataset.pick); } });
-  window.addEventListener("storage", e => { if (e.key === BOSS_HIDDEN_KEY) renderBossMini(); });
   renderBossMini();
+}
+/* Boss-Liste in einem anderen Mini-Fenster ein-/ausblenden */
+function setMiniBossBar(on) {
+  try { localStorage.setItem(MINI_BOSSBAR_KEY, on ? "1" : "0"); } catch {}
+  const box = document.getElementById("boss-mini");
+  if (on) { setupBossMini(true); tick(); } else if (box) box.remove();
+  document.querySelectorAll("[data-bossbar]").forEach(b => b.classList.toggle("is-on", on));
 }
 
 /* ---------------- Bereich „Boss-Timer“ ---------------- */
@@ -415,13 +447,15 @@ function initBells() {
 }
 
 function initEvents() {
-  if (BOSS_MINI) setupBossMini();
+  if (BOSS_MINI) setupBossMini(false);
+  else if (typeof MINI_MODE !== "undefined" && MINI_TOOLS.some(x => x.mode === MINI_MODE) && localStorage.getItem(MINI_BOSSBAR_KEY) === "1") setupBossMini(true);
+  window.addEventListener("storage", e => { if (e.key === BOSS_HIDDEN_KEY) renderBossMini(); });
   renderTicker();
   renderBossBoard();
   initBells();
   window.addEventListener("langchange", () => { renderTicker(); renderBossBoard(); renderBossMini(); paintBells(); tick(); });
   const pop = document.getElementById("boss-popout");
-  if (pop) pop.addEventListener("click", () => openMiniWindow("boss", "bosse", t("boss.title"), BOSS_MINI_SIZE));
+  if (pop) pop.addEventListener("click", () => openMiniWindow("boss", "bosse", t("boss.title"), BOSS_MINI_SIZES[bossOrient()]));
   // Glocken zwischen Seite und Mini-Fenster abgleichen
   window.addEventListener("storage", e => { if (e.key === SOUND_KEY) paintBells(); });
   tick();

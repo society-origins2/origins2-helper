@@ -27,6 +27,11 @@ Der Nutzer ist kein Programmierer: Erklärungen kurz, auf Deutsch, ohne Fachjarg
 
 **Konfigurationsdaten immer getrennt halten** (`js/data.js`, `js/streamers.js`, `js/events.js`), oben in der Datei, deutsch kommentiert, damit der Nutzer sie selbst erweitern kann.
 
+## Präsentation (praesentation/)
+- `praesentation/index.html` + `praesentation/img/`: eigenständige Folien-Seite im Website-Look (11 Folien, DE/EN-Umschalter, Pfeiltasten/Wischen, Vollbild), für Server-Team und potenzielle Helfer. Link: https://society-origins2.github.io/origins2-helper/praesentation/ – nicht im Menü verlinkt.
+- Discord-Vorschau über og:-Tags + `img/vorschau.jpg` (1200×630).
+- Inhalt: rein browserbasiert, keine externe Software, kein Eingriff in den Client, keine Monetarisierung, ehrenamtlich. GitHub/offenen Code NICHT erwähnen (Nutzerwunsch). Promotion Team nicht erwähnen. Klarname in Screenshots immer unkenntlich machen.
+
 ## Online stellen (GitHub Pages)
 - Repo: `society-origins2/origins2-helper` (Organisation, damit der Klarname des Nutzers nicht im Link steht), Seite: https://society-origins2.github.io/origins2-helper/
 - `Hochladen.bat` (Doppelklick) = Patcher: git init beim ersten Mal, Abgleich mit `origin/main` per `reset --soft` (lokaler Ordner ist immer die Wahrheit), commit + push. Autor in der Historie: `society-origins2` (nie den echten Namen setzen).
@@ -61,7 +66,8 @@ Edles, warmes Dark-RPG-Dashboard, angelehnt an die Stimmung der Origins2-Website
 
 ## Mini-Fenster (alle Rechner)
 - `openMiniWindow(mode, hash, title)` in upp.js: Chrome/Edge → Document-PiP mit iframe auf `?mini=<mode>#<hash>`, sonst Popup derselben URL; einheitlich 470×800 (`MINI_W/MINI_H`).
-- Modi: `upp` (#upp-rechner), `skill` (#skilltree), `fish` (#event-helper), `boss` (#bosse, waagerecht 1180×132, eigene Größe über 4. Parameter, ohne Umschalt-Leiste; `setupBossMini()` in events.js, Kurznamen `short`/`shortEn` auch bei Map-Bossen).
+- Chrome erlaubt browserweit nur EIN schwebendes Fenster (ein zweites schließt das erste). Deshalb: Uhr-Knopf in der Umschalt-Leiste blendet oben die nächsten 3 Bosse ein (`setMiniBossBar`, `localStorage o2h.miniBossBar`, eingebettetes `#boss-mini.bm-embedded`). Boss-Fenster selbst: hochkant (300×430) oder waagerecht (1180×84), `o2h.bossOrient`.
+- Modi: `upp` (#upp-rechner), `skill` (#skilltree), `fish` (#event-helper), `boss` (#bosse, flache Leiste 1180×84 – Nutzer wollte sie möglichst niedrig; links „Serverzeit“ + Knopf „Bosse wählen“ zum Ausblenden einzelner Bosse, `localStorage o2h.bossHidden`; eigene Größe über 4. Parameter, ohne Umschalt-Leiste; `setupBossMini()` in events.js, Kurznamen `short`/`shortEn` auch bei Map-Bossen).
 - Preisfelder überall über `priceField(id, prices)` + `wirePriceFields(root, rerender)` (upp.js) – mit ×-Knopf zum Löschen; Upp-Kalkulator und Skilltree teilen sich die Preise (`o2h.marketPrices`). Oben in jedem Mini-Fenster die Umschalt-Leiste `.mini-nav` (`MINI_TOOLS`), `html.is-mini` blendet die Mini-Fenster-Knöpfe aus. Neues Werkzeug = Eintrag in `MINI_TOOLS` + `?mini=`-Ansicht + Knopf.
 
 ## Aufbau der Seite

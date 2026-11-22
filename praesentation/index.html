@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Origins2 Helper Präsentation</title>
+<meta name="description" content="Kostenlose Browser-Tools für Origins2 – ehrenamtlich gebaut von der Gilde Society. Free browser tools for Origins2.">
+<meta name="theme-color" content="#d4a24c">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Origins2 Helper by Society">
+<meta property="og:title" content="Origins2 Helper – Präsentation / Presentation">
+<meta property="og:description" content="Kostenlose Browser-Tools für Origins2: Upp-Kalkulator, Skilltree, Boss-Timer, Fischpuzzle & Mini-Fenster. Zum Durchklicken – Deutsch & English.">
+<meta property="og:image" content="https://society-origins2.github.io/origins2-helper/praesentation/img/vorschau.jpg">
+<meta property="og:url" content="https://society-origins2.github.io/origins2-helper/praesentation/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  /* Website-Look: warmes Dark-RPG – Tinte, Pergament, ein Goldton. Bühne 1600×900, skaliert aufs Fenster. */
+  --ink-950: #110d09; --ink-900: #17130e; --ink-800: #1e1912; --ink-700: #2a231a;
+  --parch-100: #f1e9da; --parch-300: #c9bda8; --parch-400: #9b8e78; --parch-500: #75695a;
+  --gold-200: #f3d79a; --gold-300: #e6bd6c; --gold-400: #d4a24c; --gold-500: #b7853a;
+  --line: rgb(212 162 76 / .16); --line-strong: rgb(212 162 76 / .34);
+  --font-display: "Cinzel", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { background: var(--ink-950); color: var(--parch-100); font-family: var(--font-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
+html[data-lang="de"] [lang="en"], html[data-lang="en"] [lang="de"] { display: none !important; }
+
+/* ---------- Bühne ---------- */
+.viewport { position: fixed; inset: 0; display: grid; place-items: center; background:
+  radial-gradient(120% 80% at 50% 0%, rgb(120 64 22 / .28), transparent 60%), var(--ink-950); }
+.stage { position: relative; width: 1600px; height: 900px; flex: none; transform-origin: center center; }
+.slide { position: absolute; inset: 0; padding: 70px 90px 84px; display: none; overflow: hidden; border-radius: 18px;
+  background: linear-gradient(180deg, rgb(30 25 18 / .55), rgb(17 13 9 / .9)), url("img/bg-texture.jpg") center / 512px repeat, var(--ink-900);
+  border: 1px solid var(--line); box-shadow: 0 30px 80px rgb(0 0 0 / .6), inset 0 1px 0 rgb(243 215 154 / .08); }
+.slide.is-active { display: flex; flex-direction: column; animation: in .45s ease both; }
+.slide::before { content: ""; position: absolute; left: 90px; right: 90px; top: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-400), transparent); opacity: .6; }
+@keyframes in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .slide.is-active { animation: none; } }
+
+/* ---------- Typo ---------- */
+.eyebrow { font-size: 15px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: var(--gold-300); }
+h1, h2 { font-family: var(--font-display); font-weight: 700; color: var(--parch-100); text-wrap: balance; letter-spacing: .02em; }
+h2 { font-size: 50px; line-height: 1.1; margin-top: 12px; }
+h3 { font-family: var(--font-display); font-size: 25px; font-weight: 600; color: var(--parch-100); letter-spacing: .02em; }
+.lead { margin-top: 18px; max-width: 980px; font-size: 23px; line-height: 1.5; color: var(--parch-300); }
+.gold { color: var(--gold-200); }
+.small { font-size: 17px; line-height: 1.5; color: var(--parch-400); }
+
+/* ---------- Bausteine ---------- */
+.row { display: flex; align-items: flex-start; gap: 44px; margin-top: 34px; }
+.col { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.bullets { display: grid; gap: 16px; }
+.bullets li { list-style: none; display: grid; grid-template-columns: 26px 1fr; gap: 12px; font-size: 23px; line-height: 1.45; color: var(--parch-300); }
+.bullets li::before { content: ""; width: 10px; height: 10px; margin-top: 11px; transform: rotate(45deg); background: var(--gold-400); box-shadow: 0 0 10px rgb(212 162 76 / .6); justify-self: center; }
+.bullets b { color: var(--parch-100); font-weight: 600; }
+.shot { border-radius: 14px; border: 1px solid var(--line-strong); overflow: hidden; background: #0c0907; box-shadow: 0 18px 50px rgb(0 0 0 / .55); }
+.shot img { display: block; width: 100%; height: auto; }
+.ig-grid .shot img { height: 100%; object-fit: cover; object-position: top center; }
+.shot.tall img { max-height: 600px; object-fit: cover; object-position: top center; }
+.vc { margin-top: auto !important; margin-bottom: auto; }
+.vc-top { margin-top: auto !important; }
+.vc-bottom { margin-bottom: auto; }
+.cap { margin-top: 10px; font-size: 15px; color: var(--parch-500); }
+.card { padding: 24px 26px; border-radius: 14px; border: 1px solid var(--line); background: linear-gradient(180deg, rgb(30 25 18 / .85), rgb(17 13 9 / .85)); }
+.card p { margin-top: 10px; font-size: 20px; line-height: 1.5; color: var(--parch-300); }
+.ico { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 14px; color: var(--gold-200);
+  border: 1px solid var(--line-strong); background: radial-gradient(circle at 50% 30%, rgb(212 162 76 / .25), rgb(212 162 76 / .04) 70%); }
+.ico svg { width: 24px; height: 24px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line-strong); font-size: 15px; font-weight: 600; color: var(--gold-200); background: rgb(212 162 76 / .08); }
+
+/* Titel */
+.s-title { align-items: center; justify-content: center; text-align: center; padding-top: 40px; }
+.s-title .logo { width: 430px; filter: drop-shadow(0 18px 40px rgb(0 0 0 / .6)); }
+.s-title .kick { display: flex; align-items: center; gap: 22px; margin-top: 14px; font-family: var(--font-display); font-size: 30px; font-weight: 700; letter-spacing: .38em; color: var(--gold-300); }
+.s-title .kick::before, .s-title .kick::after { content: ""; width: 90px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-400)); }
+.s-title .kick::after { transform: scaleX(-1); }
+.s-title .lead { margin-top: 26px; max-width: 900px; }
+.s-title .pills { display: flex; gap: 12px; margin-top: 34px; flex-wrap: wrap; justify-content: center; }
+.s-title .url { margin-top: 28px; font-size: 18px; color: var(--parch-400); letter-spacing: .02em; }
+
+/* Grundsätze-Raster */
+.grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 34px; }
+.quote { margin-top: 30px; padding: 22px 28px; border-left: 3px solid var(--gold-400); border-radius: 0 12px 12px 0; background: rgb(212 162 76 / .06);
+  font-family: var(--font-display); font-size: 24px; line-height: 1.45; color: var(--gold-200); }
+
+/* Werkzeug-Übersicht */
+.tools { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; align-content: start; }
+.tools .card { padding: 20px 22px; }
+.tools h3 { font-size: 22px; }
+.tools .card p { font-size: 18px; margin-top: 6px; }
+
+/* Mini-Fenster-Folie */
+.ig-grid { display: grid; grid-template-columns: 1.55fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; flex: 1; min-height: 0; }
+.ig-grid .shot:first-child { grid-row: span 2; }
+.ig-grid .shot { position: relative; }
+.ig-grid .tag { position: absolute; left: 12px; bottom: 12px; padding: 5px 12px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--gold-200);
+  background: rgb(17 13 9 / .85); border: 1px solid var(--line-strong); }
+
+/* Ablauf-Diagramm */
+.flow { display: grid; grid-template-columns: 1fr 50px 1fr 50px 1fr 50px 1fr; align-items: stretch; margin-top: 36px; }
+.flow .step { padding: 22px 20px; border-radius: 14px; border: 1px solid var(--line); background: rgb(17 13 9 / .7); text-align: center; }
+.flow .step.is-key { border-color: var(--line-strong); background: linear-gradient(180deg, rgb(212 162 76 / .12), rgb(17 13 9 / .7)); }
+.flow .step b { display: block; font-family: var(--font-display); font-size: 22px; color: var(--parch-100); }
+.flow .step span { display: block; margin-top: 8px; font-size: 18px; line-height: 1.45; color: var(--parch-400); }
+.flow .arrow { display: grid; place-items: center; color: var(--gold-400); font-size: 28px; }
+
+/* Mitmachen */
+.ask { display: grid; grid-template-columns: 1.15fr 1fr; gap: 26px; margin-top: 30px; align-items: stretch; }
+.ask .card { display: flex; flex-direction: column; }
+.ask .card.is-main { border-color: var(--line-strong); background: linear-gradient(180deg, rgb(212 162 76 / .10), rgb(17 13 9 / .88)); }
+.ask .bullets li { font-size: 20px; }
+.ask .bullets { margin: 18px 0 22px; gap: 12px; }
+.ask .foot { margin-top: auto; padding-top: 16px; margin-bottom: 0; font-size: 16px; color: var(--parch-400); border-top: 1px solid var(--line); }
+
+/* Schluss */
+.s-end { align-items: center; justify-content: center; text-align: center; }
+.s-end .logo { width: 300px; }
+.s-end .contact { display: flex; gap: 16px; margin-top: 30px; flex-wrap: wrap; justify-content: center; }
+
+/* Fußzeile jeder Folie */
+.foot-brand { position: absolute; left: 90px; bottom: 30px; font-family: var(--font-display); font-size: 14px; font-weight: 700; letter-spacing: .18em; color: var(--parch-500); }
+.foot-brand em { font-style: normal; color: var(--gold-500); }
+.foot-num { position: absolute; right: 90px; bottom: 30px; font-size: 14px; color: var(--parch-500); font-variant-numeric: tabular-nums; }
+
+/* ---------- Steuerung ---------- */
+.ui { position: fixed; z-index: 10; display: flex; align-items: center; gap: 8px; }
+.ui-top { top: 14px; right: 16px; }
+.ui-bottom { bottom: 14px; left: 50%; transform: translateX(-50%); padding: 6px; border-radius: 999px; border: 1px solid var(--line); background: rgb(17 13 9 / .8); backdrop-filter: blur(6px); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; min-width: 36px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: rgb(17 13 9 / .75); color: var(--parch-300); font: 600 13px var(--font-body); cursor: pointer; transition: color .15s, border-color .15s; }
+.btn:hover { color: var(--gold-200); border-color: var(--line-strong); }
+.btn:focus-visible { outline: 2px solid var(--gold-300); outline-offset: 2px; }
+.btn svg { width: 16px; height: 16px; }
+.lang { display: inline-flex; padding: 3px; gap: 3px; border-radius: 999px; border: 1px solid var(--line); background: rgb(17 13 9 / .75); }
+.lang button { height: 30px; min-width: 40px; border: 0; border-radius: 999px; background: transparent; color: var(--parch-400); font: 700 12px var(--font-body); letter-spacing: .06em; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--ink-700); color: var(--gold-200); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.dots { display: flex; gap: 6px; padding: 0 6px; }
+.dots button { width: 9px; height: 9px; border-radius: 50%; border: 0; background: rgb(255 255 255 / .18); cursor: pointer; padding: 0; }
+.dots button[aria-current="true"] { background: var(--gold-300); box-shadow: 0 0 8px rgb(230 189 108 / .8); }
+</style>
+</head>
+<body>
+<div class="viewport" id="viewport">
+<div class="stage" id="stage">
+
+<!-- 1 · Titel -->
+<section class="slide s-title" data-name="start">
+  <img class="logo" src="img/origins2-logo.png" alt="Origins2 Rebirth">
+  <p class="kick">HELPER BY SOCIETY</p>
+  <p class="lead">
+    <span lang="de">Kostenlose Browser-Tools für Origins2 – zum Uppen, Planen und Mitspielen. Ehrenamtlich gebaut von der Gilde Society.</span>
+    <span lang="en">Free browser tools for Origins2 – for upgrading, planning and playing along. Built by volunteers from the guild Society.</span>
+  </p>
+  <div class="pills">
+    <span class="pill"><span lang="de">Rein im Browser</span><span lang="en">Browser only</span></span>
+    <span class="pill"><span lang="de">Kostenlos &amp; ohne Werbung</span><span lang="en">Free &amp; ad-free</span></span>
+    <span class="pill"><span lang="de">Deutsch &amp; Englisch</span><span lang="en">German &amp; English</span></span>
+    <span class="pill"><span lang="de">PC &amp; Handy</span><span lang="en">PC &amp; mobile</span></span>
+  </div>
+  <p class="url">society-origins2.github.io/origins2-helper</p>
+</section>
+
+<!-- 2 · Was ist der Helper -->
+<section class="slide" data-name="idee">
+  <p class="eyebrow"><span lang="de">Die Idee</span><span lang="en">The idea</span></p>
+  <h2><span lang="de">Was ist der Origins2 Helper?</span><span lang="en">What is the Origins2 Helper?</span></h2>
+  <div class="grid4">
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></div>
+      <h3><span lang="de">Reine Browser-Tools</span><span lang="en">Pure browser tools</span></h3>
+      <p><span lang="de">Eine Website, sonst nichts. Keine externe Software, kein Download, kein Eingriff in den Client.</span><span lang="en">A website, nothing else. No external software, no download, nothing that touches the client.</span></p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z"/></svg></div>
+      <h3><span lang="de">Ehrenamtlich</span><span lang="en">Run by volunteers</span></h3>
+      <p><span lang="de">Keine Monetarisierung, keine Werbung, keine Bezahlfunktionen. Wir bauen das in unserer Freizeit.</span><span lang="en">No monetisation, no ads, no paid features. We build it in our free time.</span></p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="m16 3 5 5M21 3l-5 5"/></svg></div>
+      <h3><span lang="de">Ohne Anmeldung</span><span lang="en">No sign-up</span></h3>
+      <p><span lang="de">Einfach öffnen und loslegen. Einstellungen und Preise bleiben im eigenen Browser.</span><span lang="en">Just open it and go. Settings and prices stay in your own browser.</span></p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="14" height="11" rx="2"/><rect x="16" y="9" width="6" height="11" rx="1.5"/><path d="M6 19h6"/></svg></div>
+      <h3><span lang="de">Für alle Spieler</span><span lang="en">For every player</span></h3>
+      <p><span lang="de">Auf Deutsch und Englisch, am PC und am Handy, mit Links zum Teilen auf Discord.</span><span lang="en">In German and English, on PC and mobile, with links to share on Discord.</span></p>
+    </div>
+  </div>
+  <p class="quote"><span lang="de">Unser Ziel: die ohnehin schon sehr gute Erfahrung auf Origins2 noch komfortabler machen.</span><span lang="en">Our goal: make the already great experience on Origins2 even more comfortable.</span></p>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 3 · Überblick -->
+<section class="slide" data-name="ueberblick">
+  <p class="eyebrow"><span lang="de">Überblick</span><span lang="en">Overview</span></p>
+  <h2><span lang="de">Alles an einem Ort</span><span lang="en">Everything in one place</span></h2>
+  <div class="row vc">
+    <div class="col" style="flex:1.15">
+      <div class="shot"><img lang="de" src="img/home-de.jpg" alt="Startseite des Origins2 Helper"><img lang="en" src="img/home-en.jpg" alt="Origins2 Helper home page"></div>
+      <p class="small"><span lang="de">Oben immer sichtbar: die nächsten Weltbosse mit Countdown und die heute laufenden Events.</span><span lang="en">Always visible at the top: the next world bosses with countdown and today's running events.</span></p>
+    </div>
+    <div class="tools" style="flex:1">
+      <div class="card"><h3><span lang="de">Upp-Kalkulator</span><span lang="en">Upgrade Calculator</span></h3><p><span lang="de">Kosten &amp; Einkaufsliste für ganze Item-Reihen</span><span lang="en">Costs &amp; shopping list for whole item lines</span></p></div>
+      <div class="card"><h3>Skilltree</h3><p><span lang="de">Ziel wählen, alle Lieferungen sehen</span><span lang="en">Pick a goal, see every delivery</span></p></div>
+      <div class="card"><h3><span lang="de">Boss-Timer</span><span lang="en">Boss Timer</span></h3><p><span lang="de">Live-Countdowns mit Ton</span><span lang="en">Live countdowns with sound</span></p></div>
+      <div class="card"><h3><span lang="de">Eventkalender</span><span lang="en">Event Calendar</span></h3><p><span lang="de">Monat, Woche, Tag – mit Erinnerung</span><span lang="en">Month, week, day – with reminders</span></p></div>
+      <div class="card"><h3><span lang="de">Fischpuzzle</span><span lang="en">Fish Puzzle</span></h3><p><span lang="de">Bester Zug, exakt berechnet</span><span lang="en">Best move, calculated exactly</span></p></div>
+      <div class="card"><h3><span lang="de">Mini-Fenster</span><span lang="en">Mini window</span></h3><p><span lang="de">Schwebt über dem Spiel</span><span lang="en">Floats over the game</span></p></div>
+    </div>
+  </div>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 4 · Upp-Kalkulator -->
+<section class="slide" data-name="upp">
+  <p class="eyebrow"><span lang="de">Werkzeug 1</span><span lang="en">Tool 1</span></p>
+  <h2><span lang="de">Upp-Kalkulator</span><span lang="en">Upgrade Calculator</span></h2>
+  <div class="row vc">
+    <div class="col" style="flex:1">
+      <ul class="bullets">
+        <li><span lang="de"><b>Ganze Item-Reihen</b> von Start bis Ziel, inklusive Entwicklung zur nächsten Waffe – z. B. Partisane +0 bis Kyanitklinge +9.</span><span lang="en"><b>Whole item lines</b> from start to goal, including the evolution into the next weapon – e.g. Partisan +0 to Kyanite Blade +9.</span></li>
+        <li><span lang="de"><b>10.000 Simulationen</b> mit den Wiki-Chancen und Pity: Minimum, Durchschnitt und Pech-Puffer.</span><span lang="en"><b>10,000 simulations</b> with the wiki chances and pity: minimum, average and bad-luck buffer.</span></li>
+        <li><span lang="de"><b>Einkaufsliste</b> mit Mindestmengen, eigenen Marktpreisen und Durchstreichen beim Einkaufen.</span><span lang="en"><b>Shopping list</b> with minimum amounts, your own market prices and crossing off while you shop.</span></li>
+        <li><span lang="de"><b>Teilen:</b> als Bild, als Text, für Discord oder als Link mit derselben Auswahl.</span><span lang="en"><b>Share:</b> as an image, as text, for Discord or as a link with the same selection.</span></li>
+      </ul>
+    </div>
+    <div class="col" style="flex:1.25">
+      <div class="shot"><img lang="de" src="img/upp-list-de.jpg" alt="Upp-Kalkulator mit Einkaufsliste"><img lang="en" src="img/upp-list-en.jpg" alt="Upgrade Calculator with shopping list"></div>
+    </div>
+  </div>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 5 · Skilltree -->
+<section class="slide" data-name="skilltree">
+  <p class="eyebrow"><span lang="de">Werkzeug 2</span><span lang="en">Tool 2</span></p>
+  <h2><span lang="de">Skilltree-Kalkulator</span><span lang="en">Skill Tree Calculator</span></h2>
+  <div class="row vc">
+    <div class="col" style="flex:1.3">
+      <div class="shot"><img lang="de" src="img/skill-de.jpg" alt="Skilltree-Kalkulator"><img lang="en" src="img/skill-en.jpg" alt="Skill Tree Calculator"></div>
+    </div>
+    <div class="col" style="flex:1">
+      <ul class="bullets">
+        <li><span lang="de"><b>Ziel antippen</b> – der Baum füllt sich bis dorthin. PvM, PvP und Yohara lassen sich kombinieren.</span><span lang="en"><b>Tap your goal</b> – the tree fills up to it. PvM, PvP and Yohara can be combined.</span></li>
+        <li><span lang="de"><b>Voraussetzungen automatisch:</b> Yohara braucht PvM komplett, PvP nur den TP-Spot.</span><span lang="en"><b>Requirements built in:</b> Yohara needs PvM complete, PvP only the TP spot.</span></li>
+        <li><span lang="de"><b>Schlüssel auf Wunsch eingerechnet</b> – Items und Yang für die Freischaltung.</span><span lang="en"><b>Key included on request</b> – items and Yang for the unlock.</span></li>
+        <li><span lang="de"><b>Einkaufsliste</b> mit Materialwert, Durchstreichen und Export.</span><span lang="en"><b>Shopping list</b> with material value, crossing off and export.</span></li>
+      </ul>
+    </div>
+  </div>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 6 · Boss-Timer & Fischpuzzle -->
+<section class="slide" data-name="boss-fisch">
+  <p class="eyebrow"><span lang="de">Werkzeug 3 &amp; 4</span><span lang="en">Tools 3 &amp; 4</span></p>
+  <h2><span lang="de">Boss-Timer &amp; Fischpuzzle-Helfer</span><span lang="en">Boss Timer &amp; Fish Puzzle helper</span></h2>
+  <div class="row" style="gap:32px;margin-top:26px">
+    <div class="col" style="flex:1">
+      <div class="shot"><img lang="de" src="img/boss-de.jpg" alt="Boss-Timer"><img lang="en" src="img/boss-en.jpg" alt="Boss Timer"></div>
+      <ul class="bullets">
+        <li><span lang="de"><b>Live-Countdowns</b> in Serverzeit für Welt- und Map-Bosse.</span><span lang="en"><b>Live countdowns</b> in server time for world and map bosses.</span></li>
+        <li><span lang="de"><b>Glocke pro Boss:</b> Ton 5 Minuten vorher und beim Spawn.</span><span lang="en"><b>Bell per boss:</b> sound 5 minutes before and at spawn.</span></li>
+      </ul>
+    </div>
+    <div class="col" style="flex:1">
+      <div class="shot"><img lang="de" src="img/fish-de.jpg" alt="Fischpuzzle-Helfer"><img lang="en" src="img/fish-en.jpg" alt="Fish Puzzle helper"></div>
+      <ul class="bullets">
+        <li><span lang="de"><b>Bester Platz</b> für jedes Teil – oder der Rat, es wegzuwerfen.</span><span lang="en"><b>Best spot</b> for every piece – or the advice to discard it.</span></li>
+        <li><span lang="de"><b>Exakte Chance</b> auf die große Truhe, über alle Teile, die noch kommen können.</span><span lang="en"><b>Exact chance</b> for the big chest, across every piece that can still come.</span></li>
+      </ul>
+    </div>
+  </div>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 7 · Mini-Fenster im Spiel -->
+<section class="slide" data-name="im-spiel">
+  <p class="eyebrow"><span lang="de">Direkt im Spiel</span><span lang="en">Right in the game</span></p>
+  <h2><span lang="de">Mini-Fenster über dem Client</span><span lang="en">Mini windows over the client</span></h2>
+  <p class="lead" style="margin-top:10px;font-size:20px"><span lang="de">Ideal mit nur einem Bildschirm: Rechner, Skilltree, Fischpuzzle oder Boss-Leiste schweben als kleines Fenster über dem Spiel. Es bleibt ein Browserfenster – der Client wird nicht verändert.</span><span lang="en">Ideal with a single screen: calculator, skill tree, fish puzzle or boss bar float as a small window over the game. It is still just a browser window – the client is not changed.</span></p>
+  <div class="ig-grid" style="margin-top:22px">
+    <div class="shot"><img src="img/ig-upp.jpg" alt="Upp-Kalkulator als Mini-Fenster neben dem Schmied"><span class="tag"><span lang="de">Uppen beim Schmied</span><span lang="en">Upgrading at the blacksmith</span></span></div>
+    <div class="shot"><img src="img/ig-skill.jpg" alt="Skilltree als Mini-Fenster"><span class="tag">Skilltree</span></div>
+    <div class="shot"><img src="img/ig-fish.jpg" alt="Fischpuzzle als Mini-Fenster" style="object-position:center 20%"><span class="tag"><span lang="de">Fischpuzzle</span><span lang="en">Fish puzzle</span></span></div>
+  </div>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 8 · So funktioniert es -->
+<section class="slide" data-name="technik">
+  <p class="eyebrow"><span lang="de">So funktioniert es</span><span lang="en">How it works</span></p>
+  <h2><span lang="de">Einfach, sicher und ungefährlich</span><span lang="en">Simple, safe and harmless</span></h2>
+  <div class="flow">
+    <div class="step"><b><span lang="de">Ingame-Wiki</span><span lang="en">In-game wiki</span></b><span><span lang="de">Werte, Chancen, Materialien</span><span lang="en">Values, chances, materials</span></span></div>
+    <div class="arrow">→</div>
+    <div class="step"><b><span lang="de">Daten-Dateien</span><span lang="en">Data files</span></b><span><span lang="de">heute: von Screenshots abgetippt</span><span lang="en">today: typed up from screenshots</span></span></div>
+    <div class="arrow">→</div>
+    <div class="step is-key"><b><span lang="de">Website</span><span lang="en">Website</span></b><span><span lang="de">eine einfache Seite, ohne eigenen Server</span><span lang="en">a simple page, no server of its own</span></span></div>
+    <div class="arrow">→</div>
+    <div class="step"><b><span lang="de">Dein Browser</span><span lang="en">Your browser</span></b><span><span lang="de">rechnet alles selbst aus</span><span lang="en">does all the maths itself</span></span></div>
+  </div>
+  <div class="row" style="margin-top:40px;gap:22px;align-items:stretch">
+    <div class="card" style="flex:1"><h3><span lang="de">Kein Eingriff ins Spiel</span><span lang="en">Nothing touches the game</span></h3><p><span lang="de">Keine Bots, keine Automatisierung, kein Auslesen des Clients. Man gibt selbst ein, was man im Spiel sieht.</span><span lang="en">No bots, no automation, no reading of the client. You enter what you see in game yourself.</span></p></div>
+    <div class="card" style="flex:1"><h3><span lang="de">Keine Konten, keine Cookies</span><span lang="en">No accounts, no cookies</span></h3><p><span lang="de">Auswahl, Preise und Haken bleiben im eigenen Browser. Der Besucherzähler arbeitet ohne Cookies.</span><span lang="en">Selections, prices and ticks stay in your own browser. The visitor counter works without cookies.</span></p></div>
+    <div class="card" style="flex:1"><h3><span lang="de">Kostenlos &amp; werbefrei</span><span lang="en">Free &amp; ad-free</span></h3><p><span lang="de">Kein Abo, keine Werbung, keine Bezahlfunktionen – heute nicht und auch nicht später.</span><span lang="en">No subscription, no ads, no paid features – not now and not later.</span></p></div>
+  </div>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 9 · Stand & nächste Schritte -->
+<section class="slide" data-name="stand">
+  <p class="eyebrow"><span lang="de">Stand &amp; Ausblick</span><span lang="en">Status &amp; outlook</span></p>
+  <h2><span lang="de">Was fertig ist – und was noch kommt</span><span lang="en">What is done – and what is coming</span></h2>
+  <div class="row vc-top" style="gap:26px;margin-top:38px">
+    <div class="card" style="flex:1">
+      <h3 class="gold"><span lang="de">Fertig</span><span lang="en">Done</span></h3>
+      <ul class="bullets" style="margin-top:16px;gap:12px">
+        <li><span lang="de">Upp-Reihen: 1-Hand- und 2-Hand-Waffen, Krieger-Rüstung (PvP)</span><span lang="en">Upgrade lines: one- and two-handed weapons, warrior armour (PvP)</span></li>
+        <li><span lang="de">Skilltree mit allen Lieferungen und Schlüssel</span><span lang="en">Skill tree with every delivery and the key</span></li>
+        <li><span lang="de">Boss-Timer, Eventkalender, Fischpuzzle-Helfer</span><span lang="en">Boss timer, event calendar, fish puzzle helper</span></li>
+        <li><span lang="de">Mini-Fenster, Deutsch &amp; Englisch, PC &amp; Handy</span><span lang="en">Mini windows, German &amp; English, PC &amp; mobile</span></li>
+      </ul>
+    </div>
+    <div class="card" style="flex:1">
+      <h3 class="gold"><span lang="de">Als Nächstes</span><span lang="en">Next up</span></h3>
+      <ul class="bullets" style="margin-top:16px;gap:12px">
+        <li><span lang="de">Waffen und Rüstungen für alle Klassen</span><span lang="en">Weapons and armour for every class</span></li>
+        <li><span lang="de">Helme, Schmuck und weitere Ausrüstung</span><span lang="en">Helmets, jewellery and more equipment</span></li>
+        <li><span lang="de">PvM-Item-Reihen und alternative Materialien</span><span lang="en">PvM item lines and alternative materials</span></li>
+        <li><span lang="de">Skilltree-Boni mit Namen und Werten, weitere Event-Helfer</span><span lang="en">Skill tree bonuses with names and values, more event helpers</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="small vc-bottom" style="margin-top:22px"><span lang="de">Der größte Aufwand ist dabei nicht der Code, sondern die Daten: Jede Tabelle wird heute aus Wiki-Screenshots von Hand übertragen.</span><span lang="en">The biggest effort is not the code but the data: today every table is copied by hand from wiki screenshots.</span></p>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 10 · Mitmachen -->
+<section class="slide" data-name="mitmachen">
+  <p class="eyebrow"><span lang="de">Mitmachen</span><span lang="en">Get involved</span></p>
+  <h2><span lang="de">Wie du uns helfen kannst</span><span lang="en">How you can help</span></h2>
+  <div class="ask vc">
+    <div class="card is-main">
+      <h3><span lang="de">Für das Origins2-Team: Wiki-Inhalte als Datei</span><span lang="en">For the Origins2 team: wiki content as a file</span></h3>
+      <p><span lang="de">Mit den Wiki-Daten als Datei wären alle Werte vollständig, aktuell und frei von Abtippfehlern – für jede Klasse und jedes Item.</span><span lang="en">With the wiki data as a file, every value would be complete, up to date and free of typing errors – for every class and every item.</span></p>
+      <ul class="bullets">
+        <li><span lang="de">Upp-Tabellen: Yang, Chance, Pity und Materialien je Stufe</span><span lang="en">Upgrade tables: Yang, chance, pity and materials per step</span></li>
+        <li><span lang="de">Items mit deutschen und englischen Namen und Icons</span><span lang="en">Items with German and English names and icons</span></li>
+        <li><span lang="de">Skilltree-Stufen sowie Boss- und Event-Zeiten</span><span lang="en">Skill tree stages plus boss and event times</span></li>
+        <li><span lang="de">Format ganz egal: Excel, CSV, JSON oder ein Export</span><span lang="en">Any format works: Excel, CSV, JSON or an export</span></li>
+      </ul>
+      <p class="foot"><span lang="de">Wir nutzen die Daten nur für den Helper und geben sie nicht weiter.</span><span lang="en">We only use the data for the Helper and do not pass it on.</span></p>
+    </div>
+    <div class="card">
+      <h3><span lang="de">Für Spieler: Helfer werden</span><span lang="en">For players: become a helper</span></h3>
+      <p><span lang="de">Jede Hilfe zählt, auch ohne Programmierkenntnisse.</span><span lang="en">Every bit of help counts, no coding skills needed.</span></p>
+      <ul class="bullets">
+        <li><span lang="de">Screenshots &amp; Daten aus dem Wiki sammeln</span><span lang="en">Collect screenshots &amp; data from the wiki</span></li>
+        <li><span lang="de">Übersetzen und Namen prüfen</span><span lang="en">Translate and check names</span></li>
+        <li><span lang="de">Testen und Fehler melden</span><span lang="en">Test and report bugs</span></li>
+        <li><span lang="de">Guides schreiben, Design, Promotion</span><span lang="en">Write guides, design, promotion</span></li>
+      </ul>
+      <p class="foot"><span lang="de">Bewerben direkt auf der Seite im Reiter „Team“.</span><span lang="en">Apply right on the site in the “Team” tab.</span></p>
+    </div>
+  </div>
+  <span class="foot-brand">ORIGINS2 HELPER <em>by Society</em></span><span class="foot-num"></span>
+</section>
+
+<!-- 11 · Danke -->
+<section class="slide s-end" data-name="danke">
+  <img class="logo" src="img/origins2-logo.png" alt="Origins2 Rebirth">
+  <h2 style="font-size:56px;margin-top:18px"><span lang="de">Danke fürs Anschauen!</span><span lang="en">Thanks for watching!</span></h2>
+  <p class="lead" style="text-align:center;max-width:860px"><span lang="de">Ehrenamtlich gebaut von der Gilde Society – für alle Spieler auf Origins2.</span><span lang="en">Built by volunteers from the guild Society – for every player on Origins2.</span></p>
+  <div class="contact">
+    <span class="pill">society-origins2.github.io/origins2-helper</span>
+    <span class="pill">Ingame: xZcRiTiCaLZz</span>
+  </div>
+  <span class="foot-num"></span>
+</section>
+
+</div>
+</div>
+
+<!-- Steuerung -->
+<div class="ui ui-top">
+  <div class="lang" role="group" aria-label="Sprache / Language">
+    <button type="button" data-lang="de" aria-pressed="true">DE</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+  <button type="button" class="btn" id="fs" aria-label="Vollbild">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+  </button>
+</div>
+<div class="ui ui-bottom">
+  <button type="button" class="btn" id="prev" aria-label="Zurück"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+  <div class="dots" id="dots"></div>
+  <button type="button" class="btn" id="next" aria-label="Weiter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+</div>
+
+<script>
+(() => {
+  const stage = document.getElementById("stage");
+  const slides = [...document.querySelectorAll(".slide")];
+  const dots = document.getElementById("dots");
+  let cur = 0;
+
+  // Bühne aufs Fenster skalieren (16:9, Platz für die Leisten)
+  function fit() {
+    const s = Math.min((innerWidth - 24) / 1600, (innerHeight - 90) / 900);
+    stage.style.transform = `scale(${Math.max(s, 0.2)})`;
+  }
+  addEventListener("resize", fit); fit();
+
+  slides.forEach((s, i) => {
+    const n = s.querySelector(".foot-num"); if (n) n.textContent = `${i + 1} / ${slides.length}`;
+    const d = document.createElement("button"); d.type = "button"; d.setAttribute("aria-label", `Folie ${i + 1}`);
+    d.addEventListener("click", () => go(i)); dots.appendChild(d);
+  });
+
+  function go(i, fromHash) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("is-active", k === cur));
+    [...dots.children].forEach((d, k) => d.setAttribute("aria-current", k === cur ? "true" : "false"));
+    if (!fromHash) { const h = "#" + slides[cur].dataset.name; if (location.hash !== h) history.replaceState(null, "", h); }
+  }
+  const fromHash = () => { const k = slides.findIndex(s => "#" + s.dataset.name === location.hash); return k < 0 ? 0 : k; };
+  addEventListener("hashchange", () => go(fromHash(), true));
+  go(fromHash(), true);
+
+  document.getElementById("prev").addEventListener("click", () => go(cur - 1));
+  document.getElementById("next").addEventListener("click", () => go(cur + 1));
+  addEventListener("keydown", e => {
+    if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+    if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+    if (e.key === "Home") go(0); if (e.key === "End") go(slides.length - 1);
+  });
+  // Wischen am Handy
+  let x0 = null;
+  addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+  addEventListener("touchend", e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1)); x0 = null; });
+  // Klick auf die Folie = weiter
+  stage.addEventListener("click", e => { if (!e.target.closest("a, button")) go(cur + 1); });
+
+  // Sprache
+  function setLang(l) {
+    document.documentElement.dataset.lang = l; document.documentElement.lang = l;
+    document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === l ? "true" : "false"));
+    document.title = l === "en" ? "Origins2 Helper presentation" : "Origins2 Helper Präsentation";
+    try { localStorage.setItem("o2h.deckLang", l); } catch {}
+  }
+  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+  let start = "de";
+  try { start = localStorage.getItem("o2h.deckLang") || ((navigator.language || "de").startsWith("de") ? "de" : "en"); } catch {}
+  setLang(start);
+
+  // Vollbild
+  document.getElementById("fs").addEventListener("click", async () => {
+    try { document.fullscreenElement ? await document.exitFullscreen() : await document.documentElement.requestFullscreen(); } catch {}
+  });
+})();
+</script>
+</body>
+</html>

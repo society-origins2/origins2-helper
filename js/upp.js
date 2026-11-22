@@ -21,9 +21,14 @@ function buildMiniNav() {
   if (!MINI_TOOLS.some(x => x.mode === MINI_MODE)) return;
   const nav = document.createElement("nav");
   nav.className = "mini-nav";
+  const barOn = () => { try { return localStorage.getItem("o2h.miniBossBar") === "1"; } catch { return false; } };
   const draw = () => { nav.innerHTML = MINI_TOOLS.map(x =>
-    `<a href="${miniUrl(x.mode, x.hash)}"${x.mode === MINI_MODE ? ' class="is-active" aria-current="page"' : ""}>${t(x.key)}</a>`).join(""); };
+    `<a href="${miniUrl(x.mode, x.hash)}"${x.mode === MINI_MODE ? ' class="is-active" aria-current="page"' : ""}>${t(x.key)}</a>`).join("") +
+    // Boss-Liste oben einblenden – so hat man Bosse + Rechner in EINEM schwebenden Fenster
+    `<button type="button" class="mini-boss-btn${barOn() ? " is-on" : ""}" data-bossbar title="${uEsc(t("mini.bossBar"))}" aria-label="${uEsc(t("mini.bossBar"))}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></button>`; };
   draw(); window.addEventListener("langchange", draw);
+  nav.addEventListener("click", e => { if (e.target.closest("[data-bossbar]") && typeof setMiniBossBar === "function") setMiniBossBar(!barOn()); });
   document.body.prepend(nav);
   document.documentElement.classList.add("is-mini");
 }

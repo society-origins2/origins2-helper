@@ -222,9 +222,10 @@ function fpSetupPopup() {
   const root = fpRootEl;
   root.classList.add("is-mini");
   const shell = document.createElement("div"); shell.className = "fp-mini-shell";
-  Array.from(document.body.children).forEach(n => { if (n.id !== "toast" && n.tagName !== "SCRIPT" && !n.classList.contains("mini-nav")) n.style.display = "none"; });
+  Array.from(document.body.children).forEach(n => { if (n.id !== "toast" && n.id !== "boss-mini" && n.tagName !== "SCRIPT" && !n.classList.contains("mini-nav")) n.style.display = "none"; });
   shell.appendChild(root); document.body.prepend(shell);
   const nav = document.querySelector(".mini-nav"); if (nav) document.body.prepend(nav);
+  const bm = document.getElementById("boss-mini"); if (bm && nav) nav.after(bm);
   document.body.classList.add("fp-mini-body");
   document.title = t("fp.title") + " · Origins2 Helper";
   fpPlace();

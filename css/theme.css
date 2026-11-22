@@ -665,7 +665,9 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .upp-empty.panel { padding: 2rem 1.2rem; }
 
 /* ---------------- Boss-Karten mit Porträt & Drops ---------------- */
-.boss-card { overflow: hidden; }
+.boss-card { overflow: hidden; display: flex; flex-direction: column; }
+/* Spawnzeit, Countdown und Balken immer unten – so stehen sie in einer Reihe auf gleicher Höhe */
+.boss-card > .mt-4 { margin-top: auto; padding-top: 1rem; }
 .boss-card > *:not(.boss-art) { position: relative; z-index: 1; }
 .boss-art {
   position: absolute; right: -2%; top: 3.4rem; bottom: 0.4rem; height: calc(100% - 3.8rem); width: auto; max-width: 62%;
@@ -1311,7 +1313,7 @@ a.tm-card:hover .tm-art img { filter: drop-shadow(0 0 14px rgb(88 101 242 / .5))
 .bm-list::-webkit-scrollbar { display: none; }
 .bm-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 0.4rem; row-gap: 0.1rem; align-items: center; align-content: center; min-width: 0;
   padding: 0.3rem 0.45rem; border-radius: 9px; border: 1px solid var(--line); background: rgb(17 13 9 / .75); }
-.bm-item .tick-ava { grid-row: 1 / 3; grid-column: 1; width: 1.9rem; height: 1.9rem; }
+.bm-item .tick-ava { display: block !important; grid-row: 1 / 3; grid-column: 1; width: 1.9rem; height: 1.9rem; }
 .bm-item > .min-w-0 { grid-row: 1; grid-column: 2 / -1; }
 .bm-item .tick-meta { display: none; }
 .bm-item .tick-name { font-size: 0.72rem; line-height: 1.2; }
@@ -1332,6 +1334,29 @@ a.tm-card:hover .tm-art img { filter: drop-shadow(0 0 14px rgb(88 101 242 / .5))
 .bm-item.is-off { opacity: .35; filter: grayscale(.8); }
 .bm-eye { display: grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 6px; color: var(--color-gold-200); background: rgb(212 162 76 / .1); }
 .bm-eye svg { width: 0.95rem; height: 0.95rem; }
+/* Hochkant-Ansicht + eingebettet in anderen Mini-Fenstern */
+.bm-btns { display: flex; gap: 0.3rem; margin-top: 0.1rem; }
+.bm-btns .bm-pick { margin-top: 0; }
+.bm-pick em { font-style: normal; color: var(--color-gold-200); }
+#boss-mini:not(.bm-vertical) .bm-btxt { display: none; }     /* waagerecht: nur Symbole, damit es flach bleibt */
+#boss-mini:not(.bm-vertical) .bm-pick { padding: 0.15rem 0.4rem; }
+#boss-mini.bm-vertical .bm-btns { margin: 0 0 0 auto; }
+#boss-mini.bm-vertical { flex-direction: column; height: auto; min-height: 100vh; }
+#boss-mini.bm-vertical .bm-head { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 0.3rem 0.5rem; padding: 0.15rem 0.2rem 0.4rem; border-right: 0; border-bottom: 1px solid var(--line); }
+#boss-mini.bm-vertical .bm-head .bm-pick { margin-top: 0; }
+#boss-mini.bm-vertical .bm-list { grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: 1fr; overflow: visible; }
+#boss-mini.bm-vertical .bm-item { grid-template-columns: auto minmax(0, 1fr) auto auto; grid-template-rows: auto; padding: 0.3rem 0.45rem; }
+#boss-mini.bm-vertical .bm-item .tick-ava { grid-row: 1; width: 1.7rem; height: 1.7rem; }
+#boss-mini.bm-vertical .bm-item > .min-w-0 { grid-row: 1; grid-column: 2; }
+#boss-mini.bm-vertical .bm-item .tick-count { grid-row: 1; grid-column: 3; font-size: 1rem; }
+#boss-mini.bm-vertical .bm-item .bell, #boss-mini.bm-vertical .bm-item .bm-eye { grid-row: 1; grid-column: 4; }
+#boss-mini.bm-embedded { min-height: 0; margin: 0.4rem 0.5rem 0; padding: 0.4rem; border: 1px solid var(--line); border-radius: 10px; background: rgb(17 13 9 / .6); }
+#boss-mini.bm-embedded:not(:has(.is-picking)) .bm-item:nth-child(n+4) { display: none; }   /* nur die nächsten 3 */
+.mini-nav { grid-template-columns: repeat(3, 1fr) auto !important; }
+.mini-boss-btn { display: grid; place-items: center; width: 2.1rem; border-radius: 7px; color: var(--color-parch-400); }
+.mini-boss-btn svg { width: 1.05rem; height: 1.05rem; }
+.mini-boss-btn:hover { color: var(--color-gold-200); background: rgb(212 162 76 / .06); }
+.mini-boss-btn.is-on { color: var(--color-gold-200); background: var(--color-ink-700); box-shadow: inset 0 0 0 1px var(--line-strong); }
 .bm-empty { align-self: center; padding: 0 0.6rem; font-size: 0.78rem; color: var(--color-parch-400); }
 
 /* Umschalt-Leiste oben in allen Mini-Fenstern */
