@@ -49,7 +49,7 @@ function refInfoHtml() {
       <span class="ri-lvl"><small>Level</small>${r.level}</span>
       <ul class="ri-items">${r.items.map(i => {
         const n = (typeof LANG !== "undefined" && LANG === "en" ? (i.nameEn || i.name) : i.name) || t("ri.nameTbd");
-        return `<li title="${riEsc(n)}"><img src="assets/referral/${i.img}.png" alt="" loading="lazy"><span${i.name ? "" : ' class="is-tbd"'}>${riEsc(n)}</span></li>`;
+        return `<li title="${riEsc(n)}"><img src="assets/referral/${i.img}.png?v=3" alt="" loading="lazy"><span${i.name ? "" : ' class="is-tbd"'}>${riEsc(n)}</span></li>`;
       }).join("")}</ul>
     </div>`).join("");
   return `

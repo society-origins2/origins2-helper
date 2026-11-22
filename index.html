@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="css/tailwind.css?v=20261122-2">
-  <link rel="stylesheet" href="css/theme.css?v=20261122-2">
+  <link rel="stylesheet" href="css/tailwind.css?v=20261122-10">
+  <link rel="stylesheet" href="css/theme.css?v=20261122-10">
 </head>
 <body class="min-h-screen bg-ink-950 text-parch-100 font-sans antialiased">
 
@@ -46,6 +46,10 @@
         <button type="button" class="btn-ghost text-xs fp-popout" id="dock-popout" data-i18n-attr="title:dock.openTitle" title="Kleine Leiste, die über dem Spiel schwebt – von dort öffnest du alle Mini-Fenster">
           <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="2"/><path d="M7 12h.01M11 12h.01M15 12h.01"/></svg>
           <span data-i18n="dock.open">Mini-Leiste</span>
+        </button>
+        <button type="button" class="btn-ghost text-xs fb-head-btn hide-xs" data-open-feedback data-i18n-attr="title:fb.open" title="Bug melden / Idee vorschlagen">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/><path d="M12 7v4M12 14h.01"/></svg>
+          <span data-i18n="fb.short">Feedback</span>
         </button>
         <button type="button" class="btn-ghost text-xs" id="share-site">
           <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
@@ -84,7 +88,9 @@
       </div>
       <div class="hero-grid">
         <div class="hero-logo-wrap">
-          <img src="assets/origins2-logo.png" alt="Origins2 Rebirth" class="hero-logo" data-fallback="origins2">
+          <a href="https://origins2.global" class="hero-logo-link" data-i18n-attr="title:hero.logoLink;aria-label:hero.logoLink" title="Zur Origins2-Webseite">
+            <img src="assets/origins2-logo.png" alt="Origins2 Rebirth" class="hero-logo" data-fallback="origins2">
+          </a>
         </div>
 
         <div class="hero-text">
@@ -110,7 +116,7 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v9H5v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
                   <span data-i18n="ri.open">Vorteile &amp; Infos</span>
                 </button>
-                <a href="https://origins2.global/users/register" class="inline-flex items-center gap-1 text-[11px] font-medium text-gold-300 hover:text-gold-200">
+                <a href="https://origins2.global/users/register#content-wrap" class="inline-flex items-center gap-1 text-[11px] font-medium text-gold-300 hover:text-gold-200">
                   <span data-i18n="ref.register">Jetzt registrieren</span>
                   <svg class="h-2.5 w-2.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M7.3 4.3 13 10l-5.7 5.7-1.4-1.4L10.2 10 5.9 5.7z"/></svg>
                 </a>
@@ -178,7 +184,6 @@
           <button type="button" class="chip is-active" data-filter="all" data-i18n="filter.all">Alle</button>
           <button type="button" class="chip" data-filter="live" data-i18n="filter.live">Live</button>
           <button type="button" class="chip" data-filter="guild" data-i18n="filter.guild">Gilde</button>
-          <button type="button" class="chip" data-filter="server" data-i18n="filter.server">Server</button>
         </div>
         </div>
       </div>
@@ -458,10 +463,83 @@
         <p class="mt-1 text-xs text-parch-500" data-i18n="footer.rights">© 2026 Society · Alle Rechte vorbehalten</p>
         <p id="visitor-count" class="visitor-count mt-2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><b>0</b> <span data-i18n="visitors.label">Besucher bisher</span></p>
       </div>
+      <button type="button" class="fb-footer-btn" data-open-feedback>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v3M16 2v3M9 8h6a3 3 0 0 1 3 3v3a6 6 0 0 1-12 0v-3a3 3 0 0 1 3-3ZM6 13H2M22 13h-4M6 18l-3 2M18 18l3 2M6 9 3 7M18 9l3-2"/></svg>
+        <span data-i18n="fb.open">Bug melden / Idee vorschlagen</span></button>
       <p class="text-xs text-parch-500">Creator: <span class="text-parch-300" data-runner-egg>xZcRiTiCaLZz</span> · Code <span class="font-semibold tracking-wider text-gold-300">CRITICALZ</span></p>
     </div>
   </footer>
 
+
+  <!-- ===================== BUGS & VORSCHLÄGE (js/feedback.js) ===================== -->
+  <!-- Bug/Idee-Karte rechts im freien Rand (nur auf breiten Bildschirmen, sonst schwebender Knopf) -->
+  <aside class="fb-side panel" aria-labelledby="fb-side-title">
+    <p class="eyebrow" data-i18n="fb.sideEyebrow">Beta · im Aufbau</p>
+    <h2 id="fb-side-title" class="fb-side-title" data-i18n="fb.sideTitle">Hilf mit!</h2>
+    <p class="fb-side-text" data-i18n="fb.sideText">Fehler gefunden oder eine Idee? Sag es uns – jede Meldung landet direkt bei uns auf Discord.</p>
+    <button type="button" class="btn-gold py-2.5 w-full justify-center" data-open-feedback="bug">
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v3M16 2v3M9 8h6a3 3 0 0 1 3 3v3a6 6 0 0 1-12 0v-3a3 3 0 0 1 3-3ZM6 13H2M22 13h-4M6 18l-3 2M18 18l3 2M6 9 3 7M18 9l3-2"/></svg>
+      <span data-i18n="fb.sideBug">Bug melden</span></button>
+    <button type="button" class="btn-ghost-sq w-full justify-center mt-2" data-open-feedback="idea">
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2Z"/></svg>
+      <span data-i18n="fb.sideIdea">Idee vorschlagen</span></button>
+    <p class="fb-side-note" data-i18n="fb.sideNote">Was umgesetzt wird, siehst du im Changelog.</p>
+    <div class="fb-side-helper">
+      <p class="fb-side-helper-text" data-i18n="fb.sideHelper">Lust, öfter mitzuhelfen? Testen, Daten sammeln, übersetzen – jeder Helfer wird im Team verewigt.</p>
+      <button type="button" class="fb-side-helper-btn" data-open-helper>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M19 8v6M16 11h6"/></svg>
+        <span data-i18n="fb.sideHelperBtn">Helfer werden</span></button>
+    </div>
+  </aside>
+  <button type="button" class="fb-float" data-open-feedback data-i18n-attr="title:fb.open;aria-label:fb.open" title="Bug melden / Idee vorschlagen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/><path d="M12 7v4M12 14h.01"/></svg>
+    <span data-i18n="fb.float">Bug / Idee melden</span>
+  </button>
+  <div id="feedback-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="feedback-title">
+    <div class="modal-card panel">
+      <button type="button" class="modal-x" data-close-feedback aria-label="×">×</button>
+      <p class="eyebrow" data-i18n="fb.eyebrow">Hilf uns besser zu werden</p>
+      <h2 id="feedback-title" class="section-title" data-i18n="fb.title">Bug melden oder Idee vorschlagen</h2>
+      <p class="mt-1 text-sm text-parch-400" data-i18n="fb.intro">Etwas funktioniert nicht oder dir fehlt etwas? Schreib es uns – es landet direkt bei uns auf Discord.</p>
+
+      <form id="feedback-form" class="apply-form mt-5" novalidate>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="field sm:col-span-2"><span class="field-label" data-i18n="fb.type">Art</span>
+            <div class="seg fb-type" role="radiogroup" data-i18n-attr="aria-label:fb.type">
+              <label><input type="radio" name="fb-type" value="bug" checked><span data-i18n="fb.bug">Bug / Fehler</span></label>
+              <label><input type="radio" name="fb-type" value="idea"><span data-i18n="fb.idea">Verbesserungsvorschlag</span></label>
+            </div></div>
+          <label class="field"><span class="field-label" data-i18n="fb.area">Bereich</span>
+            <select id="fb-area" class="field-input"></select></label>
+          <label class="field"><span class="field-label" data-i18n="fb.discord">Discord-Name (optional)</span>
+            <input id="fb-discord" class="field-input text" maxlength="40" autocomplete="off" data-i18n-attr="placeholder:fb.discordEx" placeholder="für Rückfragen"></label>
+          <label class="field sm:col-span-2"><span class="field-label" data-i18n="fb.text">Beschreibung</span>
+            <textarea id="fb-text" class="field-input text area" maxlength="1500" rows="5" required data-i18n-attr="placeholder:fb.textEx" placeholder="Was ist passiert? Was hättest du erwartet?"></textarea></label>
+          <div class="field sm:col-span-2"><span class="field-label" data-i18n="fb.shot">Screenshot (optional)</span>
+            <label id="fb-shot-preview" class="shot-drop" for="fb-shot"></label>
+            <input id="fb-shot" type="file" accept="image/*" class="sr-only"></div>
+        </div>
+        <p class="mt-2 text-xs text-parch-500" data-i18n="fb.autoInfo">Seite, Browser und Bildschirmgröße werden automatisch mitgeschickt.</p>
+        <input id="fb-website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p id="feedback-error" class="apply-error" role="alert"></p>
+        <div class="mt-4 flex flex-wrap items-center justify-end gap-2">
+          <button type="button" class="btn-ghost-sq" data-close-feedback data-i18n="apply.cancel">Abbrechen</button>
+          <button type="submit" class="btn-gold py-2.5" id="feedback-submit" data-i18n="fb.send">Absenden</button>
+        </div>
+      </form>
+
+      <div id="feedback-done" class="apply-done" hidden>
+        <div class="icon-tile mx-auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
+        <h3 id="feedback-done-title" class="mt-4 font-display text-lg font-semibold text-parch-100">Danke!</h3>
+        <p class="mt-1 text-sm text-parch-400" data-i18n="fb.thanksText">Wir schauen es uns an. Was umgesetzt wird, siehst du im Changelog auf der Startseite.</p>
+        <div class="fb-done-helper">
+          <p data-i18n="fb.doneHelper">Lust, öfter mitzuhelfen? Werde Helfer – ganz ohne Programmierkenntnisse.</p>
+          <button type="button" class="btn-ghost-sq" data-close-feedback data-open-helper data-i18n="fb.sideHelperBtn">Helfer werden</button>
+        </div>
+        <button type="button" class="btn-ghost-sq mt-5" data-close-feedback data-i18n="apply.close">Schließen</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ===================== PROMOTER-CODE: VORTEILE & INFOS ===================== -->
   <div id="ref-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="ref-title">
@@ -601,24 +679,25 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="js/i18n.js?v=20261122-2"></script>
-  <script src="js/data.js?v=20261122-2"></script>
-  <script src="js/icons-data.js?v=20261122-2"></script>
-  <script src="js/streamers.js?v=20261122-2"></script>
-  <script src="js/referral.js?v=20261122-2"></script>
-  <script src="js/events.js?v=20261122-2"></script>
-  <script src="js/upp.js?v=20261122-2"></script>
-  <script src="js/skill-data.js?v=20261122-2"></script>
-  <script src="js/skilltree.js?v=20261122-2"></script>
-  <script src="js/calendar-data.js?v=20261122-2"></script>
-  <script src="js/calendar.js?v=20261122-2"></script>
-  <script src="js/changelog.js?v=20261122-2"></script>
-  <script src="js/apply.js?v=20261122-2"></script>
-  <script src="js/team.js?v=20261122-2"></script>
-  <script src="js/fish-solver.js?v=20261122-2"></script>
-  <script src="js/fishpuzzle.js?v=20261122-2"></script>
-  <script src="js/runner.js?v=20261122-2"></script>
-  <script src="js/visitors.js?v=20261122-2"></script>
-  <script src="js/app.js?v=20261122-2"></script>
+  <script src="js/i18n.js?v=20261122-10"></script>
+  <script src="js/data.js?v=20261122-10"></script>
+  <script src="js/icons-data.js?v=20261122-10"></script>
+  <script src="js/streamers.js?v=20261122-10"></script>
+  <script src="js/referral.js?v=20261122-10"></script>
+  <script src="js/events.js?v=20261122-10"></script>
+  <script src="js/upp.js?v=20261122-10"></script>
+  <script src="js/skill-data.js?v=20261122-10"></script>
+  <script src="js/skilltree.js?v=20261122-10"></script>
+  <script src="js/calendar-data.js?v=20261122-10"></script>
+  <script src="js/calendar.js?v=20261122-10"></script>
+  <script src="js/changelog.js?v=20261122-10"></script>
+  <script src="js/apply.js?v=20261122-10"></script>
+  <script src="js/team.js?v=20261122-10"></script>
+  <script src="js/feedback.js?v=20261122-10"></script>
+  <script src="js/fish-solver.js?v=20261122-10"></script>
+  <script src="js/fishpuzzle.js?v=20261122-10"></script>
+  <script src="js/runner.js?v=20261122-10"></script>
+  <script src="js/visitors.js?v=20261122-10"></script>
+  <script src="js/app.js?v=20261122-10"></script>
 </body>
 </html>

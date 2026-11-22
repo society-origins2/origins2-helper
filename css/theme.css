@@ -1617,3 +1617,61 @@ a.tm-card:hover .tm-art img { filter: drop-shadow(0 0 14px rgb(88 101 242 / .5))
   .hero-text { padding-right: 0 !important; max-width: 36rem; }
   .hero-grid { grid-template-columns: auto auto !important; justify-content: center; padding-left: var(--crew-l, 0px); padding-right: var(--crew-r, 0px); }
 }
+
+/* ---------------- Bugs & Vorschläge (js/feedback.js) ---------------- */
+.fb-float { position: fixed; right: 1rem; bottom: 1rem; z-index: 40; display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 1rem; border-radius: 999px; border: 1px solid var(--color-gold-400);
+  background: linear-gradient(180deg, #2a231a, #17130e); color: var(--color-gold-200); font-size: 0.82rem; font-weight: 600;
+  box-shadow: 0 8px 24px rgb(0 0 0 / .5), 0 0 0 4px rgb(212 162 76 / .08); transition: transform .15s, box-shadow .15s, background .15s; cursor: pointer; }
+.fb-float svg { width: 1.1rem; height: 1.1rem; color: var(--color-gold-300); }
+.fb-float:hover { transform: translateY(-2px); background: linear-gradient(180deg, #33291d, #1e1912); box-shadow: 0 10px 28px rgb(0 0 0 / .55), 0 0 0 5px rgb(212 162 76 / .14); }
+.fb-float:focus-visible { outline: 2px solid var(--color-gold-300); outline-offset: 3px; }
+.fb-float::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; box-shadow: 0 0 0 0 rgb(212 162 76 / .45); animation: fbPulse 3.2s ease-out 1.5s 3; pointer-events: none; }
+@keyframes fbPulse { 0% { box-shadow: 0 0 0 0 rgb(212 162 76 / .45); } 70%, 100% { box-shadow: 0 0 0 12px rgb(212 162 76 / 0); } }
+@media (prefers-reduced-motion: reduce) { .fb-float::after { animation: none; } }
+@media (max-width: 639px) { .fb-float { right: 0.75rem; bottom: 0.75rem; padding: 0.55rem 0.85rem; font-size: 0.78rem; } }
+.fb-head-btn { border-color: rgb(212 162 76 / .4); color: var(--color-gold-200); }
+.is-mini .fb-float, body.modal-open .fb-float { display: none; }
+.fb-footer-btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 0.8rem; border-radius: 10px;
+  border: 1px solid var(--line); color: var(--color-parch-300); font-size: 0.78rem; background: transparent; cursor: pointer; transition: color .15s, border-color .15s; }
+.fb-footer-btn svg { width: 1rem; height: 1rem; color: var(--color-gold-300); }
+.fb-footer-btn:hover { color: var(--color-gold-200); border-color: var(--line-strong); }
+.fb-type { display: flex; width: 100%; }
+.fb-type label { flex: 1; text-align: center; }
+/* py-2.5 fehlt im kompilierten Tailwind → goldene Knöpfe gleich hoch wie die daneben */
+.py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+
+/* Origins2-Logo im Hero = Link zur Origins2-Webseite */
+.hero-logo-link { display: inline-flex; border-radius: 12px; transition: filter .2s; }
+.hero-logo-link:hover { filter: brightness(1.08) drop-shadow(0 0 18px rgb(230 189 108 / .25)); }
+.hero-logo-link:focus-visible { outline: 2px solid var(--color-gold-300); outline-offset: 6px; }
+
+/* Bug/Idee-Karte im freien rechten Rand – nur wenn neben dem Inhalt (72rem) genug Platz ist */
+.fb-side { display: none; }
+@media (min-width: 1680px) {
+  .fb-side { display: block; position: fixed; z-index: 30; top: var(--fb-side-top, 50%); transform: translateY(var(--fb-side-shift, -50%));
+    right: max(1.5rem, calc((100vw - 72rem) / 4 - 9rem)); width: 18rem; padding: 1.4rem 1.3rem 1.2rem; }
+  .fb-float { display: none; }
+}
+.fb-side .eyebrow { color: var(--color-gold-400); }
+.fb-side-title { margin-top: 0.35rem; font-family: Cinzel, Georgia, serif; font-size: 1.45rem; font-weight: 700; color: var(--color-parch-100); letter-spacing: 0.02em; }
+.fb-side-text { margin: 0.5rem 0 1.1rem; font-size: 0.86rem; line-height: 1.5; color: var(--color-parch-300); }
+.fb-side .btn-gold, .fb-side .btn-ghost-sq { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; }
+.fb-side .btn-ghost-sq { margin-top: 0.5rem; }
+.fb-side-note { margin-top: 0.9rem; font-size: 0.72rem; color: var(--color-parch-500); text-align: center; }
+.is-mini .fb-side, body.modal-open .fb-side { display: none; }
+.fb-side { transition: opacity .2s; }
+html.fb-side-off .fb-side { opacity: 0; pointer-events: none; }
+@media (min-width: 1680px) { html.fb-side-off .fb-float { display: inline-flex; } }
+.is-mini .fb-float, body.modal-open .fb-float { display: none !important; }
+
+/* „Helfer werden“ in der Hilf-mit-Karte und im Danke-Fenster */
+.fb-side-helper { margin-top: 1rem; padding-top: 0.95rem; border-top: 1px solid var(--line); }
+.fb-side-helper-text { font-size: 0.78rem; line-height: 1.45; color: var(--color-parch-400); }
+.fb-side-helper-btn { margin-top: 0.6rem; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0; background: none; border: 0;
+  font-size: 0.84rem; font-weight: 600; color: var(--color-gold-300); cursor: pointer; }
+.fb-side-helper-btn svg { width: 1rem; height: 1rem; }
+.fb-side-helper-btn:hover { color: var(--color-gold-200); text-decoration: underline; text-underline-offset: 3px; }
+.fb-side-helper-btn:focus-visible { outline: 2px solid var(--color-gold-300); outline-offset: 3px; border-radius: 4px; }
+.fb-done-helper { margin: 1.2rem auto 0; max-width: 24rem; padding: 0.9rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: rgb(23 19 14 / .5); }
+.fb-done-helper p { font-size: 0.82rem; color: var(--color-parch-300); margin-bottom: 0.6rem; }
