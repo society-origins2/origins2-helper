@@ -131,26 +131,31 @@ function buildMiniDock() {
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
     e.preventDefault(); turn(e.key === "ArrowRight" ? 1 : -1);
   });
-  // Wischen/Ziehen auf der Walze
+  // Wischen/Ziehen auf der Walze.
+  // WICHTIG: kein setPointerCapture – sonst landet der folgende Klick auf der Leiste
+  // statt auf dem Werkzeug und nichts klappt mehr auf. Darum am Fenster mithören.
   dock.addEventListener("pointerdown", e => {
-    if (!e.target.closest(".md-stage")) return;
+    if (e.button || !e.target.closest(".md-stage")) return;
     drag = { x: e.clientX, from: idx, moved: false };
-    try { dock.setPointerCapture(e.pointerId); } catch {}
   });
-  dock.addEventListener("pointermove", e => {
+  window.addEventListener("pointermove", e => {
     if (!drag) return;
     const dx = e.clientX - drag.x, w = (stage && stage.clientWidth) || 200;
-    if (Math.abs(dx) > 4) drag.moved = true;
+    if (Math.abs(dx) > 10) drag.moved = true;      // kleine Wackler sind ein Klick, kein Wischen
+    if (!drag.moved) return;
     idx = drag.from - dx / (w * 0.55);
     spin(false);
   });
   const endDrag = () => {
     if (!drag) return;
-    if (drag.moved) blockClick = Date.now() + 150;
-    drag = null; idx = Math.round(idx); spin();
+    const moved = drag.moved;
+    drag = null;
+    if (!moved) return;                            // reiner Klick: Walze nicht anfassen
+    blockClick = Date.now() + 120;
+    idx = Math.round(idx); spin();
   };
-  dock.addEventListener("pointerup", endDrag);
-  dock.addEventListener("pointercancel", endDrag);
+  window.addEventListener("pointerup", endDrag);
+  window.addEventListener("pointercancel", endDrag);
 
   // Falls das Fenster zu groß aufgeht: beim ersten Antippen auf Leisten-Größe ziehen
   document.addEventListener("pointerdown", e => {
