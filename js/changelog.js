@@ -8,6 +8,25 @@
 
 const CHANGELOG = [
   {
+    version: "0.5",
+    date: "2026-11-26",
+    title: "Feinschliff", titleEn: "Polish",
+    items: [
+      { type: "improved", de: "Die Seite lädt spürbar schneller: Logo und Bilder sind jetzt rund 800 KB kleiner – vor allem am Handy und wenn nebenbei das Spiel läuft",
+                     en: "The site loads noticeably faster: logo and images are around 800 KB smaller – especially on mobile and while the game is running" },
+      { type: "new", de: "Wenn jemand den Link teilt, erscheint jetzt eine richtige Vorschaukarte mit Bild statt einer nackten Adresse. Dazu gibt es endlich ein Symbol im Browser-Tab",
+                     en: "When someone shares the link, a proper preview card with an image now appears instead of a bare address. And there is finally an icon in the browser tab" },
+      { type: "improved", de: "Die Schriftarten liefern wir jetzt selbst aus statt sie bei Google zu laden – es geht also nichts mehr an Dritte, und es lädt schneller",
+                     en: "We now serve the fonts ourselves instead of loading them from Google – so nothing goes to third parties any more, and it loads faster" },
+      { type: "new", de: "Datenschutzseite, unten im Footer verlinkt: was gespeichert wird, was nicht, und was passiert, wenn du etwas meldest. Deutsch und Englisch",
+                     en: "Privacy page, linked in the footer: what is stored, what is not, and what happens when you report something. German and English" },
+      { type: "new", de: "Unter Upp-Kalkulator und Skilltree steht jetzt, von wann die Werte sind – damit du weißt, wie aktuell die Zahlen sind",
+                     en: "The Upgrade Calculator and skill tree now show when the values are from – so you know how current the numbers are" },
+      { type: "new", de: "Eigene Fehlerseite im Seitenlook, falls ein Link mal ins Leere führt",
+                     en: "Our own error page in the site's look, in case a link ever goes nowhere" }
+    ]
+  },
+  {
     version: "0.4",
     date: "2026-11-25",
     title: "Frag xZcRiTiCaLZz", titleEn: "Ask xZcRiTiCaLZz",
