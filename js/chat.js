@@ -80,6 +80,8 @@ function chatWriteLog(a) { try { localStorage.setItem(CHAT_LOG_KEY, JSON.stringi
 function chatIsEnabled() {
   return CHAT_ENABLED || /[?&]chat=1(&|$)/.test(location.search) || location.hash === "#chat";
 }
+/* eigenes Mini-Fenster über dem Spiel: …/index.html?mini=chat (Knopf in der Mini-Leiste) */
+const CHAT_MINI = /[?&]mini=chat(&|$)/.test(location.search);
 
 const chatState = { open: false, busy: false, last: 0, started: false };
 
@@ -91,7 +93,12 @@ function chatAvatar() {
   a.appendChild(img);
   return a;
 }
-function chatScroll() { const log = chatGet("chat-log"); if (log) log.scrollTop = log.scrollHeight; }
+function chatScroll() {
+  const log = chatGet("chat-log"); if (!log) return;
+  log.scrollTop = log.scrollHeight;
+  // nach dem Neu-Umbrechen (Schriften, Bilder) noch einmal, sonst bleibt die letzte Zeile unter dem Rand
+  requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; });
+}
 
 function chatAddUser(text) {
   const row = chatEl("div", "chat-row chat-row-user");
@@ -242,12 +249,14 @@ function chatOpen() {
   const win = chatGet("chat-win"), fab = chatGet("chat-float"); if (!win) return;
   if (!chatState.started) chatStart();
   chatSubLabel();
-  win.hidden = false; fab.hidden = true;
+  win.hidden = false; if (fab) fab.hidden = true;
   document.body.classList.add("chat-open");
   chatState.open = true;
   setTimeout(() => chatGet("chat-input")?.focus(), 60);
 }
 function chatClose(refocus = true) {
+  // Im eigenen Mini-Fenster gibt es nichts zu schließen: zurück zur Mini-Leiste
+  if (CHAT_MINI) { if (typeof miniGo === "function") miniGo("dock"); return; }
   const win = chatGet("chat-win"), fab = chatGet("chat-float"); if (!win) return;
   win.hidden = true; fab.hidden = false;
   document.body.classList.remove("chat-open");
@@ -257,11 +266,13 @@ function chatClose(refocus = true) {
 
 function initChat() {
   const fab = chatGet("chat-float"), win = chatGet("chat-win");
-  if (!fab || !win || !chatIsEnabled()) return;
-  fab.hidden = false;
-  fab.addEventListener("click", chatOpen);
+  // Chat aus? Dann auch kein leeres Mini-Fenster stehen lassen
+  if (!chatIsEnabled()) { if (CHAT_MINI && typeof miniGo === "function") miniGo("dock"); return; }
+  if (!fab || !win) return;
+  // Mini-Leiste neu zeichnen – der Chat-Knopf erscheint dort erst, wenn der Chat eingeschaltet ist
+  if (typeof miniRedraw === "function") miniRedraw();
+
   chatGet("chat-close").addEventListener("click", () => chatClose(true));
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && chatState.open) chatClose(true); });
   chatGet("chat-form").addEventListener("submit", e => {
     e.preventDefault();
     const inp = chatGet("chat-input"); const v = inp.value; inp.value = "";
@@ -271,5 +282,19 @@ function initChat() {
     chatSubLabel();
     if (chatState.started && !chatGet("chat-log").querySelector(".chat-row-user")) chatStart();   // noch kein Gespräch → Begrüßung neu in der Sprache
   });
+
+  // Eigenes Mini-Fenster (?mini=chat): füllt das ganze Fenster, kein schwebender Knopf
+  if (CHAT_MINI) {
+    document.documentElement.classList.add("is-mini", "is-mini-chat");
+    document.title = "xZcRiTiCaLZz · Origins2 Helper";
+    chatOpen();
+    return;
+  }
+
+  fab.hidden = false;
+  document.documentElement.classList.add("chat-on");   // rückt den Weihnachtsbaum zur Seite (css/theme.css)
+  fab.addEventListener("click", chatOpen);
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && chatState.open) chatClose(true); });
   if (location.hash === "#chat") chatOpen();
 }
+

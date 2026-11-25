@@ -1727,6 +1727,7 @@ html.xmas .hero::before {
 .xmas-mistle-r { right: 10px; transform: scaleX(-1) rotate(-6deg); }
 .xmas-bow { position: absolute; top: 2px; left: 50%; width: 46px; height: 34px; transform: translateX(-50%); opacity: .9; }
 .xmas-tree { position: absolute; left: 14px; bottom: 10px; width: 62px; height: 84px; opacity: .9; }
+html.chat-on .xmas-tree { bottom: 96px; }   /* unten links sitzt dann der Chat-Knopf – Baum rutscht darüber */
 @media (max-width: 860px) { .xmas-bow, .xmas-tree { display: none; } .xmas-mistle { width: 56px; height: 42px; } }
 
 /* ---------------- KI-Chat (js/chat.js) ---------------- */
@@ -1737,23 +1738,41 @@ html.xmas .hero::before {
 .chat-ava-wrap { position: relative; display: inline-flex; flex-shrink: 0; }
 .chat-dot { position: absolute; right: 0; bottom: 2px; width: 0.75rem; height: 0.75rem; border-radius: 50%; background: #5fd38a; border: 2px solid #1b130b; }
 
-.chat-float { position: fixed; right: 1rem; bottom: 4.6rem; z-index: 41; display: inline-flex; align-items: center; gap: 0.6rem; padding: 0; border: 0; background: none; cursor: pointer; color: var(--color-parch-100); }
+/* unten LINKS, damit sich Chat und „Bug/Idee melden“ (unten rechts) nicht überlappen */
+.chat-float { position: fixed; left: 1rem; bottom: 1rem; z-index: 41; display: inline-flex; flex-direction: row-reverse; align-items: center; gap: 0.6rem; padding: 0; border: 0; background: none; cursor: pointer; color: var(--color-parch-100); }
 .chat-float[hidden] { display: none; }
 .chat-float .chat-ava { width: 4rem; height: 4rem; box-shadow: 0 0 0 4px rgb(212 162 76 / .14), 0 8px 24px rgb(0 0 0 / .55), 0 0 22px rgb(212 162 76 / .35); transition: transform .2s; }
 .chat-float:hover .chat-ava { transform: translateY(-2px) scale(1.04); }
 .chat-float:focus-visible { outline: 2px solid var(--color-gold-300); outline-offset: 4px; border-radius: 999px; }
-.chat-float-tip { padding: 0.6rem 0.9rem; border-radius: 14px 14px 4px 14px; background: var(--color-ink-800); border: 1px solid var(--line-strong);
+.chat-float-tip { padding: 0.6rem 0.9rem; border-radius: 14px 14px 14px 4px; background: var(--color-ink-800); border: 1px solid var(--line-strong);
   font-size: 0.85rem; font-weight: 500; color: var(--color-parch-100); box-shadow: 0 8px 22px rgb(0 0 0 / .5); }
-@media (max-width: 639px) { .chat-float { right: 0.75rem; bottom: 3.9rem; } .chat-float .chat-ava { width: 3.4rem; height: 3.4rem; } .chat-float-tip { display: none; } }
-@media (min-width: 1680px) { .chat-float { bottom: 1rem; } }
+@media (max-width: 639px) { .chat-float { left: 0.75rem; bottom: 0.75rem; } .chat-float .chat-ava { width: 3.4rem; height: 3.4rem; } .chat-float-tip { display: none; } }
 
-.chat-win { position: fixed; right: 1rem; bottom: 1rem; z-index: 58; display: flex; flex-direction: column; width: min(26rem, calc(100vw - 1.5rem)); height: min(40rem, calc(100vh - 2rem));
+.chat-win { position: fixed; left: 1rem; bottom: 1rem; z-index: 58; display: flex; flex-direction: column; width: min(26rem, calc(100vw - 1.5rem)); height: min(40rem, calc(100vh - 2rem));
   border: 1px solid var(--color-gold-500); border-radius: 16px; background: var(--color-ink-900); overflow: hidden; animation: viewIn .2s ease-out;
   box-shadow: 0 20px 60px rgb(0 0 0 / .6), 0 0 0 1px rgb(212 162 76 / .1); }
 .chat-win[hidden] { display: none; }
 @media (max-width: 639px) { .chat-win { right: 0.5rem; left: 0.5rem; bottom: 0.5rem; width: auto; height: min(80vh, 40rem); } }
-body.chat-open .fb-float, body.chat-open .fb-side { display: none; }
-.is-mini .chat-float, .is-mini .chat-win { display: none !important; }
+/* nur am Handy (dort deckt der Chat die ganze Breite ab) den Melde-Knopf ausblenden */
+@media (max-width: 639px) { body.chat-open .fb-float { display: none; } }
+.is-mini .chat-float { display: none !important; }
+.is-mini:not(.is-mini-chat) .chat-win { display: none !important; }
+
+/* Chat als eigenes Mini-Fenster (?mini=chat) – für das Overlay über dem Spiel */
+.is-mini-chat body::before { display: none; }
+.is-mini-chat body { overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
+.is-mini-chat body > *:not(#chat-win):not(#toast):not(.mini-nav) { display: none !important; }
+.is-mini-chat .chat-win { position: static; width: auto; height: auto; flex: 1; min-height: 0; margin: 0.5rem; border-radius: 12px; animation: none; }
+.is-mini-chat .chat-head { padding: 0.55rem 0.6rem; gap: 0.6rem; }
+.is-mini-chat .chat-head .chat-ava { width: 2.4rem; height: 2.4rem; }
+.is-mini-chat .chat-name { font-size: 1rem; }
+.is-mini-chat .chat-sub { font-size: 0.68rem; }
+.is-mini-chat .chat-log { padding: 0.7rem 0.6rem 0.4rem; }
+.is-mini-chat .chat-note { padding: 0 0.6rem 0.35rem; }
+.is-mini-chat .chat-form { padding: 0.5rem 0.6rem 0.6rem; }
+.md-btn.md-chat { color: var(--color-gold-200); }
+.md-btn.md-chat .md-ava { width: 1.35rem; height: 1.35rem; border-radius: 50%; overflow: hidden; border: 1px solid var(--line-strong); }
+.md-btn.md-chat .md-ava img { display: block; width: 170%; height: 170%; max-width: none; margin-left: -35%; margin-top: -6%; }
 
 .chat-head { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 0.9rem; background: linear-gradient(180deg, #2a1d10, #1b130b); border-bottom: 1px solid var(--line-strong); }
 .chat-head-text { flex: 1; min-width: 0; }
@@ -1781,7 +1800,7 @@ body.chat-open .fb-float, body.chat-open .fb-side { display: none; }
 .chat-link:hover { color: var(--color-gold-200); }
 .chat-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.4rem; }
 .chat-chips-start { padding-left: 2.95rem; margin-top: 0; }
-.chat-chip { min-height: 2.75rem; padding: 0.5rem 0.9rem; border-radius: 999px; border: 1px solid var(--color-gold-500); background: transparent; color: var(--color-parch-100); font-size: 0.85rem; cursor: pointer; text-align: left; }
+.chat-chip { min-height: 2.75rem; padding: 0.5rem 0.9rem; border-radius: 999px; border: 1px solid rgb(212 162 76 / .55); background: rgb(212 162 76 / .06); color: var(--color-parch-100); font-size: 0.85rem; cursor: pointer; text-align: left; }
 .chat-chip:hover { background: rgb(212 162 76 / .12); border-color: var(--color-gold-400); }
 
 .chat-typing { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.9rem 1rem; }

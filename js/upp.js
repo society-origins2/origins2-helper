@@ -12,23 +12,34 @@ const UPP_STATE_KEY = "o2h.uppState";
 const MINI_TOOLS = [
   { mode: "upp",   hash: "upp-rechner",  key: "mini.upp" },
   { mode: "skill", hash: "skilltree",    key: "mini.skill" },
-  { mode: "fish",  hash: "event-helper", key: "mini.fish" }
+  { mode: "fish",  hash: "event-helper", key: "mini.fish" },
+  { mode: "chat",  hash: "uebersicht",   key: "mini.chat" }
 ];
+/* Der Chat-Reiter erscheint nur, wenn der Chat eingeschaltet ist (siehe js/chat.js).
+   chat.js wird NACH dieser Datei geladen, darum zeichnet es die Leiste danach neu (miniRedraw). */
+function miniChatOn() { try { return typeof chatIsEnabled === "function" && chatIsEnabled(); } catch { return false; } }
+function miniTools() { return MINI_TOOLS.filter(x => x.mode !== "chat" || miniChatOn()); }
+let miniRedraw = null;
 const MINI_W = 470, MINI_H = 800;   // gleiche Größe für alle, damit das Wechseln passt
 const MINI_MODE = new URLSearchParams(location.search).get("mini");
-function miniUrl(mode, hash) { return location.pathname + "?mini=" + mode + "&lang=" + (typeof LANG !== "undefined" ? LANG : "de") + "#" + hash; }
+function miniUrl(mode, hash) {
+  const test = /[?&]chat=1(&|$)/.test(location.search) ? "&chat=1" : "";   // Test-Schalter beim Wechseln mitnehmen
+  return location.pathname + "?mini=" + mode + "&lang=" + (typeof LANG !== "undefined" ? LANG : "de") + test + "#" + hash;
+}
 /* ---------------- Mini-Leiste („Fernbedienung“, ?mini=dock) ----------------
    Ganz kleines schwebendes Fenster mit Knöpfen für alle Mini-Fenster. Ein Klick klappt
    DASSELBE Fenster zum gewünschten Werkzeug auf (Chrome erlaubt nur ein schwebendes Fenster),
    der Einklapp-Knopf oben macht es wieder zur kleinen Leiste. */
 const MINI_DOCK_SIZE = [420, 64];
 const MINI_REF_CODE = "CRITICALZ";   // Referral-Code zum Kopieren in der Mini-Leiste
-const MINI_HASH = { dock: "uebersicht", upp: "upp-rechner", skill: "skilltree", fish: "event-helper", boss: "bosse", ref: "uebersicht" };
+const MINI_HASH = { dock: "uebersicht", upp: "upp-rechner", skill: "skilltree", fish: "event-helper", boss: "bosse", ref: "uebersicht", chat: "uebersicht" };
+const MINI_CHAT_SIZE = [400, 620];
 const MINI_REF_SIZE = [420, 780];
 const MINI_ICON = {"upp": "<path d=\"m14 12-8.6 8.6a2.1 2.1 0 0 1-3-3L11 9\"/><path d=\"M17.6 15 22 10.6\"/><path d=\"m20.9 11.7-1.2-1.2a3.2 3.2 0 0 1-1-2.3v-.8l-2.7-2.7a5.6 5.6 0 0 0-3.9-1.6H9l.9.8A6.2 6.2 0 0 1 12 8.4V10l2 2h2.5l2.3 1.9\"/>", "skill": "<circle cx=\"12\" cy=\"4.5\" r=\"2\"/><circle cx=\"5\" cy=\"13\" r=\"2\"/><circle cx=\"19\" cy=\"13\" r=\"2\"/><circle cx=\"12\" cy=\"20\" r=\"2\"/><path d=\"M11 6.3 6.2 11.4M13 6.3l4.8 5.1M6.3 14.6l4.6 3.8M17.7 14.6l-4.6 3.8\"/>", "fish": "<rect x=\"3\" y=\"3\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"13\" y=\"3\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"3\" y=\"13\" width=\"8\" height=\"8\" rx=\"1.5\"/><path d=\"M14 17h6M17 14v6\"/>", "boss": "<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2.5 2M9 2h6\"/>"};
 function miniSize(mode) {
-  if (mode === "dock") return MINI_DOCK_SIZE;
+  if (mode === "dock") return miniChatOn() ? [MINI_DOCK_SIZE[0] + 50, MINI_DOCK_SIZE[1]] : MINI_DOCK_SIZE;
   if (mode === "ref") return MINI_REF_SIZE;
+  if (mode === "chat") return MINI_CHAT_SIZE;
   if (mode === "boss" && typeof BOSS_MINI_SIZES !== "undefined") return BOSS_MINI_SIZES[typeof bossOrient === "function" ? bossOrient() : "h"];
   return [MINI_W, MINI_H];
 }
@@ -55,17 +66,21 @@ function buildMiniDock() {
       ["upp", "skill", "fish", "boss"].map(m => `<button type="button" class="md-btn" data-go="${m}" title="${uEsc(t("dock." + m + "Title"))}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${MINI_ICON[m]}</svg>
         <span>${t("dock." + m)}</span></button>`).join("") +
+      // Chat – nur wenn eingeschaltet; mit dem Charakterbild statt Symbol
+      (miniChatOn() ? `<button type="button" class="md-btn md-chat" data-go="chat" title="${uEsc(t("dock.chatTitle"))}">
+        <span class="md-ava"><img src="assets/chat-avatar.png" alt="" width="24" height="24"></span>
+        <span>${t("dock.chat")}</span></button>` : "") +
       // Referral-Code mit einem Klick kopieren
       `<button type="button" class="md-btn md-ref" data-go="ref" title="${uEsc(t("ri.title"))}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v9H5v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
         <span>${MINI_REF_CODE}</span></button>`;
   };
-  draw(); window.addEventListener("langchange", draw);
+  draw(); miniRedraw = draw; window.addEventListener("langchange", draw);
   dock.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) miniGo(b.dataset.go); });
   // Falls das Fenster zu groß aufgeht: beim ersten Antippen auf Leisten-Größe ziehen
   document.addEventListener("pointerdown", e => {
     if (e.target.closest("[data-go]")) return;
-    const [w, h] = MINI_DOCK_SIZE; if (innerHeight > h + 40) miniResize(w, h);
+    const [w, h] = miniSize("dock"); if (innerHeight > h + 40) miniResize(w, h);
   });
   document.body.prepend(dock);
   document.title = "Origins2 Helper";
@@ -76,14 +91,18 @@ function buildMiniNav() {
   const nav = document.createElement("nav");
   nav.className = "mini-nav";
   const barOn = () => { try { return localStorage.getItem("o2h.miniBossBar") === "1"; } catch { return false; } };
-  const draw = () => { nav.innerHTML = MINI_TOOLS.map(x =>
+  const draw = () => {
+    const tools = miniTools();
+    // Spalten passend zur Zahl der Reiter + der Knöpfe rechts (das CSS hat !important, darum so)
+    nav.style.setProperty("grid-template-columns", `repeat(${tools.length}, 1fr)` + (MINI_MODE === "chat" ? " auto" : " auto auto"), "important");
+    nav.innerHTML = tools.map(x =>
     `<a href="${miniUrl(x.mode, x.hash)}"${x.mode === MINI_MODE ? ' class="is-active" aria-current="page"' : ""}>${t(x.key)}</a>`).join("") +
-    // Boss-Liste oben einblenden – so hat man Bosse + Rechner in EINEM schwebenden Fenster
-    `<button type="button" class="mini-boss-btn${barOn() ? " is-on" : ""}" data-bossbar title="${uEsc(t("mini.bossBar"))}" aria-label="${uEsc(t("mini.bossBar"))}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></button>` +
+    // Boss-Liste oben einblenden – so hat man Bosse + Rechner in EINEM schwebenden Fenster (im Chat-Fenster ist dafür kein Platz)
+    (MINI_MODE === "chat" ? "" : `<button type="button" class="mini-boss-btn${barOn() ? " is-on" : ""}" data-bossbar title="${uEsc(t("mini.bossBar"))}" aria-label="${uEsc(t("mini.bossBar"))}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></button>`) +
     // zur kleinen Mini-Leiste einklappen
     `<button type="button" class="mini-boss-btn" data-collapse title="${uEsc(t("dock.collapse"))}" aria-label="${uEsc(t("dock.collapse"))}">${COLLAPSE_SVG}</button>`; };
-  draw(); window.addEventListener("langchange", draw);
+  draw(); miniRedraw = draw; window.addEventListener("langchange", draw);
   nav.addEventListener("click", e => {
     if (e.target.closest("[data-collapse]")) return miniGo("dock");
     if (e.target.closest("[data-bossbar]") && typeof setMiniBossBar === "function") setMiniBossBar(!barOn());
