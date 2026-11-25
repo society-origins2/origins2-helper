@@ -7,7 +7,7 @@
    3. Code hier eintragen. Leer = Zähler ist ausgeblendet.
    ===================================================================== */
 
-const GOATCOUNTER_CODE = "";
+const GOATCOUNTER_CODE = "xzcriticalzz";
 
 
 /* ---- Ab hier nichts ändern ---- */
