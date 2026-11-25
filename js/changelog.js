@@ -20,8 +20,8 @@ const CHANGELOG = [
                      en: "Start: for now the chat knows the site itself (tools, boss timer, calendar, promoter code). Real game values such as pet skill costs will follow as soon as the wiki data is here – until then such answers are clearly marked as test entries" },
       { type: "improved", de: "„Bug / Idee melden“ bleibt unten rechts, der Chat sitzt unten links – die beiden Knöpfe überlappen sich nicht mehr",
                      en: "“Report bug / idea” stays at the bottom right, the chat sits at the bottom left – the two buttons no longer overlap" },
-      { type: "improved", de: "Mini-Leiste neu gestaltet: Die Werkzeuge sitzen auf einer Walze, die du mit den Pfeilen, dem Mausrad oder per Wischen nach links und rechts drehst – ein Klick öffnet das Werkzeug vorne. Nur der Promoter-Code bleibt fest daneben stehen",
-                     en: "Mini bar redesigned: the tools sit on a drum that you turn left and right with the arrows, the mouse wheel or by swiping – one click opens the tool at the front. Only the promoter code stays fixed next to it" }
+      { type: "improved", de: "Mini-Leiste neu gestaltet: Die Werkzeuge sitzen auf einer Walze, die du mit den Pfeilen, dem Mausrad oder per Wischen nach links und rechts drehst – der Knopf „Öffnen“ klappt das Werkzeug auf, das vorne steht. Nur der Promoter-Code bleibt fest daneben stehen",
+                     en: "Mini bar redesigned: the tools sit on a drum that you turn left and right with the arrows, the mouse wheel or by swiping – the “Open” button opens whichever tool is at the front. Only the promoter code stays fixed next to it" }
     ]
   },
   {

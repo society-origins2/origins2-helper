@@ -86,6 +86,8 @@ function buildMiniDock() {
     reel.style.transform = `translateZ(calc(var(--md-r, 90px) * -1)) rotateY(${(-idx * stepDeg()).toFixed(2)}deg)`;
     const front = wrap(idx);
     reel.querySelectorAll(".md-slot").forEach(s => s.classList.toggle("is-front", s.dataset.go === front));
+    const open = dock.querySelector("[data-open]");
+    if (open) { open.title = t("dock." + front + "Title"); open.setAttribute("aria-label", open.title); }
     if (!animate) requestAnimationFrame(() => { if (reel) reel.style.transition = ""; });
     else { try { localStorage.setItem(DOCK_PICK_KEY, front); } catch {} }
   }
@@ -105,6 +107,9 @@ function buildMiniDock() {
         `</div></div>
         <button type="button" class="md-arrow" data-turn="1" title="${uEsc(t("dock.next"))}" aria-label="${uEsc(t("dock.next"))}">${DOCK_ARROW(1)}</button>
       </div>
+      <button type="button" class="md-btn md-open" data-open>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20H4v-6M14 4h6v6M4 20l7-7M20 4l-7 7"/></svg>
+        <span>${t("dock.expand")}</span></button>
       <button type="button" class="md-btn md-ref" data-go="ref" title="${uEsc(t("ri.title"))}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v9H5v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
         <span>${MINI_REF_CODE}</span></button>`;
@@ -117,6 +122,7 @@ function buildMiniDock() {
 
   dock.addEventListener("click", e => {
     const a = e.target.closest("[data-turn]"); if (a) return turn(Number(a.dataset.turn));
+    if (e.target.closest("[data-open]")) return miniGo(wrap(idx));
     if (Date.now() < blockClick) return;                       // war ein Wischen, kein Klick
     const b = e.target.closest("[data-go]"); if (b) miniGo(b.dataset.go);
   });
