@@ -8,6 +8,21 @@
 
 const CHANGELOG = [
   {
+    version: "0.4",
+    date: "2026-11-25",
+    title: "Frag xZcRiTiCaLZz", titleEn: "Ask xZcRiTiCaLZz",
+    items: [
+      { type: "new", de: "Neuer Chat unten links: Frag einfach, was du wissen willst – der Helfer durchsucht die Wissensbasis der Seite und zeigt dir die Antwort samt Link zum passenden Werkzeug",
+                     en: "New chat at the bottom left: just ask what you want to know – the helper searches this site's knowledge base and shows you the answer with a link to the right tool" },
+      { type: "new", de: "Chat auch als Mini-Fenster über dem Spiel: Knopf „Chat“ in der Mini-Leiste, Wechsel zwischen Upp-Kalkulator, Skilltree, Fischpuzzle und Chat ohne zurück in den Browser",
+                     en: "Chat also as a mini window over the game: a “Chat” button in the mini bar, switching between Upgrade Calculator, skill tree, fish puzzle and chat without going back to the browser" },
+      { type: "new", de: "Start: Der Chat kennt bisher die Seite selbst (Werkzeuge, Boss-Timer, Kalender, Promoter-Code). Echte Spielwerte wie Petskill-Kosten kommen dazu, sobald die Wiki-Daten da sind – solche Antworten sind bis dahin klar als Testeintrag gekennzeichnet",
+                     en: "Start: for now the chat knows the site itself (tools, boss timer, calendar, promoter code). Real game values such as pet skill costs will follow as soon as the wiki data is here – until then such answers are clearly marked as test entries" },
+      { type: "improved", de: "„Bug / Idee melden“ bleibt unten rechts, der Chat sitzt unten links – die beiden Knöpfe überlappen sich nicht mehr",
+                     en: "“Report bug / idea” stays at the bottom right, the chat sits at the bottom left – the two buttons no longer overlap" }
+    ]
+  },
+  {
     version: "0.3",
     date: "2026-11-22",
     title: "Skilltree-Update", titleEn: "Skill tree update",
@@ -145,6 +160,8 @@ const ROADMAP = [
   { status: "progress", de: "Guides der Gilde Society",                                  en: "Guides from the guild Society" },
   { status: "progress", de: "Upp-Reihen für Helme, Schmuck & PvM",                        en: "Upgrade lines for helmets, jewellery & PvM" },
   { status: "progress", de: "Englische Item-Namen mit dem Client abgleichen",           en: "Check English item names against the client" },
+  { status: "progress", de: "Chat: echte Spieldaten aus dem Wiki einpflegen (z. B. Petskills, Einsteiger-Fragen)", en: "Chat: add real game data from the wiki (e.g. pet skills, beginner questions)" },
+  { status: "planned",  de: "Chat: KI-Antworten statt reiner Stichwortsuche",            en: "Chat: AI answers instead of plain keyword search" },
   { status: "planned",  de: "Event-Helper: Black Jack und Catch the King",             en: "Event Helper: Black Jack and Catch the King" },
   { status: "planned",  de: "Englische Übersetzung der ganzen Seite verbessern",        en: "Improve the English translation of the whole site" },
   { status: "planned",  de: "Weitere Sprachen (z. B. Türkisch, Rumänisch, Polnisch)",   en: "More languages (e.g. Turkish, Romanian, Polish)" },

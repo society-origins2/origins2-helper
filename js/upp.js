@@ -903,4 +903,4 @@ async function openMiniWindow(mode, hash, title, size) {
   if (!w && typeof toast === "function") toast(t("fp.popupBlocked"));
 }
 function uppOpenMini() { return openMiniWindow("upp", "upp-rechner", t("upp.title")); }
-document.addEventListener("click", e => { if (e.target.closest("#dock-popout")) openMiniWindow("dock", "uebersicht", "Origins2 Helper", MINI_DOCK_SIZE); });
+document.addEventListener("click", e => { if (e.target.closest("#dock-popout")) openMiniWindow("dock", "uebersicht", "Origins2 Helper", miniSize("dock")); });

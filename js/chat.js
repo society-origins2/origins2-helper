@@ -9,7 +9,7 @@
                   Leer lassen = Chat arbeitet nur mit der Textsuche (ohne KI).
    ===================================================================== */
 
-const CHAT_ENABLED = false;
+const CHAT_ENABLED = true;
 const CHAT_API_URL = "";
 
 const CHAT_COOLDOWN_MS = 3000;      // Pause zwischen zwei Fragen
