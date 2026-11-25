@@ -244,6 +244,9 @@ function chatStart() {
 }
 function chatSubLabel() {
   const el = chatGet("chat-sub"); if (el) el.textContent = t(CHAT_API_URL ? "chat.subAi" : "chat.subSearch");
+  // Mit Worker geht die Frage an einen KI-Dienst – das muss im Fenster stehen (Datenschutz)
+  const note = document.querySelector("#chat-win .chat-note");
+  if (note) note.textContent = t(CHAT_API_URL ? "chat.noteAi" : "chat.note");
 }
 function chatOpen() {
   const win = chatGet("chat-win"), fab = chatGet("chat-float"); if (!win) return;

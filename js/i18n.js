@@ -372,6 +372,7 @@ const I18N = {
     "chat.subAi": "Origins2 Helper · KI-Assistent",
     "chat.subSearch": "Origins2 Helper · Wissenssuche",
     "chat.note": "Antworten stammen aus der Wissensbasis dieser Seite und können Fehler enthalten.",
+    "chat.noteAi": "Antworten stammen aus der Wissensbasis dieser Seite und können Fehler enthalten. Deine Frage wird dafür an einen KI-Dienst weitergegeben.",
     "chat.placeholder": "Frag mich etwas zu Origins2 ...",
     "chat.inputLabel": "Deine Frage",
     "chat.send": "Senden",
@@ -459,6 +460,7 @@ const I18N = {
     "cal.text": "Wochen- und Monatsansicht mit Filter für Events, Weltbosse und Society-Termine – plus Erinnerungs-Glocke pro Termin.",
 
     "footer.rights": "© 2026 Society · Alle Rechte vorbehalten",
+    "footer.privacy": "Datenschutz",
     "footer.tool": "Community-Tool der Gilde Society",
     "cl.eyebrow": "Changelog", "cl.title": "Neuigkeiten",
     "cl.new": "Neu", "cl.improved": "Verbessert", "cl.fixed": "Behoben",
@@ -830,6 +832,7 @@ const I18N = {
     "chat.subAi": "Origins2 Helper · AI assistant",
     "chat.subSearch": "Origins2 Helper · knowledge search",
     "chat.note": "Answers come from this site's knowledge base and may contain errors.",
+    "chat.noteAi": "Answers come from this site's knowledge base and may contain errors. Your question is passed on to an AI service for this.",
     "chat.placeholder": "Ask me something about Origins2 ...",
     "chat.inputLabel": "Your question",
     "chat.send": "Send",
@@ -917,6 +920,7 @@ const I18N = {
     "cal.text": "Week and month view with filters for events, world bosses and Society dates – plus a reminder bell for every date.",
 
     "footer.rights": "© 2026 Society · All rights reserved",
+    "footer.privacy": "Privacy",
     "footer.tool": "Community tool of the guild Society",
     "cl.eyebrow": "Changelog", "cl.title": "What's new",
     "cl.new": "New", "cl.improved": "Improved", "cl.fixed": "Fixed",
