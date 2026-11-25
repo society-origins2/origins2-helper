@@ -37,7 +37,7 @@ const MINI_CHAT_SIZE = [400, 620];
 const MINI_REF_SIZE = [420, 780];
 const MINI_ICON = {"upp": "<path d=\"m14 12-8.6 8.6a2.1 2.1 0 0 1-3-3L11 9\"/><path d=\"M17.6 15 22 10.6\"/><path d=\"m20.9 11.7-1.2-1.2a3.2 3.2 0 0 1-1-2.3v-.8l-2.7-2.7a5.6 5.6 0 0 0-3.9-1.6H9l.9.8A6.2 6.2 0 0 1 12 8.4V10l2 2h2.5l2.3 1.9\"/>", "skill": "<circle cx=\"12\" cy=\"4.5\" r=\"2\"/><circle cx=\"5\" cy=\"13\" r=\"2\"/><circle cx=\"19\" cy=\"13\" r=\"2\"/><circle cx=\"12\" cy=\"20\" r=\"2\"/><path d=\"M11 6.3 6.2 11.4M13 6.3l4.8 5.1M6.3 14.6l4.6 3.8M17.7 14.6l-4.6 3.8\"/>", "fish": "<rect x=\"3\" y=\"3\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"13\" y=\"3\" width=\"8\" height=\"8\" rx=\"1.5\"/><rect x=\"3\" y=\"13\" width=\"8\" height=\"8\" rx=\"1.5\"/><path d=\"M14 17h6M17 14v6\"/>", "boss": "<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2.5 2M9 2h6\"/>"};
 function miniSize(mode) {
-  if (mode === "dock") return miniChatOn() ? [MINI_DOCK_SIZE[0] + 50, MINI_DOCK_SIZE[1]] : MINI_DOCK_SIZE;
+  if (mode === "dock") return MINI_DOCK_SIZE;   // Walze zeigt ein Werkzeug – die Leiste bleibt schmal
   if (mode === "ref") return MINI_REF_SIZE;
   if (mode === "chat") return MINI_CHAT_SIZE;
   if (mode === "boss" && typeof BOSS_MINI_SIZES !== "undefined") return BOSS_MINI_SIZES[typeof bossOrient === "function" ? bossOrient() : "h"];
@@ -56,30 +56,105 @@ function miniGo(mode) {
   location.href = miniUrl(mode, MINI_HASH[mode]);
 }
 const COLLAPSE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>';
+/* Walze: ein Werkzeug steht vorn, mit Pfeilen/Wischen/Mausrad dreht man weiter.
+   Nur der Promoter-Code bleibt fest daneben stehen. */
+const DOCK_PICK_KEY = "o2h.dockPick";
+const DOCK_LABEL = { upp: "upp.title", skill: "mini.skill", fish: "fp.title", boss: "boss.title", chat: "mini.chat" };
+const DOCK_ARROW = dir => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${dir < 0 ? "M15 5 8 12l7 7" : "M9 5l7 7-7 7"}"/></svg>`;
+function dockTools() { return miniChatOn() ? ["upp", "skill", "fish", "boss", "chat"] : ["upp", "skill", "fish", "boss"]; }
+
 function buildMiniDock() {
   document.documentElement.classList.add("is-mini", "is-mini-dock");
   const dock = document.createElement("div");
   dock.id = "mini-dock";
-  const old = document.getElementById("server-clock"); if (old) old.removeAttribute("id");   // Uhr nur einmal
+  let tools = dockTools(), idx = 0, stage = null, reel = null, drag = null, blockClick = 0, lastTurn = 0;
+  try { const i = tools.indexOf(localStorage.getItem(DOCK_PICK_KEY) || ""); if (i >= 0) idx = i; } catch {}
+
+  const wrap = i => tools[((Math.round(i) % tools.length) + tools.length) % tools.length];
+  const stepDeg = () => 360 / tools.length;
+  function layout() {                      // Walzen-Maße aus der Breite der Bühne
+    if (!stage) return;
+    const w = stage.clientWidth || 200, slot = Math.max(90, w * 0.78);
+    stage.style.setProperty("--md-slot", Math.round(slot) + "px");
+    stage.style.setProperty("--md-step", stepDeg() + "deg");
+    stage.style.setProperty("--md-r", Math.round((slot / 2) / Math.tan(Math.PI / tools.length)) + "px");
+    spin(false);
+  }
+  function spin(animate = true) {
+    if (!reel) return;
+    if (!animate) reel.style.transition = "none";
+    reel.style.transform = `translateZ(calc(var(--md-r, 90px) * -1)) rotateY(${(-idx * stepDeg()).toFixed(2)}deg)`;
+    const front = wrap(idx);
+    reel.querySelectorAll(".md-slot").forEach(s => s.classList.toggle("is-front", s.dataset.go === front));
+    if (!animate) requestAnimationFrame(() => { if (reel) reel.style.transition = ""; });
+    else { try { localStorage.setItem(DOCK_PICK_KEY, front); } catch {} }
+  }
+  function turn(dir) { idx = Math.round(idx) + dir; spin(); }
+
   const draw = () => {
-    dock.innerHTML = `<div class="md-clock"><span>${t("boss.serverTime")}</span><b class="tabular-nums" id="server-clock">--:--:--</b></div>` +
-      ["upp", "skill", "fish", "boss"].map(m => `<button type="button" class="md-btn" data-go="${m}" title="${uEsc(t("dock." + m + "Title"))}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${MINI_ICON[m]}</svg>
-        <span>${t("dock." + m)}</span></button>`).join("") +
-      // Chat – nur wenn eingeschaltet; mit dem Charakterbild statt Symbol
-      (miniChatOn() ? `<button type="button" class="md-btn md-chat" data-go="chat" title="${uEsc(t("dock.chatTitle"))}">
-        <span class="md-ava"><img src="assets/chat-avatar.png" alt="" width="24" height="24"></span>
-        <span>${t("dock.chat")}</span></button>` : "") +
-      // Referral-Code mit einem Klick kopieren
-      `<button type="button" class="md-btn md-ref" data-go="ref" title="${uEsc(t("ri.title"))}">
+    tools = dockTools();
+    idx = Math.round(idx);
+    dock.innerHTML =
+      `<div class="md-drum" role="group" aria-label="${uEsc(t("dock.openTitle"))}">
+        <button type="button" class="md-arrow" data-turn="-1" title="${uEsc(t("dock.prev"))}" aria-label="${uEsc(t("dock.prev"))}">${DOCK_ARROW(-1)}</button>
+        <div class="md-stage"><div class="md-reel">` +
+        tools.map((m, i) => `<button type="button" class="md-slot" data-go="${m}" style="--i:${i}" title="${uEsc(t("dock." + m + "Title"))}">
+          ${m === "chat" ? `<span class="md-ava"><img src="assets/chat-avatar.png" alt="" width="24" height="24"></span>`
+            : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${MINI_ICON[m]}</svg>`}
+          <span>${t(DOCK_LABEL[m])}</span></button>`).join("") +
+        `</div></div>
+        <button type="button" class="md-arrow" data-turn="1" title="${uEsc(t("dock.next"))}" aria-label="${uEsc(t("dock.next"))}">${DOCK_ARROW(1)}</button>
+      </div>
+      <button type="button" class="md-btn md-ref" data-go="ref" title="${uEsc(t("ri.title"))}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v9H5v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
         <span>${MINI_REF_CODE}</span></button>`;
+    stage = dock.querySelector(".md-stage");
+    reel = dock.querySelector(".md-reel");
+    layout();
   };
   draw(); miniRedraw = draw; window.addEventListener("langchange", draw);
-  dock.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) miniGo(b.dataset.go); });
+  window.addEventListener("resize", layout);
+
+  dock.addEventListener("click", e => {
+    const a = e.target.closest("[data-turn]"); if (a) return turn(Number(a.dataset.turn));
+    if (Date.now() < blockClick) return;                       // war ein Wischen, kein Klick
+    const b = e.target.closest("[data-go]"); if (b) miniGo(b.dataset.go);
+  });
+  dock.addEventListener("wheel", e => {
+    if (!e.target.closest(".md-drum")) return;
+    e.preventDefault();
+    const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (Math.abs(d) < 2 || Date.now() - lastTurn < 220) return;
+    lastTurn = Date.now(); turn(d > 0 ? 1 : -1);
+  }, { passive: false });
+  dock.addEventListener("keydown", e => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault(); turn(e.key === "ArrowRight" ? 1 : -1);
+  });
+  // Wischen/Ziehen auf der Walze
+  dock.addEventListener("pointerdown", e => {
+    if (!e.target.closest(".md-stage")) return;
+    drag = { x: e.clientX, from: idx, moved: false };
+    try { dock.setPointerCapture(e.pointerId); } catch {}
+  });
+  dock.addEventListener("pointermove", e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, w = (stage && stage.clientWidth) || 200;
+    if (Math.abs(dx) > 4) drag.moved = true;
+    idx = drag.from - dx / (w * 0.55);
+    spin(false);
+  });
+  const endDrag = () => {
+    if (!drag) return;
+    if (drag.moved) blockClick = Date.now() + 150;
+    drag = null; idx = Math.round(idx); spin();
+  };
+  dock.addEventListener("pointerup", endDrag);
+  dock.addEventListener("pointercancel", endDrag);
+
   // Falls das Fenster zu groß aufgeht: beim ersten Antippen auf Leisten-Größe ziehen
   document.addEventListener("pointerdown", e => {
-    if (e.target.closest("[data-go]")) return;
+    if (e.target.closest("[data-go], [data-turn], .md-stage")) return;
     const [w, h] = miniSize("dock"); if (innerHeight > h + 40) miniResize(w, h);
   });
   document.body.prepend(dock);
