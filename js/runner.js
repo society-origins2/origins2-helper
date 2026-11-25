@@ -7,7 +7,7 @@
               Weltweite Rangliste kommt mit Supabase (Phase 2).
    ===================================================================== */
 
-const RUNNER_SPRITE = "assets/creator.png";
+const RUNNER_SPRITE = "assets/creator.webp";
 const RUNNER_KEY = "o2h.runnerTop";
 const RUNNER_NAME_KEY = "o2h.runnerName";
 
