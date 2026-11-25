@@ -461,6 +461,7 @@ const I18N = {
 
     "footer.rights": "© 2026 Society · Alle Rechte vorbehalten",
     "footer.privacy": "Datenschutz",
+    "data.stand": "Datenstand: {a} · Werte aus dem Ingame-Wiki, von Hand übertragen. Fehler gefunden? Sag uns Bescheid!",
     "footer.tool": "Community-Tool der Gilde Society",
     "cl.eyebrow": "Changelog", "cl.title": "Neuigkeiten",
     "cl.new": "Neu", "cl.improved": "Verbessert", "cl.fixed": "Behoben",
@@ -921,6 +922,7 @@ const I18N = {
 
     "footer.rights": "© 2026 Society · All rights reserved",
     "footer.privacy": "Privacy",
+    "data.stand": "Data as of {a} · Values from the in-game wiki, typed up by hand. Found a mistake? Let us know!",
     "footer.tool": "Community tool of the guild Society",
     "cl.eyebrow": "Changelog", "cl.title": "What's new",
     "cl.new": "New", "cl.improved": "Improved", "cl.fixed": "Fixed",

@@ -199,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof initApply === "function") initApply();
   if (typeof initFeedback === "function") initFeedback();
   if (typeof initChat === "function") initChat();
+  initDataStand();
   if (typeof initSkilltree === "function") initSkilltree();
   if (typeof initFishPuzzle === "function") initFishPuzzle();
   if (typeof initTeam === "function") initTeam();
@@ -228,4 +229,19 @@ function layoutHeroCrew() {
   if (avail - 2 * sym < block) { pl = wl ? wl + gap : 0; pr = wr ? wr + gap : 0; }
   grid.style.setProperty("--crew-l", pl + "px");
   grid.style.setProperty("--crew-r", pr + "px");
+}
+
+/* Datenstand unter den Rechnern – Datum steht in js/data.js (DATA_STAND) */
+function initDataStand() {
+  const els = document.querySelectorAll("[data-stand]");
+  if (!els.length || typeof DATA_STAND !== "string" || !DATA_STAND) return;
+  const paint = () => {
+    const d = new Date(DATA_STAND + "T00:00:00Z");
+    if (isNaN(d)) return;
+    const datum = new Intl.DateTimeFormat(LANG === "en" ? "en-GB" : "de-DE",
+      { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(d);
+    els.forEach(el => { el.textContent = t("data.stand", datum); el.hidden = false; });
+  };
+  paint();
+  window.addEventListener("langchange", paint);
 }

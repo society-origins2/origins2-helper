@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seite nicht gefunden · Origins2 Helper by Society</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#110d09">
+<link rel="icon" href="/origins2-helper/assets/favicon-32.png?v=20261126-1" sizes="32x32" type="image/png">
+<link rel="stylesheet" href="/origins2-helper/css/fonts.css?v=20261126-1">
+<style>
+:root {
+  --ink-950:#110d09; --ink-800:#1e1912; --ink-700:#2a231a;
+  --parch-100:#f1e9da; --parch-300:#c9bda8; --parch-400:#9b8e78; --parch-500:#75695a;
+  --gold-200:#f3d79a; --gold-300:#e6bd6c;
+  --line:rgb(212 162 76 / .16); --line-strong:rgb(212 162 76 / .34);
+  --font-display:"Cinzel", Georgia, serif; --font-body:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { min-height:100vh; display:grid; place-items:center; padding:2rem 1.25rem;
+  background: radial-gradient(120% 70% at 50% 0%, rgb(120 64 22 / .25), transparent 60%), var(--ink-950);
+  color:var(--parch-100); font-family:var(--font-body); text-align:center; -webkit-font-smoothing:antialiased; }
+html[data-lang="de"] [lang="en"], html[data-lang="en"] [lang="de"] { display:none !important; }
+.card { max-width:34rem; }
+.code { font-family:var(--font-display); font-size:clamp(4rem, 18vw, 7rem); font-weight:700; line-height:1;
+  color:var(--gold-300); text-shadow:0 0 40px rgb(212 162 76 / .25); }
+h1 { margin-top:.6rem; font-family:var(--font-display); font-size:1.5rem; font-weight:600; color:var(--parch-100); letter-spacing:.02em; }
+p { margin-top:.9rem; color:var(--parch-300); line-height:1.6; }
+.links { margin-top:1.8rem; display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; }
+a.btn { display:inline-flex; align-items:center; gap:.4rem; padding:.6rem 1.1rem; border-radius:10px; text-decoration:none;
+  border:1px solid var(--line-strong); color:var(--gold-200); background:linear-gradient(180deg, rgb(212 162 76 / .14), rgb(17 13 9 / .6)); font-size:.9rem; font-weight:600; }
+a.btn:hover { background:linear-gradient(180deg, rgb(212 162 76 / .24), rgb(17 13 9 / .6)); }
+a.ghost { border-color:var(--line); color:var(--parch-300); background:none; font-weight:500; }
+a.ghost:hover { color:var(--gold-200); border-color:var(--line-strong); }
+.lang { margin-top:2.2rem; display:inline-flex; gap:.25rem; padding:.2rem; border:1px solid var(--line); border-radius:999px; }
+.lang button { padding:.3rem .75rem; border:0; border-radius:999px; background:none; color:var(--parch-400);
+  font:600 .75rem var(--font-body); letter-spacing:.06em; cursor:pointer; }
+.lang button.is-on { color:var(--gold-200); background:var(--ink-700); }
+.brand { margin-top:2.5rem; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--parch-500); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="code">404</div>
+  <h1><span lang="de">Diese Seite gibt es nicht</span><span lang="en">This page doesn't exist</span></h1>
+  <p>
+    <span lang="de">Der Link ist falsch, veraltet oder die Seite ist umgezogen. Von hier kommst du überall hin:</span>
+    <span lang="en">The link is wrong, outdated, or the page has moved. You can get anywhere from here:</span>
+  </p>
+  <div class="links">
+    <a class="btn" href="/origins2-helper/"><span lang="de">Zur Startseite</span><span lang="en">To the home page</span></a>
+    <a class="ghost btn" href="/origins2-helper/#upp-rechner"><span lang="de">Upp-Kalkulator</span><span lang="en">Upgrade Calculator</span></a>
+    <a class="ghost btn" href="/origins2-helper/#bosse"><span lang="de">Boss-Timer</span><span lang="en">Boss Timer</span></a>
+    <a class="ghost btn" href="/origins2-helper/#kalender"><span lang="de">Kalender</span><span lang="en">Calendar</span></a>
+  </div>
+  <div class="lang"><button type="button" data-lang="de">DE</button><button type="button" data-lang="en">EN</button></div>
+  <p class="brand">Origins2 Helper <span style="color:var(--gold-300)">by Society</span></p>
+</div>
+<script>
+  const KEY = "o2h.lang";
+  function setLang(l) {
+    document.documentElement.setAttribute("data-lang", l);
+    document.documentElement.setAttribute("lang", l);
+    document.title = (l === "de" ? "Seite nicht gefunden" : "Page not found") + " · Origins2 Helper by Society";
+    document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("is-on", b.dataset.lang === l));
+    try { localStorage.setItem(KEY, l); } catch {}
+  }
+  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+  let start = "de";
+  try { const s = localStorage.getItem(KEY); if (s === "de" || s === "en") start = s; } catch {}
+  setLang(start);
+</script>
+</body>
+</html>

@@ -11,6 +11,11 @@
    Kürzel (mat-XX, wpn-XX, arm-XX) gehören zu den Icons in assets/items/.
    ===================================================================== */
 
+/* Datenstand: Datum der letzten Überarbeitung dieser Werte (JJJJ-MM-TT).
+   Erscheint klein unter dem Upp-Rechner und dem Skilltree. Bitte mitändern,
+   wenn du Werte korrigierst oder neue Reihen einträgst. Leer lassen = Zeile aus. */
+const DATA_STAND = "2026-11-22";
+
 const ASSET_V = "20261122-21";   // Cache-Buster für Item-Icons (bei Icon-Änderung hochzählen)
 
 const MATERIALS = {

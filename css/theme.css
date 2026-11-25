@@ -1380,6 +1380,11 @@ a.tm-card:hover .tm-art img { filter: drop-shadow(0 0 14px rgb(88 101 242 / .5))
 .mini-boss-btn.is-on { color: var(--color-gold-200); background: var(--color-ink-700); box-shadow: inset 0 0 0 1px var(--line-strong); }
 .bm-empty { align-self: center; padding: 0 0.6rem; font-size: 0.78rem; color: var(--color-parch-400); }
 
+/* Datenstand-Hinweis unter den Rechnern (js/app.js, Datum in js/data.js) */
+.data-stand { margin-top: 0.8rem; font-size: 0.74rem; color: var(--color-parch-500); }
+.data-stand[hidden] { display: none; }
+.is-mini .data-stand { display: none !important; }
+
 /* Mini-Leiste („Fernbedienung“) – Werkzeuge auf einer drehbaren Walze, Promoter-Code fest daneben */
 .is-mini-dock body::before { display: none; }
 .is-mini-dock body { overflow: hidden; }
