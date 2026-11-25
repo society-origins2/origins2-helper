@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 
-  <link rel="stylesheet" href="css/tailwind.css?v=20261122-21">
-  <link rel="stylesheet" href="css/theme.css?v=20261122-21">
+  <link rel="stylesheet" href="css/tailwind.css?v=20261125-1">
+  <link rel="stylesheet" href="css/theme.css?v=20261125-1">
 </head>
 <body class="min-h-screen bg-ink-950 text-parch-100 font-sans antialiased">
 
@@ -691,28 +691,52 @@
     </div>
   </div>
 
+  <!-- KI-Chat (js/chat.js): erst sichtbar, wenn CHAT_ENABLED = true ist oder die Seite mit ?chat=1 geöffnet wird -->
+  <button type="button" id="chat-float" class="chat-float" hidden aria-haspopup="dialog" aria-controls="chat-win" data-i18n-attr="aria-label:chat.open">
+    <span class="chat-float-tip" data-i18n="chat.tip">Fragen? Frag xZcRiTiCaLZz!</span>
+    <span class="chat-ava"><img src="assets/chat-avatar.png" alt="" width="64" height="64"></span>
+  </button>
+  <section id="chat-win" class="chat-win" hidden role="dialog" aria-modal="false" aria-labelledby="chat-title">
+    <header class="chat-head">
+      <span class="chat-ava-wrap"><span class="chat-ava"><img src="assets/chat-avatar.png" alt="" width="56" height="56"></span><i class="chat-dot" aria-hidden="true"></i></span>
+      <div class="chat-head-text">
+        <h2 id="chat-title" class="chat-name">xZcRiTiCaLZz</h2>
+        <p id="chat-sub" class="chat-sub"></p>
+      </div>
+      <button type="button" id="chat-close" class="chat-x" data-i18n-attr="aria-label:chat.close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+    </header>
+    <div id="chat-log" class="chat-log" role="log" aria-live="polite"></div>
+    <p class="chat-note" data-i18n="chat.note">Antworten stammen aus der Wissensbasis dieser Seite und können Fehler enthalten.</p>
+    <form id="chat-form" class="chat-form" autocomplete="off">
+      <input id="chat-input" class="field-input text" type="text" maxlength="300" data-i18n-attr="placeholder:chat.placeholder;aria-label:chat.inputLabel">
+      <button type="submit" id="chat-send" class="btn-gold chat-send" data-i18n-attr="aria-label:chat.send"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10 17 3l-4 14-3-6z"/></svg></button>
+    </form>
+  </section>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="js/i18n.js?v=20261122-21"></script>
-  <script src="js/data.js?v=20261122-21"></script>
-  <script src="js/icons-data.js?v=20261122-21"></script>
-  <script src="js/streamers.js?v=20261122-21"></script>
-  <script src="js/referral.js?v=20261122-21"></script>
-  <script src="js/events.js?v=20261122-21"></script>
-  <script src="js/upp.js?v=20261122-21"></script>
-  <script src="js/skill-data.js?v=20261122-21"></script>
-  <script src="js/skilltree.js?v=20261122-21"></script>
-  <script src="js/calendar-data.js?v=20261122-21"></script>
-  <script src="js/calendar.js?v=20261122-21"></script>
-  <script src="js/changelog.js?v=20261122-21"></script>
-  <script src="js/apply.js?v=20261122-21"></script>
-  <script src="js/team.js?v=20261122-21"></script>
-  <script src="js/feedback.js?v=20261122-21"></script>
-  <script src="js/fish-solver.js?v=20261122-21"></script>
-  <script src="js/fishpuzzle.js?v=20261122-21"></script>
-  <script src="js/runner.js?v=20261122-21"></script>
-  <script src="js/visitors.js?v=20261122-21"></script>
-  <script src="js/season.js?v=20261122-21"></script>
-  <script src="js/app.js?v=20261122-21"></script>
+  <script src="js/i18n.js?v=20261125-1"></script>
+  <script src="js/data.js?v=20261125-1"></script>
+  <script src="js/icons-data.js?v=20261125-1"></script>
+  <script src="js/streamers.js?v=20261125-1"></script>
+  <script src="js/referral.js?v=20261125-1"></script>
+  <script src="js/events.js?v=20261125-1"></script>
+  <script src="js/upp.js?v=20261125-1"></script>
+  <script src="js/skill-data.js?v=20261125-1"></script>
+  <script src="js/skilltree.js?v=20261125-1"></script>
+  <script src="js/calendar-data.js?v=20261125-1"></script>
+  <script src="js/calendar.js?v=20261125-1"></script>
+  <script src="js/changelog.js?v=20261125-1"></script>
+  <script src="js/apply.js?v=20261125-1"></script>
+  <script src="js/team.js?v=20261125-1"></script>
+  <script src="js/feedback.js?v=20261125-1"></script>
+  <script src="js/chat-data.js?v=20261125-1"></script>
+  <script src="js/chat.js?v=20261125-1"></script>
+  <script src="js/fish-solver.js?v=20261125-1"></script>
+  <script src="js/fishpuzzle.js?v=20261125-1"></script>
+  <script src="js/runner.js?v=20261125-1"></script>
+  <script src="js/visitors.js?v=20261125-1"></script>
+  <script src="js/season.js?v=20261125-1"></script>
+  <script src="js/app.js?v=20261125-1"></script>
 </body>
 </html>

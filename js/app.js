@@ -198,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof initChangelog === "function") initChangelog();
   if (typeof initApply === "function") initApply();
   if (typeof initFeedback === "function") initFeedback();
+  if (typeof initChat === "function") initChat();
   if (typeof initSkilltree === "function") initSkilltree();
   if (typeof initFishPuzzle === "function") initFishPuzzle();
   if (typeof initTeam === "function") initTeam();
