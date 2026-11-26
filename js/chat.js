@@ -83,7 +83,7 @@ function chatIsEnabled() {
 /* eigenes Mini-Fenster über dem Spiel: …/index.html?mini=chat (Knopf in der Mini-Leiste) */
 const CHAT_MINI = /[?&]mini=chat(&|$)/.test(location.search);
 
-const chatState = { open: false, busy: false, last: 0, started: false };
+const chatState = { open: false, busy: false, last: 0, started: false, lastQ: "" };
 
 /* ---------- Nachrichten zeichnen ---------- */
 function chatAvatar() {
@@ -170,8 +170,30 @@ function chatShowEntry(e, more, note) {
   chatAddBot({ text: L(e, "text"), source: L(e, "source"), link: e.link || "", more, test: !!e.isTest, note });
 }
 
+/* Kurzer Plausch ohne KI – nur wenn die Suche nichts gefunden hat (CHAT_SMALLTALK in chat-data.js) */
+function chatSmalltalk(q) {
+  if (typeof CHAT_SMALLTALK === "undefined") return "";
+  const f = chatFold(q);
+  if (!f) return "";
+  const words = f.split(" ");
+  if (words.length > 8) return "";              // längere Sätze sind echte Fragen
+  const set = new Set(words);
+  for (const g of CHAT_SMALLTALK) {
+    const hit = g.words.some(w => w.includes(" ") ? f.includes(w) : set.has(w));
+    if (!hit) continue;
+    const arr = L(g, "reply");
+    if (!arr || !arr.length) return "";
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+  return "";
+}
+
 function chatAnswerLocal(hits, note) {
-  if (!hits.length) { chatAddBot({ text: t("chat.none") }); return; }
+  if (!hits.length) {
+    const plausch = chatSmalltalk(chatState.lastQ || "");
+    chatAddBot({ text: plausch || t("chat.none") });
+    return;
+  }
   chatShowEntry(hits[0], hits.slice(1), note);
 }
 
@@ -207,6 +229,7 @@ async function chatAsk(raw) {
   const send = chatGet("chat-send"); if (send) send.disabled = true;
 
   chatAddUser(q);
+  chatState.lastQ = q;
   const hits = chatSearch(q);
   try {
     if (CHAT_API_URL && hits.length) {

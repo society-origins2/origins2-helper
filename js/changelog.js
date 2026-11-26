@@ -23,7 +23,11 @@ const CHANGELOG = [
       { type: "new", de: "Unter Upp-Kalkulator und Skilltree steht jetzt, von wann die Werte sind – damit du weißt, wie aktuell die Zahlen sind",
                      en: "The Upgrade Calculator and skill tree now show when the values are from – so you know how current the numbers are" },
       { type: "new", de: "Eigene Fehlerseite im Seitenlook, falls ein Link mal ins Leere führt",
-                     en: "Our own error page in the site's look, in case a link ever goes nowhere" }
+                     en: "Our own error page in the site's look, in case a link ever goes nowhere" },
+      { type: "new", de: "Unten im Footer steht jetzt, wie oft die Seite aufgerufen wurde – gezählt ohne Cookies und ohne zu speichern, wer du bist",
+                     en: "The footer now shows how often the site has been opened – counted without cookies and without storing who you are" },
+      { type: "improved", de: "Der Chat kennt mehr: wer hinter der Seite steckt, was er selbst kann und was nicht, den Weihnachtsmodus und die Mini-Leiste mit der Walze. Auf ein „Hallo“ oder „Danke“ antwortet er jetzt auch, statt ratlos zu schauen",
+                     en: "The chat knows more: who is behind the site, what it can and cannot do, Christmas mode and the mini bar with its drum. It now also replies to a “hello” or “thanks” instead of looking puzzled" }
     ]
   },
   {

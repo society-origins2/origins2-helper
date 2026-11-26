@@ -47,9 +47,9 @@ const CHAT_KB = [
   {
     id: "calendar",
     title: "Eventkalender", titleEn: "Event calendar",
-    text: "Der Kalender zeigt die Events in Tages-, Wochen- und Monatsansicht. Mit der Glocke kannst du dich pro Termin erinnern lassen.",
-    textEn: "The calendar shows events in day, week and month view. The bell lets you set a reminder for each event.",
-    kw: ["kalender", "calendar", "event", "events", "termin", "termine", "woche", "monat", "heute", "today", "week", "month", "erinnerung", "reminder"],
+    text: "Der Kalender zeigt die Events in Tages-, Wochen- und Monatsansicht. Bei Events, die noch nicht begonnen haben, erscheint eine kleine Glocke: Damit bekommst du zum Start einen Ton, solange die Seite offen ist. Bei Bossen übernimmt das der Boss-Timer.",
+    textEn: "The calendar shows events in day, week and month view. Events that have not started yet show a small bell: it plays a sound when they begin, as long as the page is open. For bosses, the boss timer does that job.",
+    kw: ["kalender", "calendar", "event", "events", "termin", "termine", "woche", "monat", "heute", "today", "week", "month", "erinnerung", "reminder", "naechste", "naechstes", "ansteht", "laeuft", "upcoming"],
     source: "Seite · Kalender", sourceEn: "Site · Calendar", link: "#kalender"
   },
   {
@@ -65,15 +65,15 @@ const CHAT_KB = [
     title: "Event-Helper: Fischpuzzle", titleEn: "Event Helper: fish puzzle",
     text: "Im Event-Helper löst du das Fischpuzzle (Brett 6×4). Der Löser berechnet den besten nächsten Zug. Die Truhen-Grenzen stammen aus Metin2 und sind für Origins2 noch nicht geprüft.",
     textEn: "In the Event Helper you solve the fish puzzle (6×4 board). The solver calculates the best next move. The chest limits come from Metin2 and have not yet been checked for Origins2.",
-    kw: ["fisch", "fischpuzzle", "puzzle", "fish", "event helper", "event-helper", "minispiel", "minigame", "truhe", "chest", "loeser", "solver"],
+    kw: ["fisch", "fischpuzzle", "puzzle", "fish", "minispiel", "minigame", "truhe", "chest", "loeser", "solver"],
     source: "Seite · Event-Helper", sourceEn: "Site · Event Helper", link: "#event-helper"
   },
   {
     id: "mini-window",
     title: "Mini-Fenster", titleEn: "Mini window",
-    text: "Auf dem PC kannst du Upp-Kalkulator, Skilltree, Fischpuzzle und Boss-Timer in ein kleines schwebendes Fenster auslagern, damit sie neben dem Spiel sichtbar bleiben. Dafür gibt es neben dem Titel einen Mini-Fenster-Knopf und oben im Kopfbereich die Mini-Leiste.",
-    textEn: "On a PC you can pop the upgrade calculator, skill tree, fish puzzle and boss timer out into a small floating window so they stay visible next to the game. Use the mini window button next to the title, or the mini bar in the header.",
-    kw: ["mini", "mini-fenster", "minifenster", "fenster", "window", "schwebend", "floating", "neben dem spiel", "mini-leiste", "dock", "popup", "pip"],
+    text: "Auf dem PC kannst du Upp-Kalkulator, Skilltree, Fischpuzzle, Boss-Timer und diesen Chat in ein kleines schwebendes Fenster auslagern, das über dem Spiel bleibt. Dafür gibt es neben dem Titel einen Mini-Fenster-Knopf und oben im Kopfbereich den Knopf „Mini-Leiste“. In der Mini-Leiste sitzen die Werkzeuge auf einer Walze: mit den Pfeilen, dem Mausrad oder per Wischen drehen, dann auf „Öffnen“ klicken.",
+    textEn: "On a PC you can pop the upgrade calculator, skill tree, fish puzzle, boss timer and this chat out into a small floating window that stays over the game. Use the mini window button next to the title, or the “Mini bar” button in the header. In the mini bar the tools sit on a drum: turn it with the arrows, the mouse wheel or by swiping, then click “Open”.",
+    kw: ["mini", "mini-fenster", "minifenster", "fenster", "window", "schwebend", "floating", "neben dem spiel", "mini-leiste", "walze", "drehen", "dock", "popup", "pip"],
     source: "Seite · Mini-Fenster", sourceEn: "Site · Mini window"
   },
   {
@@ -91,6 +91,30 @@ const CHAT_KB = [
     textEn: "Found a bug or have an idea? Use the “Report a bug / idea” button to send us a message, ideally with a screenshot. If you want to help out, the Team tab has the helper application and the translator for item names.",
     kw: ["bug", "fehler", "melden", "idee", "ideen", "vorschlag", "feedback", "helfer", "helfen", "mithelfen", "bewerben", "bewerbung", "team", "uebersetzen", "uebersetzer", "translate", "translator", "report", "suggest", "help out", "become a helper"],
     source: "Seite · Mitmachen", sourceEn: "Site · Get involved", link: "#team"
+  },
+  {
+    id: "chat-about",
+    title: "Dieser Chat", titleEn: "This chat",
+    text: "Ich durchsuche die Wissensbasis dieser Seite und zeige dir die passende Antwort samt Link zum richtigen Werkzeug. Was noch nicht in der Wissensbasis steht, weiß ich auch nicht – dann sage ich das lieber, statt zu raten. Echte Spielwerte wie Petskill-Kosten kommen dazu, sobald die Wiki-Daten da sind.",
+    textEn: "I search this site's knowledge base and show you the matching answer with a link to the right tool. Whatever is not in the knowledge base yet, I don't know either – I'd rather say so than guess. Real game values such as pet skill costs will follow as soon as the wiki data is here.",
+    kw: ["chat", "chatbot", "bot", "ki", "ai", "frag", "fragen", "antwort", "antworten", "wissensbasis", "knowledge", "assistent", "assistant"],
+    source: "Seite · Chat", sourceEn: "Site · Chat"
+  },
+  {
+    id: "about-us",
+    title: "Wer steckt dahinter und was kostet es?", titleEn: "Who is behind this and what does it cost?",
+    text: "Gebaut wird der Helper ehrenamtlich von der Gilde Society auf Origins2. Er ist kostenlos, werbefrei und hat keine Konten und keine Bezahlfunktionen. Es ist ein Fan-Projekt und nicht die offizielle Seite des Servers. Was gespeichert wird und was nicht, steht in der Datenschutzerklärung unten im Footer.",
+    textEn: "The helper is built voluntarily by the guild Society on Origins2. It is free, ad-free and has no accounts and no paid features. It is a fan project, not the server's official site. What is stored and what is not is explained in the privacy policy linked in the footer.",
+    kw: ["wer", "who", "dahinter", "hinter", "steckt", "betreibt", "macht", "gilde", "guild", "society", "kostenlos", "gratis", "free", "kosten", "preis", "werbung", "ads", "offiziell", "official", "datenschutz", "privacy", "daten", "cookies", "konto", "account"],
+    source: "Seite · Über uns", sourceEn: "Site · About us", link: "datenschutz/"
+  },
+  {
+    id: "xmas-mode",
+    title: "Weihnachtsmodus", titleEn: "Christmas mode",
+    text: "Von Anfang Dezember bis Mitte Januar schaltet sich der Weihnachtsmodus automatisch ein: Schneefall, Mistelzweige und ein geschmückter Baum. Mit dem kleinen Schieberegler oben in der Kopfleiste kannst du ihn jederzeit an- und ausschalten.",
+    textEn: "From early December to mid-January Christmas mode switches on automatically: snowfall, mistletoe and a decorated tree. Use the small slider in the header to turn it on or off whenever you like.",
+    kw: ["weihnachten", "weihnachtsmodus", "christmas", "schnee", "schneefall", "snow", "winter", "deko", "dekoration", "baum", "tree", "schieberegler", "slider"],
+    source: "Seite · Weihnachtsmodus", sourceEn: "Site · Christmas mode"
   },
   {
     id: "language-share",
@@ -119,5 +143,61 @@ const CHAT_KB = [
     textEn: "TEST ENTRY without real values. Later this lists the first steps for new players: [BEGINNER TIPS FROM WIKI DATA].",
     kw: ["einsteiger", "anfaenger", "neu", "neuling", "beginner", "newbie", "new player", "erste schritte", "first steps", "tipps", "tips", "levelup", "leveln"],
     source: "Test · Wiki", sourceEn: "Test · Wiki"
+  }
+];
+
+/* =====================================================================
+   SMALLTALK  –  kurze Antworten ohne KI, direkt aus der Seite
+   ---------------------------------------------------------------------
+   Greift nur, wenn die Suche oben NICHTS gefunden hat. „Hi, wann spawnen
+   die Bosse?" bekommt also weiterhin die echte Antwort.
+   words : Auslöser in Kleinbuchstaben, ohne Umlaute (ä→ae, ß→ss).
+           Ein Wort = muss als ganzes Wort vorkommen.
+           Mehrere Wörter = muss als Satzteil vorkommen.
+   reply : Mehrere Varianten, es wird zufällig eine gewählt.
+   Reihenfolge zählt: Der erste Treffer gewinnt.
+   ===================================================================== */
+const CHAT_SMALLTALK = [
+  {
+    id: "who",
+    words: ["wer bist du", "bist du ein bot", "bist du eine ki", "bist du echt", "bist du ein mensch", "who are you", "are you a bot", "are you real", "are you human"],
+    reply: ["Ich bin der Helfer-Chat dieser Seite, im Stil von xZcRiTiCaLZz. Ich durchsuche die Wissensbasis hier und sage dir, was ich finde – ein echter Mensch bin ich nicht."],
+    replyEn: ["I'm this site's helper chat, in the style of xZcRiTiCaLZz. I search the knowledge base here and tell you what I find – I'm not an actual human."]
+  },
+  {
+    id: "thanks",
+    words: ["danke", "dank", "dankeschoen", "merci", "thx", "thanks", "thank you", "ty"],
+    reply: ["Gern! 👍", "Immer doch. Noch was?", "Kein Ding – frag ruhig weiter."],
+    replyEn: ["Anytime! 👍", "You're welcome. Anything else?", "No problem – keep them coming."]
+  },
+  {
+    id: "bye",
+    words: ["tschuess", "tschuss", "ciao", "bye", "cya", "bis dann", "bis spaeter", "gute nacht", "gn8", "see you", "good night"],
+    reply: ["Bis dann – viel Erfolg beim Uppen! 🔨", "Mach's gut! 👋"],
+    replyEn: ["See you – good luck upgrading! 🔨", "Take care! 👋"]
+  },
+  {
+    id: "howareyou",
+    words: ["wie gehts", "wie geht es dir", "wie geht s dir", "alles klar", "alles gut", "was machst du", "how are you", "whats up", "how is it going"],
+    reply: ["Alles bestens, ich bin ja nur Text. 😄 Was brauchst du?", "Gut! Und bei dir – schon was geuppt heute?"],
+    replyEn: ["All good, I'm just text after all. 😄 What do you need?", "Doing fine! How about you – upgraded anything today?"]
+  },
+  {
+    id: "praise",
+    words: ["cool", "geil", "nice", "super", "mega", "stark", "klasse", "top", "awesome", "great", "amazing", "love it"],
+    reply: ["Danke! 😄 Sag Bescheid, wenn dir was fehlt.", "Freut mich! Wenn dir ein Fehler auffällt, meld ihn gern über „Bug / Idee melden“."],
+    replyEn: ["Thanks! 😄 Let me know if anything's missing.", "Glad you like it! If you spot a mistake, use “Report a bug / idea”."]
+  },
+  {
+    id: "joke",
+    words: ["witz", "erzaehl was", "langweilig", "joke", "tell me a joke", "bored"],
+    reply: ["Witze sind nicht mein Fachgebiet – aber zu Upp-Kosten und Boss-Zeiten kann ich einiges erzählen. 😄"],
+    replyEn: ["Jokes aren't my strong suit – but I can tell you plenty about upgrade costs and boss times. 😄"]
+  },
+  {
+    id: "greet",
+    words: ["hallo", "hi", "hey", "huhu", "moin", "servus", "yo", "hello", "guten morgen", "guten tag", "guten abend", "na du"],
+    reply: ["Hey! 👋 Was willst du wissen?", "Moin! Frag mich was zu Origins2 oder zu dieser Seite.", "Hi! Leg los – ich such dir die Antwort raus."],
+    replyEn: ["Hey! 👋 What do you want to know?", "Hi there! Ask me anything about Origins2 or this site.", "Hello! Fire away – I'll look it up for you."]
   }
 ];
