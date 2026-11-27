@@ -13,7 +13,7 @@
     // --- Spielregeln ---
     command: '!hit',             // Chat-Befehl
     stoneHp: 100,                // Lebenspunkte des Steins
-    cooldownSec: 30,             // Wartezeit pro Zuschauer
+    cooldownSec: 15,             // Wartezeit pro Zuschauer
     damage: 1,                   // Schaden pro Treffer
     critMultiplier: 3,           // Schaden bei kritischem Treffer
     critChanceSupporter: 0.30,   // Crit-Chance für Subs / VIPs / Mods
@@ -25,7 +25,7 @@
     autoStart: false,               // false = Stein erscheint erst nach !giveaway start
 
     // --- Gutschein-Drops (Plan: N Gutscheine ueber M Minuten, pro Zeitfenster einer garantiert) ---
-    dropLabel: '50-DR-Gutschein',
+    dropLabel: '50 DR voucher',
     dropChance: 0.20,              // Chance pro Stein, solange das Zeitfenster noch nicht vorbei ist
     dropGuaranteeBufferMin: 5,     // so viele Minuten vor Fensterende ist der naechste Stein ein sicherer Drop
     drops: 0,                      // Standard-Anzahl Gutscheine (0 = kein Plan), meist per !spawn gesetzt
@@ -42,7 +42,7 @@
     streamerName: 'Streamer',    // Name beim manuellen Treffer (Taste H)
 
     // --- Texte ---
-    lang: 'de',                  // 'de' oder 'en'
+    lang: 'en',                  // 'de' oder 'en'
 
     // --- Sound (später, leer = aus) ---
     soundHit: '',
