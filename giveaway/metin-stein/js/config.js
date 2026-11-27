@@ -49,7 +49,11 @@
     soundDestroy: '',
 
     // --- Kick-Schnittstelle (inoffiziell, bei Bedarf anpassen) ---
-    kickPusherKey: '32cbd69e4b950bf97679',
+    // Stand 27.11.2026: Kick nutzt diesen Schluessel (aelterer Schluessel funktioniert nicht mehr).
+    // Aendert Kick ihn wieder, steht der aktuelle Wert in der Antwort von
+    // POST https://web.kick.com/api/v1/realtime/channels/<id>/chat/connection (app_key) – oder per URL: &pkey=...
+    kickPusherKey: '34bf7a0ff419a2a775b9',
+    kickPusherKeysFallback: ['32cbd69e4b950bf97679'],
     kickPusherCluster: 'us2'
   };
 
@@ -68,6 +72,8 @@
   if (q.get('autostart') === '1') C.autoStart = true;
   num('drops', 'drops'); num('time', 'streamMinutes'); num('dropchance', 'dropChance');
   if (q.has('label')) C.dropLabel = q.get('label');
+  if (q.has('pkey')) C.kickPusherKey = q.get('pkey');
+  if (q.has('pcluster')) C.kickPusherCluster = q.get('pcluster');
   if (q.has('scmd')) C.spawnCommand = q.get('scmd');
   if (q.has('gcmd')) C.giveawayCommand = q.get('gcmd');
 

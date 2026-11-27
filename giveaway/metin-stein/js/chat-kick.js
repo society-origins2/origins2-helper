@@ -42,12 +42,14 @@
     const slug = String(cfg.kickChannel || '').trim().toLowerCase();
     if (!slug && !cfg.kickChatroomId) return { close() {} };
     let ws, closed = false, retry = 0, roomId = String(cfg.kickChatroomId || '');
+    const keys = [cfg.kickPusherKey].concat(cfg.kickPusherKeysFallback || []).filter(Boolean);
+    let keyIdx = 0;
 
     async function open() {
       onStatus('kick', 'connecting');
       if (!roomId) roomId = await lookupChatroomId(slug);
       if (!roomId) { onStatus('kick', 'noid'); return; }
-      const url = 'wss://ws-' + cfg.kickPusherCluster + '.pusher.com/app/' + cfg.kickPusherKey +
+      const url = 'wss://ws-' + cfg.kickPusherCluster + '.pusher.com/app/' + keys[keyIdx % keys.length] +
         '?protocol=7&client=js&version=8.4.0&flash=false';
       ws = new WebSocket(url);
       ws.onmessage = ev => {
@@ -56,6 +58,9 @@
           ws.send(JSON.stringify({ event: 'pusher:subscribe', data: { auth: '', channel: 'chatrooms.' + roomId + '.v2' } }));
         } else if (m.event === 'pusher_internal:subscription_succeeded') {
           retry = 0; onStatus('kick', 'ok');
+        } else if (m.event === 'pusher:error') {
+          // z. B. 4001: Schluessel/Cluster passt nicht -> naechsten Schluessel probieren
+          keyIdx++; onStatus('kick', 'error');
         } else if (m.event === 'pusher:ping') {
           ws.send(JSON.stringify({ event: 'pusher:pong', data: {} }));
         } else {
