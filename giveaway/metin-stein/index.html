@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Metin-Stein</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="css/stone.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="title" id="t-title"></div>
+      <div class="hint" id="t-hint"></div>
+      <div class="drops hidden" id="drops"></div>
+    </header>
+
+    <div class="hp">
+      <div class="hp-text"><span id="hp-label"></span><span id="hp-num"></span></div>
+      <div class="hp-track"><div class="hp-fill" id="hp-fill"></div></div>
+    </div>
+
+    <div id="stage">
+      <div id="stone-wrap">
+        <div id="stone">
+          <img id="stone-img" alt="">
+          <div id="cracks">
+            <svg viewBox="0 0 100 117" preserveAspectRatio="none" aria-hidden="true">
+              <g class="c c1">
+                <path class="dark" d="M52 6 L47 24 L55 38 L44 56 L50 72"/>
+                <path class="lite" d="M52 6 L47 24 L55 38 L44 56 L50 72"/>
+                <path class="dark" d="M70 20 L63 40 L69 58"/>
+                <path class="lite" d="M70 20 L63 40 L69 58"/>
+              </g>
+              <g class="c c2">
+                <path class="dark" d="M55 38 L72 46 L80 64 L74 80"/>
+                <path class="lite" d="M55 38 L72 46 L80 64 L74 80"/>
+                <path class="dark" d="M44 56 L28 62 L22 80"/>
+                <path class="lite" d="M44 56 L28 62 L22 80"/>
+                <path class="dark" d="M47 24 L33 30 L26 44"/>
+                <path class="lite" d="M47 24 L33 30 L26 44"/>
+              </g>
+              <g class="c c3">
+                <path class="dark" d="M50 72 L58 90 L54 108"/>
+                <path class="lite" d="M50 72 L58 90 L54 108"/>
+                <path class="dark" d="M50 72 L36 88 L40 104"/>
+                <path class="lite" d="M50 72 L36 88 L40 104"/>
+                <path class="dark" d="M63 40 L82 34 L90 48"/>
+                <path class="lite" d="M63 40 L82 34 L90 48"/>
+                <path class="dark" d="M28 62 L14 58 L10 44"/>
+                <path class="lite" d="M28 62 L14 58 L10 44"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div id="floats"></div>
+      </div>
+    </div>
+
+    <ul id="feed"></ul>
+  </div>
+
+  <canvas id="fx"></canvas>
+  <div id="flash"></div>
+
+  <div id="banner" class="hidden">
+    <div class="b-small" id="b-small"></div>
+    <div class="b-name" id="b-name"></div>
+    <div class="b-drop hidden" id="b-drop"></div>
+    <div class="b-sub" id="b-sub"></div>
+    <ol class="b-top" id="b-top"></ol>
+  </div>
+
+  <div id="rules" class="hidden">
+    <div class="r-title" id="r-title"></div>
+    <ul id="r-list"></ul>
+  </div>
+
+  <div id="panel" class="hidden">
+    <div class="p-title" id="p-title"></div>
+    <div class="p-row" id="p-status"></div>
+    <div class="p-row">
+      <button id="p-hit"></button>
+      <button id="p-new"></button>
+    </div>
+    <div class="p-row">
+      <button id="p-rules"></button>
+    </div>
+    <div class="p-row">
+      <label id="p-hp-label"></label>
+      <input id="p-hp" type="number" min="1" step="1">
+    </div>
+    <div class="p-row">
+      <button id="p-sim"></button>
+    </div>
+    <div class="p-row">
+      <input id="p-room" type="text" style="flex:1;width:auto">
+      <button id="p-connect" style="flex:none"></button>
+    </div>
+    <div class="p-last" id="p-last"></div>
+    <div class="p-last" id="p-plan"></div>
+    <div class="p-keys" id="p-keys"></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/stone-data.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/chat-twitch.js"></script>
+  <script src="js/chat-kick.js"></script>
+  <script src="js/stone.js"></script>
+</body>
+</html>
