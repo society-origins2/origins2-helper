@@ -226,3 +226,9 @@ header {
 .r-title { font-size: clamp(13px, 2.2vh, 19px); }
 .b-sub { font-size: clamp(14px, 2.4vh, 21px); }
 .b-top { font-size: clamp(14px, 2.4vh, 20px); }
+
+/* Drop-Ergebnis deutlich: Gewinn = grosses Gold-Siegel, kein Drop = grau und klein */
+.b-drop { display: block; margin: 1vh auto 1.4vh; padding: 1.3vh 2vw; font-size: clamp(17px, 3.4vh, 30px); letter-spacing: .08em; animation: drop-pulse 1s ease-in-out infinite alternate; }
+.b-drop.none { font-size: clamp(13px, 2.3vh, 20px); letter-spacing: .05em; color: #c9ccd3; font-weight: 600; text-transform: none;
+  background: rgba(70,74,84,.75); box-shadow: none; animation: none; }
+@keyframes drop-pulse { from { box-shadow: 0 0 14px rgba(246,210,122,.5); } to { box-shadow: 0 0 42px rgba(246,210,122,.95); } }

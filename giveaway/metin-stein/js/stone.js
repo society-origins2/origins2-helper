@@ -15,7 +15,7 @@
       simOn: 'Chat-Simulation: AN', simOff: 'Chat-Simulation: AUS',
       keys: 'Tasten: P Panel · H Treffer · N Neuer Stein · R Regeln · C Zyklus neu · T Simulation',
       crit: 'KRIT!', noid: 'Chatroom-ID fehlt', connecting: 'verbinde …', ok: 'verbunden', error: 'Fehler', off: 'aus',
-      idle: 'Das Giveaway startet gleich …', dropWord: 'DROP', dropsDone: 'vergeben', ruleDrop: 'Jeder Stein kann einen <b>{label}</b> droppen – in jedem Zeitfenster fällt garantiert einer.', planLbl: 'Drop-Plan', hits: 'Schläge', round: 'Runde', lastChat: 'Letzter Chat', kickId: 'Kick-Chatroom-ID', connect: 'Verbinden', none: '–',
+      idle: 'Das Giveaway startet gleich …', dropWord: 'GEWONNEN', noDrop: 'Kein Gutschein bei diesem Stein',  dropsDone: 'vergeben', ruleDrop: 'Jeder Stein kann einen <b>{label}</b> droppen – in jedem Zeitfenster fällt garantiert einer.', planLbl: 'Drop-Plan', hits: 'Schläge', round: 'Runde', lastChat: 'Letzter Chat', kickId: 'Kick-Chatroom-ID', connect: 'Verbinden', none: '–',
       rulesBtn: 'Regeln anzeigen', rulesTitle: 'Regeln', cycleBtn: 'Zyklus neu starten', endWord: 'Ende', winWord: 'Fenster', stoneWord: 'Stein', normalWord: 'normal', modCmd: 'Mod-Befehl',
       rules: [
         'Schreibe <b>{cmd}</b> – jeder Treffer zieht dem Stein Lebenspunkte ab.',
@@ -35,7 +35,7 @@
       simOn: 'Chat simulation: ON', simOff: 'Chat simulation: OFF',
       keys: 'Keys: P panel · H hit · N new stone · R rules · C restart cycle · T simulation',
       crit: 'CRIT!', noid: 'Chatroom ID missing', connecting: 'connecting …', ok: 'connected', error: 'error', off: 'off',
-      idle: 'The giveaway starts soon …', dropWord: 'DROP', dropsDone: 'awarded', ruleDrop: 'Every stone can drop a <b>{label}</b> – one drop is guaranteed in every time window.', planLbl: 'Drop plan', hits: 'hits', round: 'Round', lastChat: 'Last chat', kickId: 'Kick chatroom ID', connect: 'Connect', none: '–',
+      idle: 'The giveaway starts soon …', dropWord: 'WON', noDrop: 'No voucher on this stone',  dropsDone: 'awarded', ruleDrop: 'Every stone can drop a <b>{label}</b> – one drop is guaranteed in every time window.', planLbl: 'Drop plan', hits: 'hits', round: 'Round', lastChat: 'Last chat', kickId: 'Kick chatroom ID', connect: 'Connect', none: '–',
       rulesBtn: 'Show rules', rulesTitle: 'Rules', cycleBtn: 'Restart cycle', endWord: 'End', winWord: 'Window', stoneWord: 'Stone', normalWord: 'normal', modCmd: 'Mod command',
       rules: [
         'Type <b>{cmd}</b> – every hit takes HP off the stone.',
@@ -243,8 +243,9 @@
       $('b-sub').textContent = L.wonSub + ' · ' + d.hits + ' ' + L.hits;
       $('b-top').innerHTML = '<li style="justify-content:center;color:#d4a64a;letter-spacing:.2em;text-transform:uppercase;font-size:.85em"><span>' + L.top + '</span></li>' +
         d.top.map(t => '<li><span>' + esc(t.name) + '</span><span>' + t.dmg + '</span></li>').join('');
-      const bd = $('b-drop'); bd.classList.toggle('hidden', !dropped);
-      if (dropped) bd.textContent = L.dropWord + ' · ' + C.dropLabel;
+      const bd = $('b-drop'); bd.classList.toggle('hidden', !plan.active);
+      bd.classList.toggle('none', !dropped);
+      bd.textContent = dropped ? '★ ' + L.dropWord + ': ' + C.dropLabel + ' ★' : L.noDrop;
       $('banner').classList.toggle('drop', dropped);
       const b = $('banner'); b.classList.remove('hidden');
       b.style.animation = 'none'; void b.offsetWidth; b.style.animation = '';
