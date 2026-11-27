@@ -5,7 +5,7 @@
 (function () {
   const q = new URLSearchParams(location.search);
   const num = (k, d) => (q.has(k) && !isNaN(+q.get(k)) ? +q.get(k) : d);
-  const lang = q.get('lang') === 'en' ? 'en' : 'de';
+  const lang = q.get('lang') === 'de' ? 'de' : 'en';
   const test = q.get('test') === '1';
 
   const TXT = {

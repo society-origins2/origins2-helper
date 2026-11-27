@@ -13,10 +13,10 @@
       top: 'Meiste Schläge',
       panel: 'Steuerung', hit: 'Manueller Treffer', fresh: 'Neuer Stein', hpLabel: 'HP (neuer Stein)',
       simOn: 'Chat-Simulation: AN', simOff: 'Chat-Simulation: AUS',
-      keys: 'Tasten: P Panel · H Treffer · N Neuer Stein · R Regeln · T Simulation',
+      keys: 'Tasten: P Panel · H Treffer · N Neuer Stein · R Regeln · C Zyklus neu · T Simulation',
       crit: 'KRIT!', noid: 'Chatroom-ID fehlt', connecting: 'verbinde …', ok: 'verbunden', error: 'Fehler', off: 'aus',
       idle: 'Das Giveaway startet gleich …', dropWord: 'DROP', dropsDone: 'vergeben', ruleDrop: 'Jeder Stein kann einen <b>{label}</b> droppen – in jedem Zeitfenster fällt garantiert einer.', planLbl: 'Drop-Plan', hits: 'Schläge', round: 'Runde', lastChat: 'Letzter Chat', kickId: 'Kick-Chatroom-ID', connect: 'Verbinden', none: '–',
-      rulesBtn: 'Regeln anzeigen', rulesTitle: 'Regeln',
+      rulesBtn: 'Regeln anzeigen', rulesTitle: 'Regeln', cycleBtn: 'Zyklus neu starten', endWord: 'Ende', winWord: 'Fenster', stoneWord: 'Stein', normalWord: 'normal', modCmd: 'Mod-Befehl',
       rules: [
         'Schreibe <b>{cmd}</b> – jeder Treffer zieht dem Stein Lebenspunkte ab.',
         'Pro Person ein Treffer alle <b>{cd} Sekunden</b>.',
@@ -33,10 +33,10 @@
       top: 'Most hits',
       panel: 'Control', hit: 'Manual hit', fresh: 'New stone', hpLabel: 'HP (new stone)',
       simOn: 'Chat simulation: ON', simOff: 'Chat simulation: OFF',
-      keys: 'Keys: P panel · H hit · N new stone · R rules · T simulation',
+      keys: 'Keys: P panel · H hit · N new stone · R rules · C restart cycle · T simulation',
       crit: 'CRIT!', noid: 'Chatroom ID missing', connecting: 'connecting …', ok: 'connected', error: 'error', off: 'off',
       idle: 'The giveaway starts soon …', dropWord: 'DROP', dropsDone: 'awarded', ruleDrop: 'Every stone can drop a <b>{label}</b> – one drop is guaranteed in every time window.', planLbl: 'Drop plan', hits: 'hits', round: 'Round', lastChat: 'Last chat', kickId: 'Kick chatroom ID', connect: 'Connect', none: '–',
-      rulesBtn: 'Show rules', rulesTitle: 'Rules',
+      rulesBtn: 'Show rules', rulesTitle: 'Rules', cycleBtn: 'Restart cycle', endWord: 'End', winWord: 'Window', stoneWord: 'Stone', normalWord: 'normal', modCmd: 'Mod command',
       rules: [
         'Type <b>{cmd}</b> – every hit takes HP off the stone.',
         'One hit per person every <b>{cd} seconds</b>.',
@@ -85,8 +85,8 @@
     d.classList.remove('hidden');
     d.textContent = st.used + ' / ' + st.drops + ' × ' + C.dropLabel + ' ' + L.dropsDone;
     const m = Math.floor(st.nextWindowInMs / 60000), s = Math.floor(st.nextWindowInMs / 1000) % 60;
-    $('p-plan').textContent = L.planLbl + ': ' + st.used + '/' + st.drops + ' · ' + (st.over ? 'Ende' : 'Fenster ' + st.window + '/' + st.drops + ' (' + m + ':' + String(s).padStart(2, '0') + ')') +
-      ' · Stein: ' + (dropStone ? 'DROP' : 'normal');
+    $('p-plan').textContent = L.planLbl + ': ' + st.used + '/' + st.drops + ' · ' + (st.over ? L.endWord : L.winWord + ' ' + st.window + '/' + st.drops + ' (' + m + ':' + String(s).padStart(2, '0') + ')') +
+      ' · ' + L.stoneWord + ': ' + (dropStone ? 'DROP' : L.normalWord);
   }
   setInterval(renderPlan, 1000);
 
@@ -295,15 +295,34 @@
            (msg.platform === 'twitch' && n === String(C.twitchChannel).toLowerCase());
   }
 
+  // Zyklus (z. B. 3 Gutscheine in 90 Min.) von vorne starten
+  let lastCycle = { drops: C.drops, minutes: C.streamMinutes };
+  function restartCycle(drops, mins) {
+    const st = plan.active ? { drops: plan.drops, minutes: plan.minutes } : lastCycle;
+    const d = drops > 0 ? drops : st.drops, m = mins > 0 ? mins : st.minutes;
+    if (!(d > 0 && m > 0)) return false;
+    lastCycle = { drops: d, minutes: m };
+    plan.start(d, m); savePlan(); renderPlan();
+    if (game.active) { clearTimeout(nextTimer); game.newStone(currentHp()); }
+    return true;
+  }
+  $('p-cycle').textContent = L.cycleBtn;
+  $('p-cycle').onclick = () => restartCycle();
+
   function modCommand(msg) {
     const parts = msg.text.trim().toLowerCase().split(/\s+/);
+    if (parts[1] === 'cycle' || parts[1] === 'restart') {
+      if (!restartCycle(parseInt(parts[2], 10) || 0, parseInt(parts[3], 10) || 0)) return;
+      $('p-last').textContent = L.modCmd + ': ' + msg.name + ' · ' + parts.slice(0, 4).join(' ');
+      return;
+    }
     const sub = parts[1] || '', num = parseInt(parts[2], 10);
     if (sub === 'stop') game.stop();
     else if (sub === 'reset') { if (game.active) { clearTimeout(nextTimer); game.newStone(currentHp()); } else return; }
     else if (sub === 'cleardrops') { plan.clear(); savePlan(); renderPlan(); }
     else if (sub === 'hp' && num > 0) { defaultHp = num; $('p-hp').value = num; }
     else return;
-    $('p-last').textContent = 'Mod-Befehl: ' + msg.name + ' · ' + parts.slice(0, 3).join(' ');
+    $('p-last').textContent = L.modCmd + ': ' + msg.name + ' · ' + parts.slice(0, 3).join(' ');
   }
 
   function spawnCommand(msg) {
@@ -314,10 +333,10 @@
     const drops = get(/drops?\s*(\d+)/);
     const mins = get(/(?:time|zeit|min)\s*(\d+)/);
     if (n > 0) { defaultHp = n; $('p-hp').value = n; }
-    if (drops > 0) { plan.start(drops, mins > 0 ? mins : C.streamMinutes); savePlan(); }
+    if (drops > 0) { plan.start(drops, mins > 0 ? mins : C.streamMinutes); lastCycle = { drops, minutes: mins > 0 ? mins : C.streamMinutes }; savePlan(); }
     clearTimeout(nextTimer);
     game.start(currentHp());
-    $('p-last').textContent = 'Mod-Befehl: ' + msg.name + ' · ' + msg.text.trim().slice(0, 30);
+    $('p-last').textContent = L.modCmd + ': ' + msg.name + ' · ' + msg.text.trim().slice(0, 30);
   }
 
   function onChat(msg) {
@@ -381,6 +400,7 @@
     else if (k === 'h') manualHit();
     else if (k === 'n') newStone();
     else if (k === 'r') showRules(true);
+    else if (k === 'c') restartCycle();
     else if (k === 't') toggleSim();
   });
 
